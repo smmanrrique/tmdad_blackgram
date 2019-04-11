@@ -1,6 +1,7 @@
 package com.tmda.chatapp.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -11,7 +12,7 @@ import java.util.Set;
 @Entity
 @Data
 @Table(name="groups")
-//@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false)
 public class Group extends AbstractEntity {
 
     @Column(length = 50, unique = true, nullable = false)

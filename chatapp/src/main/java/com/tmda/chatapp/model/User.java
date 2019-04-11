@@ -1,6 +1,7 @@
 package com.tmda.chatapp.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ import java.util.Set;
 @Entity
 @Data
 @NoArgsConstructor
-//@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "users")
 public class User extends AbstractEntity {
 
@@ -32,10 +33,13 @@ public class User extends AbstractEntity {
     private String password;
 
     @OneToMany(fetch= FetchType.LAZY, mappedBy = "fromUser")
-    private List<Message> users = new ArrayList<>();
+    private List<Message> sendMessage = new ArrayList<>();
 
-    @OneToMany(fetch= FetchType.LAZY,mappedBy = "user")
-    private  Set<Contact> contacts = new HashSet<>();
+    @OneToMany(fetch= FetchType.LAZY, mappedBy = "toUser")
+    private List<Message> receivedMessage = new ArrayList<>();
+
+    @OneToMany(fetch= FetchType.LAZY,mappedBy = "id")
+    private  Set<User> contacts = new HashSet<>();
 
     @ManyToMany(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Group> groups = new HashSet<>();
