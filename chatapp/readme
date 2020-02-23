@@ -1,0 +1,4 @@
+
+to build gradlew wrapper
+
+./gradlew build
