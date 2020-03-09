@@ -42,6 +42,7 @@ public class RabbitMQSender {
             System.exit(-1);
         }
         System.out.println(" [*] AQMP broker found in " + amqpURL);
+
         Connection connection = factory.newConnection();
         // Con un solo canal
         Channel channel = connection.createChannel();

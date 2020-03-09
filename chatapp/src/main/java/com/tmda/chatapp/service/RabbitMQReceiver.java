@@ -1,24 +1,26 @@
 package com.tmda.chatapp.service;
 
 
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.*;
+
 import com.tmda.chatapp.model.Employee;
-import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
+import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeoutException;
 
 
 @Service
 public class RabbitMQReceiver {
-
-    ConnectionFactory factory = new ConnectionFactory();
 
     @Autowired
     private AmqpTemplate rabbitTemplate;
@@ -32,17 +34,19 @@ public class RabbitMQReceiver {
     @Value("${spring.rabbitmq.exchange}")
     private String exchange;
 
-
-    public void send(Employee company) throws IOException, TimeoutException {
-
+    public void Receiver() throws  IOException, TimeoutException {
+        ConnectionFactory factory = new ConnectionFactory();
         try {
             factory.setUri(amqpURL);
-        } catch (Exception e) {
-            System.out.println(" [*] AQMP broker not found in " + amqpURL);
-            System.exit(-1);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
         }
-        System.out.println(" [*] AQMP broker found in " + amqpURL);
         Connection connection = factory.newConnection();
+
         // Con un solo canal
         Channel channel = connection.createChannel();
 
@@ -50,34 +54,23 @@ public class RabbitMQReceiver {
         // recién creado llamada QUEUE_NAME (operación
         // idempotente: solo se creará si no existe ya)
         // Se crea tanto en el emisor como en el receptor, porque no
-        // sabemos cuál se lanzará antes.
+        // sabemos cuál se lanzará antes
         // Indicamos que no sea durable ni exclusiva
         channel.queueDeclare(queue, false, false, false, null);
+        System.out.println(" [*] Esperando mensajes. CTRL+C para salir");
 
-        //rabbitTemplate.convertAndSend("hola", "hola", company);
-        System.out.println("Send msg = " + company);
 
-        // El objeto consumer guardará los mensajes que lleguen
-        // a la cola QUEUE_NAME hasta que los usemos
 
-        Queue consumer = new QueueingConsumer(channel);
-        channel.basicConsume(QUEUE_NAME, true, consumer);
+        Consumer consumer = new DefaultConsumer(channel) {
+            @Override
+            public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
+                String message = new String(body, "UTF-8");
+                System.out.println("ReceiveLogsDirect2 Received '" + envelope.getRoutingKey() + "':'" + message + "'");
+            }
+        };
 
-        SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
-                MessageListenerAdapter listenerAdapter) {
-            SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-            container.setConnectionFactory(connectionFactory);
-            container.setQueueNames(queueName);
-            container.setMessageListener(listenerAdapter);
-            return container;
-        }
-
-        while (true) {
-            // bloquea hasta que llege un mensaje
-            QueueingConsumer.Delivery delivery = consumer.nextDelivery();
-            String message = new String(delivery.getBody());
-            System.out.println(" [x] Recibido '" + message + "'");
-        }
+        channel.basicConsume(queue, true, consumer);
 
     }
+
 }
