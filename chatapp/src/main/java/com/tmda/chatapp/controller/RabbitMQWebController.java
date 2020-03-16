@@ -1,6 +1,5 @@
 package com.tmda.chatapp.controller;
 
-import com.tmda.chatapp.model.Employee;
 import com.tmda.chatapp.service.RabbitMQSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

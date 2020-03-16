@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public final class UserConverter {
-    public User DTOtoUser(UserDTO userDTO) {
+    public User DTOtoUser(User userDTO) {
         User user = new User();
         user.setUsername(userDTO.getUsername());
         user.setPassword(userDTO.getPassword());

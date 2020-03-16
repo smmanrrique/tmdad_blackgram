@@ -3,11 +3,8 @@ package com.tmda.chatapp.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
-
 
 @Entity
 @Data
@@ -15,11 +12,11 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper=false)
-@Table(name="users")
-public class User extends AbstractEntity {
+@Table(name = "contacts")
+public class contact extends AbstractEntity {
 
     @Column(nullable = false, length = 20, unique = true)
-    private String userName;
+    private String username;
 
     @Column(length = 50, nullable = false)
     private String firstName;
@@ -34,9 +31,6 @@ public class User extends AbstractEntity {
     private String password;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date birthDay;
-
-//    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
-//    private List<User> user;
+    private Date birthday;
 
 }
