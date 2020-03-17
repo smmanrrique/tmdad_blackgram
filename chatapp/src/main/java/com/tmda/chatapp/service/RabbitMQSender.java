@@ -4,6 +4,7 @@ package com.tmda.chatapp.service;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
+import com.tmda.chatapp.model.User;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +32,7 @@ public class RabbitMQSender {
     private String exchange;
 
 
-    public void send(Employee company) throws IOException, TimeoutException {
+    public void send(User company) throws IOException, TimeoutException {
 
         try {
             factory.setUri(amqpURL);

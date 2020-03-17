@@ -15,8 +15,11 @@ import java.util.Date;
 public abstract class AbstractEntity {
 
     @Id
-    @Setter(AccessLevel.PROTECTED)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @Setter(AccessLevel.PROTECTED)
+    @Getter
+    @Setter
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
 
     @Temporal(TemporalType.TIMESTAMP)

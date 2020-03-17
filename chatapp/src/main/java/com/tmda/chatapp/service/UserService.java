@@ -2,21 +2,71 @@ package com.tmda.chatapp.service;
 
 
 import com.tmda.chatapp.model.User;
+import com.tmda.chatapp.repositories.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface UserService {
-    User find(int id);
+@Service
+public class UserService implements InterfaceUserService {
 
-    User findByUsername(String username);
+    private final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
+    private final UserRepository userRepository;
 
-    List<User> findAll();
+    @Autowired
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
-    User create(User object);
+    @Override
+    public User create(User user) {
+        return userRepository.save(user);
+    }
 
-    User update(int id, User object);
+    @Override
+    public User find(long id) {
+        return userRepository.findById(id).get();
+    }
 
-    boolean delete(int id);
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 
-    boolean deleteAll();
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User update(int id, User user) {
+//        user.setId(id);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public boolean delete(long id) {
+        try {
+            userRepository.deleteById(id);
+            return true;
+        } catch (DataAccessException e) {
+            LOGGER.info(e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteAll() {
+        try {
+            userRepository.deleteAll();
+            return true;
+        } catch (DataAccessException e) {
+            LOGGER.info(e.getMessage());
+            return false;
+        }
+    }
 }
