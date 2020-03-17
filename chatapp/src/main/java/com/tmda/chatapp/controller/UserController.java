@@ -2,8 +2,6 @@ package com.tmda.chatapp.controller;
 
 
 import com.tmda.chatapp.model.User;
-import com.tmda.chatapp.model.UserConverter;
-import com.tmda.chatapp.model.UserDTO;
 import com.tmda.chatapp.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,17 +14,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/user")
 public class UserController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
-    private final UserConverter userConverter;
 
     @Autowired
-    public UserController(UserService userService, UserConverter userConverter) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.userConverter = userConverter;
     }
 
     @RequestMapping
@@ -43,12 +39,12 @@ public class UserController {
     }
 
     @RequestMapping("/{id}")
-    public ResponseEntity<UserDTO> loadOne(@PathVariable int id) {
+    public ResponseEntity<User> loadOne(@PathVariable int id) {
         LOGGER.info("start loadOne user by id: ", id);
         try {
             User user = userService.find(id);
             LOGGER.info("Found: {}", user);
-            return new ResponseEntity<>(userConverter.userToDTO(user), HttpStatus.OK);
+            return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (DataAccessException e) {
             LOGGER.info(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -56,11 +52,11 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<UserDTO> create(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<User> create(@RequestBody User userDTO) {
         LOGGER.info("start creating user: ", userDTO);
         try {
-            User user = userService.create(userConverter.DTOtoUser(userDTO));
-            return new ResponseEntity<>(userConverter.userToDTO(user), HttpStatus.CREATED);
+            User user = userService.create(userDTO);
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
         } catch (DataAccessException e) {
             LOGGER.info(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
@@ -68,11 +64,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<UserDTO> update(@PathVariable int id, @RequestBody UserDTO userDTO) {
+    public ResponseEntity<User> update(@PathVariable int id, @RequestBody User userDTO) {
         LOGGER.info("start update user: ", userDTO);
         try {
-            User user = userService.update(id, userConverter.DTOtoUser(userDTO));
-            return new ResponseEntity<>(userConverter.userToDTO(user), HttpStatus.OK);
+            User user = userService.update(id, userDTO);
+            return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (DataAccessException e) {
             LOGGER.info(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);

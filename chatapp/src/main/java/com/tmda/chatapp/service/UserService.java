@@ -34,7 +34,7 @@ public class UserService implements InterfaceUserService {
 
     @Override
     public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return userRepository.findByUserName(username);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.tmda.chatapp.controller;
 
+import com.tmda.chatapp.model.User;
 import com.tmda.chatapp.service.RabbitMQSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +22,7 @@ public class RabbitMQWebController {
     @GetMapping(value = "/producer")
     public String producer(@RequestParam("empName") String empName,@RequestParam("empId") String empId) throws IOException, TimeoutException {
 
-        Employee emp=new Employee();
-        emp.setEmpId(empId);
-        emp.setEmpName(empName);
+        User emp=new User();
 
         rabbitMQSender.send(emp);
         System.out.printf("Prooof");
