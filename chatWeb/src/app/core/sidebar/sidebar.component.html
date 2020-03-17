@@ -5,34 +5,42 @@
 
     <nav class="nav-item">
         <div class="nav-item">
-            <div class="item header" data-menu-item="providers" [ngClass]="{'selected': dataMenuItem == 'providers'}" (click)="select($event)" routerLink="./providers">
-                <span> Proveedores</span>
+            <div class="item header" data-menu-item="Groups" [ngClass]="{'selected': dataMenuItem == 'Groups'}"
+                (click)="select($event)" routerLink="./providers">
+                <span> Groups</span>
             </div>
         </div>
 
-        <div class="nav-item" >
-            <div class="item header" data-menu-item="lots" [ngClass]="{'selected': dataMenuItem == 'lots'}" (click)="select($event)" routerLink="./lots">
-                <span> Lotes </span>
+        <div class="nav-item">
+            <div class="item header" data-menu-item="Topics" [ngClass]="{'selected': dataMenuItem == 'Topics'}"
+                (click)="select($event)" routerLink="./lots">
+                <span> Topics </span>
             </div>
         </div>
 
 
         <div class="nav-item">
-            <div class="item header" data-menu-item="orders" [ngClass]="{'selected': dataMenuItem == 'orders'}" (click)="select($event)" routerLink="./invoices">
-                <span> Reportes </span>
+            <div class="item header" data-menu-item="Chat" [ngClass]="{'selected': dataMenuItem == 'Chat'}"
+                (click)="select($event)" routerLink="./invoices">
+                <span> Trending </span>
             </div>
         </div>
-        
+
         <nav class="nav-item">
-            <div class="item header" (click)="selection.toggle(NAV_USERS)" [ngClass]="{'expanded': selection.isSelected(NAV_USERS), 
+            <div class="item header" (click)="selection.toggle(NAV_USERS)"
+                [ngClass]="{'expanded': selection.isSelected(NAV_USERS), 
                     'selected': dataMenuItem == 'userClients' || dataMenuItem == 'userEmployees' || dataMenuItem == 'userGenerics'}">
-                <span>Usuario</span>
+                <span>Perfil</span>
                 <i class="material-icons">keyboard_arrow_right</i>
             </div>
             <div class="nav-tab">
-                <div class="item" data-menu-item="userClients" [ngClass]="{'selected': dataMenuItem == 'userClients'}" (click)="select($event)" routerLink="#">Cliente</div>
-                <div class="item" data-menu-item="userEmployees" [ngClass]="{'selected': dataMenuItem == 'userEmployees'}" (click)="select($event)" routerLink="#">Empleado</div>
-                <div class="item" data-menu-item="userGenerics" [ngClass]="{'selected': dataMenuItem == 'userGenerics'}" (click)="select($event)" routerLink="#">Generico</div>
+                <div class="item" data-menu-item="userClients" [ngClass]="{'selected': dataMenuItem == 'userClients'}"
+                    (click)="select($event)" routerLink="#">Information</div>
+                <div class="item" data-menu-item="userEmployees"
+                    [ngClass]="{'selected': dataMenuItem == 'userEmployees'}" (click)="select($event)" routerLink="#">
+                    Contacts</div>
+                <div class="item" data-menu-item="userGenerics" [ngClass]="{'selected': dataMenuItem == 'userGenerics'}"
+                    (click)="select($event)" routerLink="#">Saved Messages</div>
             </div>
         </nav>
     </nav>

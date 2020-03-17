@@ -1,9 +1,9 @@
 <div class="back">
     <div class="container">
-        <img src="./assets/images/eleta.jpg" alt="logo" />
+        <img src="./assets/images/logo.png" alt="logo" />
         <form *ngIf="form" [formGroup]="form" (ngSubmit)="login()" novalidate>
             <div class="form-group">
-                <label for="email">Email</label>
+                <label for="email">UserName</label>
                 <input type="text" formControlName="email" class="form-control">
                 <app-validator [control]="form.controls['email']"></app-validator>
             </div>
@@ -16,7 +16,7 @@
                 <button class="btn-text" type="submit" [disabled]="!form.valid">
                     <div class="text">Login</div>
                 </button>
-                <!--<a (click)="showDialog()" i18n="@@forgot-password">Forgot password</a>-->
+                <a (click)="showDialog()">Register User</a>
             </div>
         </form>
     </div>
