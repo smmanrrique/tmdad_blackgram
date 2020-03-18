@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { User } from 'src/app/core/models/user';
 import { BaseService } from 'src/app/core/base.service';
 import { Observable } from 'rxjs';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { CustomValidators } from 'src/app/core/utils/validator/custom-validator';
+import { User } from './user';
 
 @Injectable({
 	providedIn: 'root'
@@ -17,7 +18,9 @@ export class UserService {
 	private jwtHelper = new JwtHelperService();
 	private headers: HttpHeaders;
 
-	constructor(private http: HttpClient) {
+	constructor(
+		private http: HttpClient,
+		private fb: FormBuilder) {
 		this.headers = new HttpHeaders();
 		this.headers.set('Content-Type', 'application/x-www-form-urlencoded');
 	}
@@ -27,8 +30,8 @@ export class UserService {
 	}
 
 
-	update(User: User): Observable<User> {
-		return this.http.put<any>(UserService.BASE_URL + '/' + User.id, User);
+	update(user: User): Observable<User> {
+		return this.http.put<any>(UserService.BASE_URL + '/' + user.id, User);
 	}
 
 	delete(id: number): Observable<any> {
@@ -43,18 +46,15 @@ export class UserService {
 		return this.http.get<any>(UserService.BASE_URL, { params: params });
 	}
 
-	getUser(User: User): FormGroup {
+	getUser(user: User): FormGroup {
 		return this.fb.group({
-			id: new FormControl(User.id),
-			UserType: new FormControl(User.UserType ? User.UserType.id : undefined, Validators.required),
-			statusUser: new FormControl(User.statusUser ? User.statusUser.id : undefined, Validators.required),
-			nitUser: new FormControl(User.nitUser, [Validators.required, Validators.maxLength(100)]),
-			nameUser: new FormControl(User.nameUser, [Validators.required, Validators.maxLength(60)]),
-			addressUser: new FormControl(User.addressUser, [Validators.required, Validators.maxLength(60)]),
-			numberUser: new FormControl(User.numberUser, [CustomValidators.numberRegex, Validators.maxLength(20)]),
-			emailUser: new FormControl(User.emailUser, [CustomValidators.emailRegex]),
-			contactNameUser: new FormControl(User.contactNameUser, [Validators.required, Validators.maxLength(50)]),
-			// invoices: new FormControl(User.emailUser, [Validators.required, Validators.maxLength(100)]),
+			id: new FormControl(user.id),
+			userName: new FormControl(user.userName, [Validators.required, Validators.maxLength(30)]),
+			firstName: new FormControl(user.firstName, [Validators.required, Validators.maxLength(50)]),
+			lastName: new FormControl(user.lastName, [Validators.required, Validators.maxLength(50)]),
+			email: new FormControl(user.email, [CustomValidators.emailRegex]),
+			password: new FormControl(user.password, [Validators.required, Validators.maxLength(50)]),
+			birthDay: new FormControl(user.birthDay),
 		});
 	}
 

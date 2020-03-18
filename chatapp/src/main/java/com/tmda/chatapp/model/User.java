@@ -3,10 +3,9 @@ package com.tmda.chatapp.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -36,7 +35,7 @@ public class User extends AbstractEntity {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date birthDay;
 
-//    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
-//    private List<User> user;
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<User> user;
 
 }

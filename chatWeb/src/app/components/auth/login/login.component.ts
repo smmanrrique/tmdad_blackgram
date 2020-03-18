@@ -86,4 +86,7 @@ export class LoginComponent implements OnInit {
 		this.router.navigate(['./admin'], { relativeTo: this.activatedRoute });
 	}
 
+	register() {
+		this.router.navigate(['./reg'], { relativeTo: this.activatedRoute });
+	}
 }
