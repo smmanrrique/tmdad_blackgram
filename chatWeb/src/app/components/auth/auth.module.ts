@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { MatInputModule, MatFormFieldModule } from '@angular/material';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ToastrModule } from 'ng6-toastr-notifications';
+import { UserRegisterComponent } from './user-register/user-register.component';
 
 @NgModule({
 	imports: [
@@ -31,10 +32,12 @@ import { ToastrModule } from 'ng6-toastr-notifications';
 	declarations: [
 		LoginComponent,
 		ChangePasswordComponent,
+		UserRegisterComponent,
 	],
 	exports: [
 		LoginComponent,
 		ChangePasswordComponent,
+		UserRegisterComponent,
 	],
 })
 

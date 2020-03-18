@@ -50,23 +50,16 @@ export class LoginComponent implements OnInit {
 
 				this.userService.getByAuthUserId(authorizationResponse.user_id).subscribe(user => {
 					sessionStorage.setItem('user', JSON.stringify(user));
-					window.location.href = window.location.href + 'admin' ;
-			// 	}, error => this.toastr.errorToastr('This is error toast.', error));
-			// 	// }, err => this.toastr.errorToastr.showError());
-			// // }); // , (err) => this.notificationService.error());
-			// }); // , (err) => this.notificationService.error());
-				}, error =>  {
+					window.location.href = window.location.href + 'admin';
+				}, error => {
 					let err = error.json();
 					console.log(error);
 				});
-				// this.notificationService.error());
-			}, // (err) => this.notificationService.error());
-			err =>  {
-				// let err = error.json();
-				console.log(err);
-				this.notificationService.error(err);
-				// this.toastr.errorToastr('This is error toast.', err);
-			});
+			},
+				err => {
+					console.log(err);
+					this.notificationService.error(err);
+				});
 		}
 	}
 
@@ -79,7 +72,7 @@ export class LoginComponent implements OnInit {
 
 	main() {
 		console.log('estoy log');
-		this.router.navigate(['./admin'], {relativeTo: this.activatedRoute});
+		this.router.navigate(['./admin'], { relativeTo: this.activatedRoute });
 	}
 
 	getForm(): FormGroup {
@@ -90,7 +83,7 @@ export class LoginComponent implements OnInit {
 	}
 
 	create() {
-		this.router.navigate(['./admin'], {relativeTo: this.activatedRoute});
+		this.router.navigate(['./admin'], { relativeTo: this.activatedRoute });
 	}
 
 }

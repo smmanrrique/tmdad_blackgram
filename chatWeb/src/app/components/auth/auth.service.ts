@@ -6,6 +6,7 @@ import { AuthorizationRequest } from '../../core/models/authorizationRequest';
 import { Observable } from 'rxjs/internal/Observable';
 import { AccessTokenResponse } from '../../core/models/accessTokenResponce';
 import { AccessTokenRequest } from '../../core/models/accessTokenResquest';
+import { User } from 'src/app/core/models/user';
 
 @Injectable({
 	providedIn: 'root'
@@ -13,7 +14,7 @@ import { AccessTokenRequest } from '../../core/models/accessTokenResquest';
 export class AuthService {
 
 	private static readonly BASE_URL: string = BaseService.HOST + '/oauth';
-	// private static readonly BASE_URL: string = BaseService.HOST + '/oauth/token';
+
 	private jwtHelper = new JwtHelperService();
 	private headers: HttpHeaders;
 
@@ -38,11 +39,6 @@ export class AuthService {
 		return this.http.post(AuthService.BASE_URL + '/revokeToken', body, {headers: this.headers});
 			// .catch(BaseService.handleError);
 	}
-
-	// forgotPassword(email: string): Observable<boolean> {
-	// 	return this.http.get(AuthService.BASE_URL + '/reset/' + email);
-	// 		// .catch(BaseService.handleError);
-	// }
 
 	changePassword(email: string, password: string, oldpassword: string): Observable<Boolean> {
 		// console.log('NewPass '+ JSON.stringify({ email: email, password: Global.toMD5(password)}));
