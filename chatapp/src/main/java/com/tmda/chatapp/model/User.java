@@ -1,32 +1,33 @@
 package com.tmda.chatapp.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 
 @Entity
 @Data
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper=false)
-@Table(name="users")
+@EqualsAndHashCode(callSuper = false)
+@Table(name = "users")
 public class User extends AbstractEntity {
 
-    @Column(nullable = false, length = 20, unique = true)
+    @Column(nullable = false, length = 30, unique = true)
     private String userName;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 50)
     private String firstName;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 50)
     private String lastName;
 
-    @Column(nullable = false, length = 50, unique = true)
+    @Column(length = 50, unique = true)
     private String email;
 
     @Column(nullable = false, length = 30)
@@ -35,7 +36,13 @@ public class User extends AbstractEntity {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date birthDay;
 
-    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
-    private List<User> user;
+    @OneToMany(mappedBy = "contactName")
+    private final List<Contact> myContacts = new ArrayList<>();
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    private final List<Group> groups = new ArrayList<>();
+
+    @OneToMany(mappedBy = "fromUser")
+    private List<Message> users = new ArrayList<>();
 
 }

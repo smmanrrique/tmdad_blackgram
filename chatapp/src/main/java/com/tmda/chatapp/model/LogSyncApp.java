@@ -10,12 +10,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper=false)
-@Table(name="logs")
-public class log extends  AbstractEntity{
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    private int id;
+public class LogSyncApp extends  AbstractEntity{
 
     @Column(length = 20, unique = true, nullable = false)
     private String path;

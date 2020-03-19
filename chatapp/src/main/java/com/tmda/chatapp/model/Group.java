@@ -2,7 +2,12 @@ package com.tmda.chatapp.model;
 
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -20,8 +25,7 @@ public class Group extends AbstractEntity {
     @Column(length = 255)
     private String description;
 
-//    @ManyToMany(mappedBy = "groups")
-//    private List<User> roles = new ArrayList<>();
-
+    @ManyToMany(mappedBy = "groups")
+    private List<User> users = new ArrayList<>();
 
 }
