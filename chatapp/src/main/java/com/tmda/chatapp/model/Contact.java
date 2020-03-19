@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@Table(name = "contats")
+@Table(name = "contacts")
 public class Contact extends AbstractEntity {
 
     @ManyToOne()
