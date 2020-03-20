@@ -1,6 +1,5 @@
 package com.tmda.chatapp.controller;
 
-
 import com.tmda.chatapp.model.User;
 import com.tmda.chatapp.service.UserService;
 import org.slf4j.Logger;
@@ -52,10 +51,10 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<User> create(@RequestBody User userDTO) {
-        LOGGER.info("start creating user: ", userDTO);
+    public ResponseEntity<User> create(@RequestBody User user) {
+        LOGGER.info("start creating user: ", user);
         try {
-            User user = userService.create(userDTO);
+            // User user = userService.create(user);
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         } catch (DataAccessException e) {
             LOGGER.info(e.getMessage());
@@ -64,10 +63,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<User> update(@PathVariable int id, @RequestBody User userDTO) {
-        LOGGER.info("start update user: ", userDTO);
+    public ResponseEntity<User> update(@PathVariable int id, @RequestBody User user) {
+        LOGGER.info("start update user: ", user);
         try {
-            User user = userService.update(id, userDTO);
+            // User user = userService.update(id, user);
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (DataAccessException e) {
             LOGGER.info(e.getMessage());
