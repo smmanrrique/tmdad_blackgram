@@ -1,0 +1,87 @@
+#side-nav{
+	position: fixed;
+	width: 250px;
+	height: 100%;
+	padding-top: 64px;
+	top: 0;
+	bottom: 0;
+	left: 0px;
+	overflow: auto;
+	background-color: black;
+    border-right: 1px solid black;
+	z-index: 1;
+}
+
+header{
+	width: 250px;
+	height: 64px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: black;
+	border-bottom: 1px solid black;
+	border-right: 1px solid black;
+}
+
+header #logo{
+    height: 57px;
+    width: 3cm;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	cursor: pointer;
+}
+
+.item{
+    padding: 15px 15px 15px 22px;
+    font-size: 26px;
+	cursor: pointer;
+	transition: all .2s linear;
+	display: flex;
+    justify-content: space-between;
+    color: #f2f2f2;
+}
+.nav-item > .item {
+	font-weight: bold;
+}
+.nav-tab > .item{
+	padding-left: 40px;
+}
+
+.item.selected {
+	color: hsl(180, 1%, 83%);
+}
+
+.item:hover{
+	background-color: #c5bfbf8d;
+}
+
+.nav-tab{
+	will-change: height;
+	overflow-y: hidden;
+	height: 100%;
+	max-height: 0;
+	transition: max-height .5s ease-in-out;
+}
+.item.expanded + .nav-tab {
+	max-height: 1000px;
+}
+
+.material-icons {
+    font-size: 26px;
+    color: #f2f2f2;
+}
+
+
+.item .material-icons{
+	transition: transform .2s linear;
+	z-index: -1;
+}
+
+.item.expanded .material-icons {
+	-webkit-transform: rotate(90deg);
+			transform: rotate(90deg);
+}
