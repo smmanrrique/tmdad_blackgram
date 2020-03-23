@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-
 @RestController
 @RequestMapping(value = "/sender/")
 public class RabbitMQWebController {
@@ -19,10 +18,10 @@ public class RabbitMQWebController {
     @Autowired
     RabbitMQSender rabbitMQSender;
 
-    @GetMapping(value = "/send")
-    public String sender(@RequestParam("sender") String sender,@RequestParam("receiver") String receiver) throws IOException, TimeoutException {
-        User emp=new User();
-        rabbitMQSender.send(sender, receiver);
+    @RequestMapping("/direct")
+    @ResponseBody
+    public String sender(@RequestParam("sender") String fromUser, @RequestParam("receiver") String toUser, @RequestParam("body") String body) throws IOException, TimeoutException {
+        rabbitMQSender.send(fromUser, toUser, body);
         System.out.printf("Sender");
         return "Message sent to the RabbitMQ JavaInUse Successfully";
     }

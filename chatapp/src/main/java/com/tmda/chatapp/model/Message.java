@@ -28,4 +28,8 @@ public class Message extends AbstractEntity {
     @ManyToMany()
     private List<Topic> topics = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "CustomMessage{" + "id=" + ", body='" + body + '\'' + '}';
+    }
 }

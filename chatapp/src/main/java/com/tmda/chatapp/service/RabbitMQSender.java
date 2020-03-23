@@ -1,6 +1,5 @@
 package com.tmda.chatapp.service;
 
-
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-
 @Service
 public class RabbitMQSender {
 
@@ -22,18 +20,19 @@ public class RabbitMQSender {
     @Autowired
     private AmqpTemplate rabbitTemplate;
     private Config config;
-    private String routingKey = config.getUrlConnection();
+
+    
 
 
     public void send(String sender, String receiver, String menssage) throws IOException, TimeoutException {
 
         try {
-            factory.setUri(config.getUrlConnection());
+            factory.setUri(config.getRoutingKey());
         } catch (Exception e) {
-            System.out.println(" [*] AQMP broker not found in " + config.getUrlConnection());
+            System.out.println(" [*] AQMP broker not found in " + config.getRoutingKey());
             System.exit(-1);
         }
-        System.out.println(" [*] AQMP broker found in " + config.getUrlConnection());
+        System.out.println(" [*] AQMP broker found in " + config.getRoutingKey());
 
         Connection connection = factory.newConnection();
         // Con un solo canal
@@ -45,7 +44,7 @@ public class RabbitMQSender {
         // Se crea tanto en el emisor como en el receptor, porque no
         // sabemos cuál se lanzará antes.
         // Indicamos que no sea durable ni exclusiva
-        channel.queueDeclare(config.getUrlConnection(), false, false, false, null);
+        channel.queueDeclare(config.getRoutingKey(), false, false, false, null);
 
         // En el modelo de mensajería de RabbitMQ los productores nunca mandan mensajes
         // directamente a colas, siempre los publican a un exchange (centralita) que
@@ -53,17 +52,14 @@ public class RabbitMQSender {
         // En este caso, el string vacío (primer parámetro) identifica el "default" o
         // "nameless" exchange: los mensajes se enrutan a la cola indicad por
         // routingKey (segundo parámetro) si existe.
-       // channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
-        channel.basicPublish("",
-                config.getUrlConnection(),
-                null,
-                menssage.getBytes());
+        // channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
+        channel.basicPublish("", config.getRoutingKey(), null, menssage.getBytes());
         System.out.println(" [x] Enviado '" + receiver + "'");
 
         channel.close();
         connection.close();
 
-        rabbitTemplate.convertAndSend( , "hola", company);
+        rabbitTemplate.convertAndSend("hola", "hola", menssage);
         System.out.println("Send msg = " + receiver);
 
     }
