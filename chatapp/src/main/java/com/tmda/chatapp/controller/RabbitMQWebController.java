@@ -13,20 +13,17 @@ import java.util.concurrent.TimeoutException;
 
 
 @RestController
-@RequestMapping(value = "/javainuse-rabbitmq/")
+@RequestMapping(value = "/sender/")
 public class RabbitMQWebController {
 
     @Autowired
     RabbitMQSender rabbitMQSender;
 
-    @GetMapping(value = "/producer")
-    public String producer(@RequestParam("empName") String empName,@RequestParam("empId") String empId) throws IOException, TimeoutException {
-
+    @GetMapping(value = "/send")
+    public String sender(@RequestParam("sender") String sender,@RequestParam("receiver") String receiver) throws IOException, TimeoutException {
         User emp=new User();
-
-        rabbitMQSender.send(emp);
-        System.out.printf("Prooof");
-
+        rabbitMQSender.send(sender, receiver);
+        System.out.printf("Sender");
         return "Message sent to the RabbitMQ JavaInUse Successfully";
     }
 

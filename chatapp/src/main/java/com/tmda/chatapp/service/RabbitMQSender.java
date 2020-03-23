@@ -4,10 +4,10 @@ package com.tmda.chatapp.service;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
+import com.tmda.chatapp.config.Config;
 import com.tmda.chatapp.model.User;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -21,26 +21,19 @@ public class RabbitMQSender {
 
     @Autowired
     private AmqpTemplate rabbitTemplate;
-
-    @Value("${spring.activemq.broker-url}")
-    private String amqpURL;
-
-    @Value("${spring.rabbitmq.queue}")
-    private String queue;
-
-    @Value("${spring.rabbitmq.exchange}")
-    private String exchange;
+    private Config config;
+    private String routingKey = config.getUrlConnection();
 
 
-    public void send(User company) throws IOException, TimeoutException {
+    public void send(String sender, String receiver, String menssage) throws IOException, TimeoutException {
 
         try {
-            factory.setUri(amqpURL);
+            factory.setUri(config.getUrlConnection());
         } catch (Exception e) {
-            System.out.println(" [*] AQMP broker not found in " + amqpURL);
+            System.out.println(" [*] AQMP broker not found in " + config.getUrlConnection());
             System.exit(-1);
         }
-        System.out.println(" [*] AQMP broker found in " + amqpURL);
+        System.out.println(" [*] AQMP broker found in " + config.getUrlConnection());
 
         Connection connection = factory.newConnection();
         // Con un solo canal
@@ -52,13 +45,7 @@ public class RabbitMQSender {
         // Se crea tanto en el emisor como en el receptor, porque no
         // sabemos cuál se lanzará antes.
         // Indicamos que no sea durable ni exclusiva
-        channel.queueDeclare(queue, false, false, false, null);
-
-        int messageNumber;
-        boolean end = false;
-
-        System.out.println("Escribe un número y pulsa <Enter> para enviarlo. El 0 para finalizar.");
-
+        channel.queueDeclare(config.getUrlConnection(), false, false, false, null);
 
         // En el modelo de mensajería de RabbitMQ los productores nunca mandan mensajes
         // directamente a colas, siempre los publican a un exchange (centralita) que
@@ -68,16 +55,16 @@ public class RabbitMQSender {
         // routingKey (segundo parámetro) si existe.
        // channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
         channel.basicPublish("",
-                queue,
+                config.getUrlConnection(),
                 null,
-                "company.getBytes()".getBytes());
-        System.out.println(" [x] Enviado '" + company + "'");
+                menssage.getBytes());
+        System.out.println(" [x] Enviado '" + receiver + "'");
 
         channel.close();
         connection.close();
 
-        //rabbitTemplate.convertAndSend("hola", "hola", company);
-        System.out.println("Send msg = " + company);
+        rabbitTemplate.convertAndSend( , "hola", company);
+        System.out.println("Send msg = " + receiver);
 
     }
 }

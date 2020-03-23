@@ -4,6 +4,6 @@
 
 export const environment = {
 	production: false,
-	backendUrl: 'https://dev.api.coffee.hecticus.com'
-	// backendUrl: 'http://localhost:8080'
+	// backendUrl: '#'
+	backendUrl: 'http://localhost:8080'
 };

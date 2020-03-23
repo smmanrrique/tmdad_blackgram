@@ -2,7 +2,6 @@ import { BaseModel } from './base-model';
 import { AuthUser } from './authUser';
 
 import { Contact } from './contact';
-import { Multimedia } from './multimedia';
 
 export class User extends BaseModel {
 	authUser: AuthUser;
@@ -10,7 +9,5 @@ export class User extends BaseModel {
 	lastName: string;
 	fullName: string;
 	description: string;
-	// contact: Contact = new Contact();
 	contact: Contact;
-	mediaPhoto: Multimedia;
 }

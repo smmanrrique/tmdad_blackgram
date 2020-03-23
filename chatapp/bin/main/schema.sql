@@ -70,7 +70,7 @@ CREATE TABLE public.users (
 	CONSTRAINT users_pkey PRIMARY KEY (id)
 );
 
--- public.contats definition
+-- public.conctats definition
 CREATE TABLE public.contacts (
 	id bigserial NOT NULL,
 	created timestamp NULL DEFAULT CURRENT_TIMESTAMP,
