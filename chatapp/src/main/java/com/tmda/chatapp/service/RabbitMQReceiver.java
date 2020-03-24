@@ -2,10 +2,9 @@ package com.tmda.chatapp.service;
 
 
 import com.rabbitmq.client.*;
-
-import org.springframework.amqp.core.*;
+import com.tmda.chatapp.config.Config;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -20,27 +19,17 @@ public class RabbitMQReceiver {
 
     @Autowired
     private AmqpTemplate rabbitTemplate;
+    ConnectionFactory factory;
+    private Config config;
 
-    @Value("${spring.activemq.broker-url}")
-    private String amqpURL;
+    public RabbitMQReceiver() throws NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
+        factory = new ConnectionFactory();
+        factory.setUri(config.getRoutingKey());
 
-    @Value("${spring.rabbitmq.queue}")
-    private String queue;
+    }
 
-    @Value("${spring.rabbitmq.exchange}")
-    private String exchange;
+    public void Receiver(String queue) throws  IOException, TimeoutException {
 
-    public void Receiver() throws  IOException, TimeoutException {
-        ConnectionFactory factory = new ConnectionFactory();
-        try {
-            factory.setUri(amqpURL);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
         Connection connection = factory.newConnection();
 
         // Con un solo canal
@@ -54,8 +43,6 @@ public class RabbitMQReceiver {
         // Indicamos que no sea durable ni exclusiva
         channel.queueDeclare(queue, false, false, false, null);
         System.out.println(" [*] Esperando mensajes. CTRL+C para salir");
-
-
 
         Consumer consumer = new DefaultConsumer(channel) {
             @Override

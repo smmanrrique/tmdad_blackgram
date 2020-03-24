@@ -4,7 +4,6 @@ import com.tmda.chatapp.service.RabbitMQReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -20,10 +19,8 @@ public class RabbitMQReceiverController {
 
     @GetMapping(value = "/rec")
     public String rec() throws IOException, TimeoutException {
-
-        rabbitMQReceiver.Receiver();
+        rabbitMQReceiver.Receiver("amarfil");
         System.out.println("ReceiveLogsDirect2 Received  ");
-
         return "Received Message  Successfully";
     }
 
