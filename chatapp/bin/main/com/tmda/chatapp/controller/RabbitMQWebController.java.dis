@@ -18,12 +18,12 @@ public class RabbitMQWebController {
     @Autowired
     RabbitMQSender rabbitMQSender;
 
-    @RequestMapping("/direct")
-    @ResponseBody
-    public String sender(@RequestParam("sender") String fromUser, @RequestParam("receiver") String toUser, @RequestParam("body") String body) throws IOException, TimeoutException {
-        rabbitMQSender.send(fromUser, toUser, body);
-        System.out.printf("Sender");
-        return "Message sent to the RabbitMQ JavaInUse Successfully";
-    }
+    // @RequestMapping("/direct")
+    // @ResponseBody
+    // public String sender(@RequestParam("sender") String fromUser, @RequestParam("receiver") String toUser, @RequestParam("body") String body) throws IOException, TimeoutException {
+    //     rabbitMQSender.send(fromUser, toUser, body);
+    //     System.out.printf("Sender");
+    //     return "Message sent to the RabbitMQ JavaInUse Successfully";
+    // }
 
 }
