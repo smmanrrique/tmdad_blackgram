@@ -1,10 +1,9 @@
 package com.tmda.chatapp.config;
 
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;;
 import org.springframework.amqp.core.*;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
-import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,37 +18,37 @@ public class Config {
     public static final String QUEUE_SPECIFIC_NAME = "appSpecificQueue";
     // public static final String ROUTING_KEY = "messages.key";
 
-    @Bean
+//    @Bean
     DirectExchange directExchange(String directName) {
         return new DirectExchange(directName);
     }
 
-    @Bean
+//    @Bean
     public TopicExchange topicExchange(String topicName) {
         return new TopicExchange(topicName);
     }
 
-    @Bean
+//    @Bean
     public Queue queueGeneric(String name) {
         return new Queue(name);
     }
 
-    @Bean
+//    @Bean
     public Queue queueSpecific(String name) {
         return new Queue(name);
     }
 
-    @Bean
+//    @Bean
     public Binding bindingGeneric(String name, String topicName) {
         return BindingBuilder.bind(queueGeneric(name)).to(topicExchange(topicName)).with(ROUTING_KEY);
     }
 
-    @Bean
+//    @Bean
     public Binding bindingSpecific(String name, String directName) {
         return BindingBuilder.bind(queueSpecific(name)).to(directExchange(directName)).with(ROUTING_KEY);
     }
 
-    @Bean
+//    @Bean
     public AmqpTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(jsonConverter());

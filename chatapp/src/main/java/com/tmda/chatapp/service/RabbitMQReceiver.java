@@ -19,19 +19,17 @@ public class RabbitMQReceiver {
 
     @Autowired
     private AmqpTemplate rabbitTemplate;
+    ConnectionFactory factory;
     private Config config;
 
+    public RabbitMQReceiver() throws NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
+        factory = new ConnectionFactory();
+        factory.setUri(config.getRoutingKey());
+
+    }
+
     public void Receiver(String queue) throws  IOException, TimeoutException {
-        ConnectionFactory factory = new ConnectionFactory();
-        try {
-            factory.setUri(config.getUrlConnection());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
+
         Connection connection = factory.newConnection();
 
         // Con un solo canal

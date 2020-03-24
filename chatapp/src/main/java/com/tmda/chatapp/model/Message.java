@@ -2,16 +2,15 @@ package com.tmda.chatapp.model;
 
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.*;
 
 @Entity
 @Data
 @Getter
 @Setter
-@NoArgsConstructor
+// @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "messages")
 public class Message extends AbstractEntity {
@@ -20,7 +19,7 @@ public class Message extends AbstractEntity {
     private User fromUser;
 
     @Column(columnDefinition = "text")
-    private String body;
+    @Setter private String body;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Multimedia multimedia = new Multimedia();
@@ -31,5 +30,9 @@ public class Message extends AbstractEntity {
     @Override
     public String toString() {
         return "CustomMessage{" + "id=" + ", body='" + body + '\'' + '}';
+    }
+
+    public Message(String bodyCont) {
+        body = bodyCont;
     }
 }
