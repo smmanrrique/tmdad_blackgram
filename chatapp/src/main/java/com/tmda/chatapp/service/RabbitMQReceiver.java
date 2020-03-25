@@ -23,8 +23,8 @@ public class RabbitMQReceiver {
     private Config config;
 
     public RabbitMQReceiver() throws NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
-        factory = new ConnectionFactory();
-        factory.setUri(config.getRoutingKey());
+//        factory = new ConnectionFactory();
+//        factory.setUri(config.getRoutingKey());
 
     }
 

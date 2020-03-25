@@ -16,11 +16,11 @@ public class RabbitMQReceiverController {
     @Autowired
     RabbitMQReceiver rabbitMQReceiver;
 
-    // @GetMapping(value = "/rec")
-    // public String rec() throws IOException, TimeoutException {
-    // rabbitMQReceiver.Receiver("amarfil");
-    // System.out.println("ReceiveLogsDirect2 Received ");
-    // return "Received Message Successfully";
-    // }
+     @GetMapping(value = "/rec")
+     public String rec() throws IOException, TimeoutException {
+     rabbitMQReceiver.Receiver("amarfil");
+     System.out.println("ReceiveLogsDirect2 Received ");
+     return "Received Message Successfully";
+     }
 
 }

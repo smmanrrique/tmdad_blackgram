@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @Getter
 @Setter
-// @NoArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "messages")
 public class Message extends AbstractEntity {
