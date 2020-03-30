@@ -1,7 +1,6 @@
 package com.tmda.chatapp.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -33,7 +32,7 @@ public class User extends AbstractEntity {
     @Column(nullable = false, length = 30)
     private String password;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthDay;
 
     @OneToMany(mappedBy = "contactName")

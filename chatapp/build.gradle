@@ -33,21 +33,21 @@ dependencies {
 //     testImplementation 'org.springframework.amqp:spring-rabbit-test'
 }
 
-sourceSets {
-    main {
-        proto {
-//            srcDir 'src/main/proto'
-            srcDir 'src/main'
-//            srcDir "$projectDir/build/generated"
-        }
-        java {
-//            srcDir 'src/main/java'
-//              srcDirs 'src/main/java', 'generated-sources/main/java'
-            srcDirs = ["src/main/java", "${protobuf.generatedFilesBaseDir}/main/java"]
-        }
-
-    }
-}
+//sourceSets {
+//    main {
+//        proto {
+////            srcDir 'src/main/proto'
+//            srcDir 'src/main'
+////            srcDir "$projectDir/build/generated"
+//        }
+//        java {
+////            srcDir 'src/main/java'
+////              srcDirs 'src/main/java', 'generated-sources/main/java'
+//            srcDirs = ["src/main/java", "${protobuf.generatedFilesBaseDir}/main/java"]
+//        }
+//
+//    }
+//}
 
 protobuf {
     // Configure the protoc executable
@@ -73,3 +73,14 @@ protobuf {
         }
     }
 }
+
+sourceSets {
+    main {
+        java {
+            srcDirs 'build/generated/source/proto/main/grpc'
+            srcDirs 'build/generated/source/proto/main/java'
+        }
+    }
+}
+
+

@@ -35,9 +35,6 @@ public class MyServiceImpl extends MyServiceGrpc.MyServiceImplBase {
     private String serverName;
 
     public MyServiceImpl() {
-//        if (name == null) {
-//            serverName = determineHostname();
-//        }
         serverName = "localhost";
     }
 
