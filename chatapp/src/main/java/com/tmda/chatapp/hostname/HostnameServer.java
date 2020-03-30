@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
  * <p>This server is intended to be a general purpose "dummy" server.
  */
 public final class HostnameServer {
-//  public static void main(String[] args) throws IOException, InterruptedException {
+  public static void main(String[] args) throws IOException, InterruptedException {
     int port = 50051;
     String hostname = null;
     if (args.length >= 1) {
@@ -50,7 +50,7 @@ public final class HostnameServer {
     }
     HealthStatusManager health = new HealthStatusManager();
     final Server server = ServerBuilder.forPort(port)
-        .addService(new HostnameGreeter(hostname))
+        .addService(new MyServiceImpl())
         .addService(ProtoReflectionService.newInstance())
         .addService(health.getHealthService())
         .build()
@@ -81,5 +81,5 @@ public final class HostnameServer {
     // hard-coding SERVING is appropriate.
     health.setStatus("", ServingStatus.SERVING);
     server.awaitTermination();
-//  }
+  }
 }

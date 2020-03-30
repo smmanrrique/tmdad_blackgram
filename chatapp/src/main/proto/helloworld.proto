@@ -17,7 +17,7 @@ service MyService {
 
 // The request message containing the user's name.
 message HelloRequest {
-    string name = 1;
+    Message name = 1;
 }
 
 // The response message containing the greetings
