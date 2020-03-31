@@ -20,6 +20,7 @@ dependencies {
 
     compile 'io.github.lognet:grpc-spring-boot-starter:3.5.2'
 
+    compile 'org.springframework.amqp:spring-rabbit:2.2.5.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'org.postgresql:postgresql'
@@ -33,26 +34,17 @@ dependencies {
 //     testImplementation 'org.springframework.amqp:spring-rabbit-test'
 }
 
-//sourceSets {
-//    main {
-//        proto {
-////            srcDir 'src/main/proto'
-//            srcDir 'src/main'
-////            srcDir "$projectDir/build/generated"
-//        }
-//        java {
-////            srcDir 'src/main/java'
-////              srcDirs 'src/main/java', 'generated-sources/main/java'
-//            srcDirs = ["src/main/java", "${protobuf.generatedFilesBaseDir}/main/java"]
-//        }
-//
-//    }
-//}
+sourceSets {
+    main {
+        java {
+            srcDirs 'build/generated/source/proto/main/grpc'
+            srcDirs 'build/generated/source/proto/main/java'
+        }
+    }
+}
 
 protobuf {
-    // Configure the protoc executable
     protoc {
-        // Download from repositories
         artifact = 'com.google.protobuf:protoc:3.11.4'
     }
 
@@ -74,13 +66,6 @@ protobuf {
     }
 }
 
-sourceSets {
-    main {
-        java {
-            srcDirs 'build/generated/source/proto/main/grpc'
-            srcDirs 'build/generated/source/proto/main/java'
-        }
-    }
-}
+
 
 
