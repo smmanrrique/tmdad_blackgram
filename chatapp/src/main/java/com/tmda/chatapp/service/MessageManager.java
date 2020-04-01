@@ -91,16 +91,16 @@ public class MessageManager {
 //
 //    }
 //
-//    /**
-//     * Send messages based on que and rout
-//     *
-//     * @param routingKey
-//     * @param object
-//     */
-//    public void sendQueueMessage(String routingKey, Message object) {
-//
-//        rabbitTemplate.convertAndSend(routingKey, object, new CorrelationData(object.getTag()));
-//    }
+    /**
+     * Send messages based on que and rout
+     *
+     * @param routingKey
+     * @param object
+     */
+    public void sendQueueMessage(String routingKey, Message object) {
+
+//        rabbitTemplate.convertAndSend(routingKey, object, new CorrelationData(object..getTag()));
+    }
 
     /**
      * sent according to exhange and rout

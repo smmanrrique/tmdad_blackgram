@@ -8,9 +8,6 @@ import java.util.List;
 
 @Entity
 @Data
-@Getter
-@Setter
-@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "messages")
 public class Message extends AbstractEntity {
@@ -19,7 +16,7 @@ public class Message extends AbstractEntity {
     private User fromUser;
 
     @Column(columnDefinition = "text")
-    @Setter private String body;
+    private String body;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Multimedia multimedia = new Multimedia();
@@ -32,7 +29,39 @@ public class Message extends AbstractEntity {
         return "CustomMessage{" + "id=" + ", body='" + body + '\'' + '}';
     }
 
-    public Message(String bodyCont) {
-        body = bodyCont;
+    public Message() {
+
+    }
+
+    public User getFromUser() {
+        return fromUser;
+    }
+
+    public void setFromUser(User fromUser) {
+        this.fromUser = fromUser;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public Multimedia getMultimedia() {
+        return multimedia;
+    }
+
+    public void setMultimedia(Multimedia multimedia) {
+        this.multimedia = multimedia;
+    }
+
+    public List<Topic> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(List<Topic> topics) {
+        this.topics = topics;
     }
 }

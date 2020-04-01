@@ -1,10 +1,16 @@
 package com.tmda.chatapp.service;
 
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import com.rabbitmq.client.Channel;
 import com.tmda.chatapp.config.Config;
 import com.tmda.chatapp.model.Message;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.Connection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -14,57 +20,61 @@ import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeoutException;
 
 @Service
+@PropertySource("classpath:application.properties")
 public class RabbitMQSender {
+    @Value("${spring.activemq.broker-url}")
+    private String RABBITMQ_URL;
+
+    @Value("${spring.rabbitmq.host}")
+    public static String RABBITMQ_HOST;
+
+    @Value("${spring.rabbitmq.username}")
+    public static String RABBITMQ_USERNAME;
+
+    @Value("${spring.rabbitmq.password}")
+    public static String RABBITMQ_PASSWORD;
+
+    private static final Logger logger = LoggerFactory.getLogger(RabbitMQSender.class.getName());
 
     @Autowired
     private AmqpTemplate rabbitTemplate;
-    private ConnectionFactory factory;
     private Config config;
 
 
-    public RabbitMQSender() throws NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
-//        factory = new ConnectionFactory();
-//        factory.setUri(config.getRoutingKey());
+    public String Send(String exchange, Message message) throws IOException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException, TimeoutException {
+
+        System.out.println("RABBITMQ_URL: "+RABBITMQ_USERNAME);
+
+        logger.info("Call connection factory ///////////////////////");
+
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+//        connectionFactory.getRabbitConnectionFactory().setUri("amqp://bzwbihsx:mo3CwoHiRL6V-ZBmGqrUX0S-_2CnHVcR@hawk.rmq.cloudamqp.com/bzwbihsx");
+        connectionFactory.getRabbitConnectionFactory().setUri(RABBITMQ_URL);
+
+        Connection connection = connectionFactory.createConnection();
+
+        Channel channel = connection.createChannel(false);
+
+        String receiver = "receiver";
+        channel.queueDeclare(receiver, true, false, false, null);
 
 
-    }
+        channel.basicPublish("sender.receiver", "receiver", null, message.getBody().getBytes());
+        System.out.println(" [x] Enviado '" + message + "'   1 ");
+//        rabbitTemplate.convertAndSend("shamuel", "shamuel", message);
+//        rabbitTemplate.convertAndSend(exchange, routingkey, CustomMessage);
+        logger.info("Send msg to consumer= ");
+        channel.basicPublish("sender.receiver", "receiver", null, message.getBody().getBytes());
+        System.out.println(" [x] Enviado '" + message + "'    2");
 
-    public void send(String sender, String receiver, String body) throws IOException, TimeoutException {
+        channel.close();
+        connection.close();
 
-        Message message =new Message(body);
+        return "Hello World" + message.getFromUser().getUserName();
 
-        config.rabbitTemplate(this.factory);
-
-        rabbitTemplate.convertAndSend(receiver, config.getRoutingKey(), message);
-
-
-//        Connection connection = factory.newConnection();
-        // Con un solo canal
-//        Channel channel = connection.createChannel();
-
-        // Declaramos una cola en el broker a través del canal
-        // recién creado llamada QUEUE_NAME (operación
-        // idempotente: solo se creará si no existe ya)
-        // Se crea tanto en el emisor como en el receptor, porque no
-        // sabemos cuál se lanzará antes.
-        // Indicamos que no sea durable ni exclusiva
-//        channel.queueDeclare(config.getRoutingKey(), false, false, false, null);
-//
-//        // En el modelo de mensajería de RabbitMQ los productores nunca mandan mensajes
-//        // directamente a colas, siempre los publican a un exchange (centralita) que
-//        // los enruta a colas (por criterios definidos según el tipo de exchange).
-//        // En este caso, el string vacío (primer parámetro) identifica el "default" o
-//        // "nameless" exchange: los mensajes se enrutan a la cola indicad por
-//        // routingKey (segundo parámetro) si existe.
-//        // channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
-//        channel.basicPublish("", config.getRoutingKey(), null, menssage.getBytes());
-//        System.out.println(" [x] Enviado '" + receiver + "'");
-//
-//        channel.close();
-//        connection.close();
-//
-//        rabbitTemplate.convertAndSend("hola", "hola", menssage);
-//        System.out.println("Send msg = " + receiver);
+//        DirectExchange exchangeName = config.directExchange(exchange);
+//        Queue queue = config.queueSpecific(queueName);
+//        rabbitTemplate.convertAndSend(exchangeName, , message);
 
     }
 }

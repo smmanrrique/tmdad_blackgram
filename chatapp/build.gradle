@@ -1,6 +1,6 @@
 plugins {
     id "com.google.protobuf" version "0.8.12"
-    id 'org.springframework.boot' version '2.2.4.RELEASE'
+    id 'org.springframework.boot' version '2.2.6.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
 
@@ -28,17 +28,17 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
 
-//     testImplementation('org.springframework.boot:spring-boot-starter-test') {
-//         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-//     }
-//     testImplementation 'org.springframework.amqp:spring-rabbit-test'
+     testImplementation('org.springframework.boot:spring-boot-starter-test') {
+         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+     }
+     testImplementation 'org.springframework.amqp:spring-rabbit-test'
 }
 
 sourceSets {
     main {
         java {
-            srcDirs 'build/generated/source/proto/main/grpc'
-            srcDirs 'build/generated/source/proto/main/java'
+            srcDirs 'build/generated/main'
+            srcDirs 'build/generated/sources'
         }
     }
 }
