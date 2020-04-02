@@ -4,6 +4,7 @@ package com.tmda.chatapp;
 import com.tmda.chatapp.config.Config;
 import com.tmda.chatapp.model.Message;
 import com.tmda.chatapp.model.User;
+import com.tmda.chatapp.service.RabbitMQReceiver;
 import com.tmda.chatapp.service.RabbitMQSender;
 import org.junit.Test;
 
@@ -38,16 +39,13 @@ public class JUnitSendTest {
     }
 
     @Test
-    public void Conn() throws IOException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
-        Config config = new Config();
-        config.Proof();
-//        CachingConnectionFactory factory = config.rabbitConnectionFactory();
-//
-//        System.out.println("CAll SENDER");
-//        Connection connection = factory.createConnection();
-//
-//
-//        System.out.println(" [x] Enviado '" + "message.getBody().getBytes()" + "'   1 ");
+    public void ReceiverTest() throws IOException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException, TimeoutException {
+        String receiver = "receiver";
+
+        RabbitMQReceiver rs =  new RabbitMQReceiver();
+        System.out.println("Call Receiver");
+        String result = rs.Receiver(receiver);
+        assertEquals(result, "Receive message: ");
 
     }
 }

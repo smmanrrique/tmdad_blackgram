@@ -18,7 +18,7 @@ public class RabbitMQReceiverController {
 
      @GetMapping(value = "/rec")
      public String rec() throws IOException, TimeoutException {
-     rabbitMQReceiver.Receiver("amarfil");
+//     rabbitMQReceiver.Receiver("amarfil");
      System.out.println("ReceiveLogsDirect2 Received ");
      return "Received Message Successfully";
      }

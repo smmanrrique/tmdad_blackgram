@@ -3,7 +3,10 @@ package com.tmda.chatapp.service;
 
 import com.rabbitmq.client.*;
 import com.tmda.chatapp.config.Config;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,27 +25,18 @@ public class RabbitMQReceiver {
     ConnectionFactory factory;
     private Config config;
 
-    public RabbitMQReceiver() throws NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
-//        factory = new ConnectionFactory();
-//        factory.setUri(config.getRoutingKey());
+    private static final Logger logger = LoggerFactory.getLogger(RabbitMQReceiver.class.getName());
 
-    }
+    public String Receiver(String queueName) throws IOException, TimeoutException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
 
-    public void Receiver(String queue) throws  IOException, TimeoutException {
+        logger.info("Call connection factory into Receiver Function");
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+        connectionFactory.getRabbitConnectionFactory().setUri("amqp://bzwbihsx:mo3CwoHiRL6V-ZBmGqrUX0S-_2CnHVcR@hawk.rmq.cloudamqp.com/bzwbihsx");
+        org.springframework.amqp.rabbit.connection.Connection connection = connectionFactory.createConnection();
 
-        Connection connection = factory.newConnection();
+        Channel channel = connection.createChannel(false);
 
-        // Con un solo canal
-        Channel channel = connection.createChannel();
-
-        // Declaramos una cola en el broker a través del canal
-        // recién creado llamada QUEUE_NAME (operación
-        // idempotente: solo se creará si no existe ya)
-        // Se crea tanto en el emisor como en el receptor, porque no
-        // sabemos cuál se lanzará antes
-        // Indicamos que no sea durable ni exclusiva
-        channel.queueDeclare(queue, false, false, false, null);
-        System.out.println(" [*] Esperando mensajes. CTRL+C para salir");
+        channel.queueDeclare(queueName, true, false, false, null);
 
         Consumer consumer = new DefaultConsumer(channel) {
             @Override
@@ -52,7 +46,8 @@ public class RabbitMQReceiver {
             }
         };
 
-        channel.basicConsume(queue, true, consumer);
+        channel.basicConsume(queueName, true, consumer);
+        return "Receive message: ";
 
     }
 
