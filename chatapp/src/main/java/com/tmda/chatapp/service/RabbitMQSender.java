@@ -1,14 +1,13 @@
 package com.tmda.chatapp.service;
 
 import com.rabbitmq.client.Channel;
-import com.tmda.chatapp.config.Config;
+import com.tmda.chatapp.config.RabbitMQConfig;
 import com.tmda.chatapp.model.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.Connection;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -22,9 +21,9 @@ public class RabbitMQSender {
 
     private static final Logger logger = LoggerFactory.getLogger(RabbitMQSender.class.getName());
 
-    @Autowired
+//    @Autowired
     private AmqpTemplate rabbitTemplate;
-    private Config config;
+//    private Config config;
 
 
     public String Send(String exchange, String queueName, Message message)
@@ -50,4 +49,29 @@ public class RabbitMQSender {
 
         return "Send message: " + message.getFromUser().getUserName();
     }
+
+    public String Send2(String exchange, String queueName, Message message)
+            throws IOException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException, TimeoutException {
+
+
+        logger.info("++++++++++++Call connection factory into Send Function");
+        CachingConnectionFactory ca = new RabbitMQConfig().rabbitConnectionFactory();
+
+//        CachingConnectionFactory connectionFactory = config.rabbitConnectionFactory();
+//        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+//        connectionFactory.getRabbitConnectionFactory().setUri("amqp://bzwbihsx:mo3CwoHiRL6V-ZBmGqrUX0S-_2CnHVcR@hawk.rmq.cloudamqp.com/bzwbihsx");
+//
+//
+//        System.out.println("11111111111111111111");
+//        AmqpTemplate rabbitTemplate = new RabbitMQConfig().rabbitTemplate(connectionFactory);
+//        System.out.println("22222222222222222222");
+//
+//        rabbitTemplate.convertAndSend(exchange, queueName, message);
+//        System.out.println("product object has been sent successfully to Queue");
+
+        return "Send message: " + message.getFromUser().getUserName();
+    }
+
+
+
 }

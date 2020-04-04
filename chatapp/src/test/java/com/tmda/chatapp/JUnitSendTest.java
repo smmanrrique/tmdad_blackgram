@@ -1,7 +1,6 @@
 package com.tmda.chatapp;
 
 
-import com.tmda.chatapp.config.Config;
 import com.tmda.chatapp.model.Message;
 import com.tmda.chatapp.model.User;
 import com.tmda.chatapp.service.RabbitMQReceiver;
@@ -18,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JUnitSendTest {
 
-    private Config config;
+//    private Config config;
 
     @Test
     public void SendTest() throws IOException, TimeoutException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
@@ -48,4 +47,26 @@ public class JUnitSendTest {
         assertEquals(result, "Receive message: ");
 
     }
+
+    @Test
+    public void Send2Test() throws IOException, TimeoutException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
+        String exchange = "sender.receiver";
+        String receiver = "receiver";
+        Message message = new Message();
+        User user = new User();
+
+        user.setUserName("shamuel");
+        message.setBody("22222222222");
+        message.setFromUser(user);
+
+        RabbitMQSender rs =  new RabbitMQSender();
+        System.out.println("CAll SENDER");
+        String result = rs.Send2(exchange, receiver, message);
+        assertEquals(result, "Send message: "+user.getUserName() );
+
+    }
+
+
+
+
 }

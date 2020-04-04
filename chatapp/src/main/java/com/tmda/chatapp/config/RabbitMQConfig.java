@@ -1,14 +1,12 @@
 package com.tmda.chatapp.config;
 
-import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,7 +15,8 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
 @Configuration
-public class Config {
+@EnableAutoConfiguration
+public class RabbitMQConfig {
 
     @Value("${spring.activemq.broker-url}")
     private String RABBITMQ_URL;
@@ -31,15 +30,19 @@ public class Config {
     @Value("${spring.rabbitmq.password}")
     public  String RABBITMQ_PASSWORD;
 
+    @Value("${spring.rabbitmq.custom.broker-url}")
+    public  String aa;
 
     public void Proof(){
-        System.out.println(RABBITMQ_HOST+"  "+ this.RABBITMQ_USERNAME+"  "+ RABBITMQ_PASSWORD+"  "+RABBITMQ_URL);
+        System.out.println(RABBITMQ_HOST+"  "+ this.RABBITMQ_USERNAME+"  "+ aa+"  "+RABBITMQ_URL);
 
     }
 
-//    @Bean
+    @Bean
     public CachingConnectionFactory rabbitConnectionFactory() throws NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
-//        System.out.println(RABBITMQ_HOST+"  "+ this.RABBITMQ_USERNAME+"  "+ RABBITMQ_PASSWORD+"  "+RABBITMQ_URL);
+        System.out.println("-----------------------------------------------------------");
+        System.out.println(RABBITMQ_HOST+"  "+ this.RABBITMQ_USERNAME+"  "+ RABBITMQ_PASSWORD+"  "+RABBITMQ_URL);
+        System.out.println("-----------------------------------------------------------");
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
 //        connectionFactory.getRabbitConnectionFactory().setUri(RABBITMQ_URL);
         connectionFactory.getRabbitConnectionFactory().setUri("amqp://bzwbihsx:mo3CwoHiRL6V-ZBmGqrUX0S-_2CnHVcR@hawk.rmq.cloudamqp.com/bzwbihsx");
@@ -68,14 +71,19 @@ public class Config {
     }
 
 //    @Bean
-//    public Binding bindingGeneric(String name, String topicName) {
-//        return BindingBuilder.bind(queueGeneric(name)).to(topicExchange(topicName)).with(RABBIT_URL);
-//    }
-//
-////    @Bean
-//    public Binding bindingSpecific(String name, String directName) {
-//        return BindingBuilder.bind(queueSpecific(name)).to(directExchange(directName)).with(RABBIT_URL);
-//    }
+    public Binding bindingGeneric(String name, String topicName) {
+        return BindingBuilder.bind(queueGeneric(name)).to(topicExchange(topicName)).with(RABBITMQ_URL);
+    }
+
+//    @Bean
+    public Binding bindingSpecific(String name, String directName) {
+        return BindingBuilder.bind(queueSpecific(name)).to(directExchange(directName)).with(RABBITMQ_URL);
+    }
+
+    @Bean
+    public Jackson2JsonMessageConverter jsonConverter() {
+        return new Jackson2JsonMessageConverter();
+    }
 
 //    @Bean
     public AmqpTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
@@ -84,13 +92,6 @@ public class Config {
         return rabbitTemplate;
     }
 
-    @Bean
-    public Jackson2JsonMessageConverter jsonConverter() {
-        return new Jackson2JsonMessageConverter();
-    }
 
-//    public String getRoutingKey() {
-//        return RABBIT_URL;
-//    }
 
 }

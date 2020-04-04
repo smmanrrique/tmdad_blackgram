@@ -1,8 +1,10 @@
 package com.tmda.chatapp.model;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +12,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "messages")
-public class Message extends AbstractEntity {
+public class Message extends AbstractEntity implements Serializable {
 
     @ManyToOne(cascade = CascadeType.ALL)
     private User fromUser;
@@ -23,11 +25,6 @@ public class Message extends AbstractEntity {
 
     @ManyToMany()
     private List<Topic> topics = new ArrayList<>();
-
-    @Override
-    public String toString() {
-        return "CustomMessage{" + "id=" + ", body='" + body + '\'' + '}';
-    }
 
     public Message() {
 
@@ -63,5 +60,15 @@ public class Message extends AbstractEntity {
 
     public void setTopics(List<Topic> topics) {
         this.topics = topics;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "fromUser=" + fromUser +
+                ", body='" + body + '\'' +
+                ", multimedia=" + multimedia +
+                ", topics=" + topics +
+                '}';
     }
 }
