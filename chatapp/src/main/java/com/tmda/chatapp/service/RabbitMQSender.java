@@ -27,10 +27,11 @@ public class RabbitMQSender {
     private Config config;
 
 
-    public String Send(String exchange, String routingkey, Message message)
+    public String Send(String exchange, String queueName, Message message)
             throws IOException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException, TimeoutException {
 
         logger.info("Call connection factory into Send Function");
+
 //        CachingConnectionFactory connectionFactory = config.rabbitConnectionFactory();
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
         connectionFactory.getRabbitConnectionFactory().setUri("amqp://bzwbihsx:mo3CwoHiRL6V-ZBmGqrUX0S-_2CnHVcR@hawk.rmq.cloudamqp.com/bzwbihsx");
@@ -38,11 +39,10 @@ public class RabbitMQSender {
 
         Channel channel = connection.createChannel(false);
 
-        String queueName = routingkey;
         channel.queueDeclare(queueName, true, false, false, null);
 
         logger.info("Publish message");
-        channel.basicPublish(exchange, routingkey, null, message.getBody().getBytes());
+        channel.basicPublish(exchange, queueName, null, message.getBody().getBytes());
         System.out.println(" [x] Enviado '" + message + "'    2");
 
         channel.close();

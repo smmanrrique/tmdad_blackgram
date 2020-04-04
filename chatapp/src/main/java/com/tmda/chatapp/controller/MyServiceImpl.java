@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.tmda.chatapp.hostname;
+package com.tmda.chatapp.controller;
 
 import com.tmda.chatapp.helloworld.HelloReply;
 import com.tmda.chatapp.helloworld.HelloRequest;

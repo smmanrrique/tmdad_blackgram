@@ -31,10 +31,6 @@ public class Config {
     @Value("${spring.rabbitmq.password}")
     public  String RABBITMQ_PASSWORD;
 
-//    @Value("${spring.activemq.broker-url}")
-//    public static void setRabbitmqUrl(String rabbitmqUrl) {
-//        RABBITMQ_URL = rabbitmqUrl;
-//    }
 
     public void Proof(){
         System.out.println(RABBITMQ_HOST+"  "+ this.RABBITMQ_USERNAME+"  "+ RABBITMQ_PASSWORD+"  "+RABBITMQ_URL);
