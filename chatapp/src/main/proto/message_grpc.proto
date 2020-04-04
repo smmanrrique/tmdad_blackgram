@@ -2,8 +2,6 @@ syntax = "proto3";
 
 package com.tmda.chatapp.message;
 
-//option java_package = "com.tmda.chatapp.message";
-
 option java_multiple_files = true;
 
 message Topic{
@@ -23,6 +21,11 @@ message MessageResponse {
     string userMessage=1;
 }
 
-service UserService {
-    rpc CreateUser(MessageRequest) returns (MessageResponse) { }
+
+
+service MessageService {
+
+    rpc SendMessage(MessageRequest) returns (MessageResponse) { }
+
+    rpc ReceiverMessage(MessageResponse) returns (MessageResponse) { }
 }

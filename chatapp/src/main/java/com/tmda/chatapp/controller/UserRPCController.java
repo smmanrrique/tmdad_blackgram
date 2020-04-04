@@ -1,4 +1,4 @@
-package com.tmda.chatapp.grpcServer;
+package com.tmda.chatapp.controller;
 
 import com.tmda.chatapp.user.UserRequest;
 import com.tmda.chatapp.user.UserResponse;

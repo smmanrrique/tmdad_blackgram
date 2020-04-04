@@ -1,8 +1,6 @@
 package com.tmda.chatapp.grpcCliente;
 
 import com.tmda.chatapp.user.UserServiceGrpc;
-import com.tmda.chatapp.user.*;
-
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import org.springframework.stereotype.Service;
@@ -16,7 +14,7 @@ public class UserRPCCliente {
                 .build();
 
         UserServiceGrpc.UserServiceBlockingStub stub = UserServiceGrpc.newBlockingStub(channel);
-        UserResponse userResponse = stub.createUser(UserRequest.newBuilder().setUserName(name).build());
+        com.tmda.chatapp.user.UserResponse userResponse = stub.createUser(com.tmda.chatapp.user.UserRequest.newBuilder().setUserName(name).build());
 //        channel.shutdown();
         return userResponse.getUserMessage();
     }
