@@ -6,16 +6,16 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 import java.net.URISyntaxException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
 @Configuration
-@EnableAutoConfiguration
+@PropertySource("classpath:application.properties")
 public class RabbitMQConfig {
 
     @Value("${spring.activemq.broker-url}")
@@ -33,9 +33,10 @@ public class RabbitMQConfig {
     @Value("${spring.rabbitmq.custom.broker-url}")
     public  String aa;
 
-    public void Proof(){
+    public String Proof(){
+        System.out.println("-----------------------------------------------------------");
         System.out.println(RABBITMQ_HOST+"  "+ this.RABBITMQ_USERNAME+"  "+ aa+"  "+RABBITMQ_URL);
-
+        return RABBITMQ_HOST+"  "+ this.RABBITMQ_USERNAME+"  "+ aa+"  "+RABBITMQ_URL;
     }
 
     @Bean
@@ -92,6 +93,11 @@ public class RabbitMQConfig {
         return rabbitTemplate;
     }
 
+    public String getRoutingKey() {
+        System.out.println(RABBITMQ_URL);
+        System.out.println("Config.getRoutingKey --------------------------------------------------------");
+        return RABBITMQ_URL;
+    }
 
 
 }

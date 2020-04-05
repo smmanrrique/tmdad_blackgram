@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.Connection;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -19,11 +21,16 @@ import java.util.concurrent.TimeoutException;
 @Service
 public class RabbitMQSender {
 
+    @Autowired
+    Environment environment;
+
+    @Autowired
+    private RabbitMQConfig config;
+
     private static final Logger logger = LoggerFactory.getLogger(RabbitMQSender.class.getName());
 
 //    @Autowired
     private AmqpTemplate rabbitTemplate;
-//    private Config config;
 
 
     public String Send(String exchange, String queueName, Message message)
@@ -50,12 +57,14 @@ public class RabbitMQSender {
         return "Send message: " + message.getFromUser().getUserName();
     }
 
-    public String Send2(String exchange, String queueName, Message message)
-            throws IOException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException, TimeoutException {
+    public String Send2(String exchange, String queueName, Message message){
 
+        System.out.println("Yml: " + environment.getProperty("spring.rabbitmq.host"));
 
         logger.info("++++++++++++Call connection factory into Send Function");
-        CachingConnectionFactory ca = new RabbitMQConfig().rabbitConnectionFactory();
+//        CachingConnectionFactory ca = new RabbitMQConfig().rabbitConnectionFactory();
+//        config.Proof();
+        System.out.println("");
 
 //        CachingConnectionFactory connectionFactory = config.rabbitConnectionFactory();
 //        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
