@@ -1,5 +1,6 @@
 package com.tmda.chatapp.controller;
 
+import com.rabbitmq.client.Channel;
 import com.tmda.chatapp.model.User;
 import com.tmda.chatapp.service.UserService;
 import com.tmda.chatapp.user.UserRequest;
@@ -9,7 +10,13 @@ import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 
 @GRpcService
 public class UserRPCController extends UserServiceGrpc.UserServiceImplBase {
@@ -29,24 +36,47 @@ public class UserRPCController extends UserServiceGrpc.UserServiceImplBase {
     public void createUser(UserRequest request, StreamObserver<UserResponse> responseObserver) {
         logger.info("server received{}", request);
 
+        String userName= request.getUserName();
+
         User user = new User();
 //        use
-        user.setUserName(request.getUserName());
+        user.setUserName(userName);
 //        user.setBirthDay(request.getBirthDay());
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         if(request.getPassword()!= null) {
             user.setPassword(request.getPassword());
         }else {
-            user.setPassword(request.getUserName());
+            user.setPassword(userName);
         }
 
 //       Created user
         userService.create(user);
 
 //      Cread queue user
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+        try {
+            connectionFactory.getRabbitConnectionFactory().setUri("amqp://bzwbihsx:mo3CwoHiRL6V-ZBmGqrUX0S-_2CnHVcR@hawk.rmq.cloudamqp.com/bzwbihsx");
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
 
+        org.springframework.amqp.rabbit.connection.Connection connection = connectionFactory.createConnection();
 
+        Channel channel = connection.createChannel(false);
+
+        try {
+            channel.queueDeclare(userName, true, false, false, null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        connectionFactory.setCloseTimeout(0);
+        connection.close();
 
         UserResponse reply = UserResponse.newBuilder()
                 .setUserMessage("Created new User " + request.getUserName() )
@@ -54,4 +84,6 @@ public class UserRPCController extends UserServiceGrpc.UserServiceImplBase {
         responseObserver.onNext(reply);
         responseObserver.onCompleted();
     }
+
+
 }
