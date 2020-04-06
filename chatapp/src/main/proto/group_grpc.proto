@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package com.tmda.chatapp.group;
+
+//option java_package = "com.tmda.chatapp.user";
+option java_multiple_files = true;
+
+import "user_grpc.proto";
+
+message Group {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    repeated string user = 4;
+}
+
+message GroupMessage {
+    string groupMessage=1;
+}
+
+service GroupService {
+    rpc CreateUser(Group) returns (GroupMessage) { }
+}

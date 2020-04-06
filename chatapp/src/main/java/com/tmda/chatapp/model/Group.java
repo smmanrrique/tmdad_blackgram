@@ -9,12 +9,8 @@ import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Entity
 @Data
-@Getter
-@Setter
-@NoArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 @Table(name="groups")
 public class Group extends AbstractEntity {
