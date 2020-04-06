@@ -15,12 +15,9 @@ import java.util.List;
 public class UserService implements InterfaceUserService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
-    private final UserRepository userRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private UserRepository userRepository;
 
     @Override
     public User create(User user) {

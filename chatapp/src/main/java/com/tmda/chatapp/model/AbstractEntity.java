@@ -18,7 +18,8 @@ public abstract class AbstractEntity implements Serializable {
     @Id
     @Getter
     @Setter
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
 //    @Temporal(TemporalType.TIMESTAMP)

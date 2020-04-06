@@ -51,10 +51,10 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<User> create(@RequestBody User user) {
-        LOGGER.info("start creating user: ", user);
+    public ResponseEntity<User> create(@RequestBody User w) {
+        LOGGER.info("start creating user: ", w);
         try {
-            // User user = userService.create(user);
+             User user = userService.create(w);
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         } catch (DataAccessException e) {
             LOGGER.info(e.getMessage());
