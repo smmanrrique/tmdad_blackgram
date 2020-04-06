@@ -30,14 +30,6 @@ public class RabbitMQConfig {
     @Value("${spring.rabbitmq.password}")
     public  String RABBITMQ_PASSWORD;
 
-    @Value("${spring.rabbitmq.custom.broker-url}")
-    public  String aa;
-
-    public String Proof(){
-        System.out.println("-----------------------------------------------------------");
-        System.out.println(RABBITMQ_HOST+"  "+ this.RABBITMQ_USERNAME+"  "+ aa+"  "+RABBITMQ_URL);
-        return RABBITMQ_HOST+"  "+ this.RABBITMQ_USERNAME+"  "+ aa+"  "+RABBITMQ_URL;
-    }
 
     @Bean
     public CachingConnectionFactory rabbitConnectionFactory() throws NoSuchAlgorithmException, KeyManagementException, URISyntaxException {

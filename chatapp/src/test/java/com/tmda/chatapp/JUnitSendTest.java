@@ -17,7 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JUnitSendTest {
 
-
+//    @Autowired
+//    RabbitMQConfig config;
 
     @Test
     public void SendTest() throws IOException, TimeoutException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
@@ -32,7 +33,7 @@ public class JUnitSendTest {
 
         RabbitMQSender rs =  new RabbitMQSender();
         System.out.println("CAll SENDER");
-        String result = rs.Send(exchange, receiver, message);
+        String result = rs.Send2(exchange, receiver, message);
         assertEquals(result, "Send message: "+user.getUserName() );
 
     }
@@ -63,9 +64,7 @@ public class JUnitSendTest {
         System.out.println("CAll SENDER");
         String result = rs.Send2(exchange, receiver, message);
         assertEquals(result, "Send message: "+user.getUserName() );
-
     }
-
 
 
 

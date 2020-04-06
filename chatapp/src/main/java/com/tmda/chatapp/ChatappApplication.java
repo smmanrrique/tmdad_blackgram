@@ -6,6 +6,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
+//@EnableConfigurationProperties(RabbitMQConfig.class)
 public class ChatappApplication {
 
     public static void main(String[] args) throws Exception {

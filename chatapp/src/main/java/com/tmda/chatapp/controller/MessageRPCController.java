@@ -24,7 +24,7 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
     private static final Logger logger = LoggerFactory.getLogger(MessageRPCController.class.getName());
 
     @Override
-    public void sendMessage(MessageRequest request, StreamObserver<MessageResponse> responseObserver){
+    public void sendMessage(MessageRequest request, StreamObserver<MessageResponse> responseObserver)  {
         logger.info("Server Send{}", request.toByteString());
 
         String exchange = "sender.receiver";
@@ -38,21 +38,31 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
         message.setBody(request.getBody());
         message.setFromUser(user);
 
+
         RabbitMQSender rs =  new RabbitMQSender();
-        System.out.println("CAll SENDER");
+
         try {
-            String result = rs.Send(exchange, receiver, message);
-        } catch (IOException e) {
-            e.printStackTrace();
+            String result = rs.Send2(exchange, receiver, message);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (KeyManagementException e) {
             e.printStackTrace();
         } catch (URISyntaxException e) {
             e.printStackTrace();
-        } catch (TimeoutException e) {
-            e.printStackTrace();
         }
+//        try {
+//            String result = rs.Send(exchange, receiver, message);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//        } catch (KeyManagementException e) {
+//            e.printStackTrace();
+//        } catch (URISyntaxException e) {
+//            e.printStackTrace();
+//        } catch (TimeoutException e) {
+//            e.printStackTrace();
+//        }
 
 
         MessageResponse reply = MessageResponse.newBuilder()

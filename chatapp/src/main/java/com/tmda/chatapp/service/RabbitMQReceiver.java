@@ -2,7 +2,6 @@ package com.tmda.chatapp.service;
 
 
 import com.rabbitmq.client.*;
-import com.tmda.chatapp.config.RabbitMQConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -53,14 +52,14 @@ public class RabbitMQReceiver {
 
     public String Receiver2(String queueName) throws IOException, TimeoutException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
 
-        CachingConnectionFactory factory = new RabbitMQConfig().rabbitConnectionFactory();
+//        CachingConnectionFactory factory = new RabbitMQConfig().rabbitConnectionFactory();
 
         logger.info("Call connection factory into Receiver Function");
 //        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
 //        connectionFactory.getRabbitConnectionFactory().setUri("amqp://bzwbihsx:mo3CwoHiRL6V-ZBmGqrUX0S-_2CnHVcR@hawk.rmq.cloudamqp.com/bzwbihsx");
 ////        Connection connection = connectionFactory.createConnection();
 //
-//        System.out.println("11111111111111111111");
+        System.out.println("11111111111111111111");
 //        AmqpTemplate rabbitTemplate = new RabbitMQConfig().rabbitTemplate(connectionFactory);
 //        System.out.println("22222222222222222222");
 
