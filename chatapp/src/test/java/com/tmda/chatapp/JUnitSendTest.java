@@ -17,9 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JUnitSendTest {
 
-//    @Autowired
-//    RabbitMQConfig config;
-
     @Test
     public void SendTest() throws IOException, TimeoutException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
         String exchange = "sender.receiver";

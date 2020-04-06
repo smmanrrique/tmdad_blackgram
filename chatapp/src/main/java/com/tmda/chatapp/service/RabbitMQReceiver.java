@@ -2,10 +2,13 @@ package com.tmda.chatapp.service;
 
 
 import com.rabbitmq.client.*;
+import com.tmda.chatapp.config.RabbitMQConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.MessageListener;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -17,11 +20,6 @@ import java.util.concurrent.TimeoutException;
 
 @Service
 public class RabbitMQReceiver {
-
-//    @Autowired
-    private AmqpTemplate rabbitTemplate;
-//    ConnectionFactory factory;
-//    private Config config;
 
     private static final Logger logger = LoggerFactory.getLogger(RabbitMQReceiver.class.getName());
 
@@ -50,20 +48,28 @@ public class RabbitMQReceiver {
     }
 
 
+    public MessageListener exampleListener() {
+        return new MessageListener() {
+            @Override
+            public void onMessage(org.springframework.amqp.core.Message message) {
+                System.out.println("received: " + message.getMessageProperties());
+
+            }
+        };
+    }
+
     public String Receiver2(String queueName) throws IOException, TimeoutException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
 
-//        CachingConnectionFactory factory = new RabbitMQConfig().rabbitConnectionFactory();
+        logger.info("Receiver2");
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+        connectionFactory.getRabbitConnectionFactory().setUri("amqp://bzwbihsx:mo3CwoHiRL6V-ZBmGqrUX0S-_2CnHVcR@hawk.rmq.cloudamqp.com/bzwbihsx");
+        AmqpTemplate rabbitTemplate = new RabbitMQConfig().rabbitTemplate(connectionFactory);
 
-        logger.info("Call connection factory into Receiver Function");
-//        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
-//        connectionFactory.getRabbitConnectionFactory().setUri("amqp://bzwbihsx:mo3CwoHiRL6V-ZBmGqrUX0S-_2CnHVcR@hawk.rmq.cloudamqp.com/bzwbihsx");
-////        Connection connection = connectionFactory.createConnection();
-//
-        System.out.println("11111111111111111111");
-//        AmqpTemplate rabbitTemplate = new RabbitMQConfig().rabbitTemplate(connectionFactory);
-//        System.out.println("22222222222222222222");
-
-
+        System.out.println("22222222222222222222");
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+        container.setConnectionFactory(connectionFactory);
+        container.setQueueNames(queueName);
+        container.setMessageListener(exampleListener());
 
         return "Receive message: ";
 

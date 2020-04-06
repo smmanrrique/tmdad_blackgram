@@ -42,54 +42,41 @@ public class RabbitMQConfig {
         return connectionFactory;
     }
 
-
-    //    @Bean
-    public DirectExchange directExchange(String directName) {
-        return new DirectExchange(directName);
-    }
-
-//    @Bean
-    public TopicExchange topicExchange(String topicName) {
-        return new TopicExchange(topicName);
-    }
-
-//    @Bean
-    public Queue queueGeneric(String name) {
-        return new Queue(name);
-    }
-
-//    @Bean
-    public Queue queueSpecific(String name) {
-        return new Queue(name);
-    }
-
-//    @Bean
-    public Binding bindingGeneric(String name, String topicName) {
-        return BindingBuilder.bind(queueGeneric(name)).to(topicExchange(topicName)).with(RABBITMQ_URL);
-    }
-
-//    @Bean
-    public Binding bindingSpecific(String name, String directName) {
-        return BindingBuilder.bind(queueSpecific(name)).to(directExchange(directName)).with(RABBITMQ_URL);
-    }
-
     @Bean
     public Jackson2JsonMessageConverter jsonConverter() {
         return new Jackson2JsonMessageConverter();
     }
 
-//    @Bean
+    //    @Bean
     public AmqpTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(jsonConverter());
         return rabbitTemplate;
     }
 
-    public String getRoutingKey() {
-        System.out.println(RABBITMQ_URL);
-        System.out.println("Config.getRoutingKey --------------------------------------------------------");
-        return RABBITMQ_URL;
+
+    public DirectExchange directExchange(String directName) {
+        return new DirectExchange(directName);
     }
 
+    public TopicExchange topicExchange(String topicName) {
+        return new TopicExchange(topicName);
+    }
+
+    public Queue queueGeneric(String name) {
+        return new Queue(name);
+    }
+
+    public Queue queueSpecific(String name) {
+        return new Queue(name);
+    }
+
+    public Binding bindingGeneric(String name, String topicName) {
+        return BindingBuilder.bind(queueGeneric(name)).to(topicExchange(topicName)).with(RABBITMQ_URL);
+    }
+
+    public Binding bindingSpecific(String name, String directName) {
+        return BindingBuilder.bind(queueSpecific(name)).to(directExchange(directName)).with(RABBITMQ_URL);
+    }
 
 }

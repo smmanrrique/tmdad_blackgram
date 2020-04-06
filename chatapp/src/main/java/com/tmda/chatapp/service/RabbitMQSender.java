@@ -5,6 +5,7 @@ import com.tmda.chatapp.config.RabbitMQConfig;
 import com.tmda.chatapp.model.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.Connection;
 import org.springframework.stereotype.Service;
@@ -17,9 +18,6 @@ import java.util.concurrent.TimeoutException;
 
 @Service
 public class RabbitMQSender {
-
-//    @Autowired
-//    public RabbitMQConfig config;
 
     private static final Logger logger = LoggerFactory.getLogger(RabbitMQSender.class.getName());
 
@@ -47,23 +45,15 @@ public class RabbitMQSender {
         return "Send message: " + message.getFromUser().getUserName();
     }
 
-    public String Send2(String exchange, String queueName, Message message) throws NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
 
-        RabbitMQConfig c = new RabbitMQConfig();
-        logger.info("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
-//        System.out.println(c.RABBITMQ_PASSWORD);
+    public String Send2(String exchange, String queueName, Message message)
+            throws NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
 
-        logger.info("++++++++++++Send2 connection factory into Send Function");
-//        CachingConnectionFactory connectionFactory = config.rabbitConnectionFactory();
-//        connectionFactory.getRabbitConnectionFactory().setUri("amqp://bzwbihsx:mo3CwoHiRL6V-ZBmGqrUX0S-_2CnHVcR@hawk.rmq.cloudamqp.com/bzwbihsx");
-//        AmqpTemplate rabbitTemplate = new RabbitMQConfig().rabbitTemplate((ConnectionFactory) config.rabbitConnectionFactory().getRabbitConnectionFactory());
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+        connectionFactory.getRabbitConnectionFactory().setUri("amqp://bzwbihsx:mo3CwoHiRL6V-ZBmGqrUX0S-_2CnHVcR@hawk.rmq.cloudamqp.com/bzwbihsx");
+        AmqpTemplate rabbitTemplate = new RabbitMQConfig().rabbitTemplate(connectionFactory);
 
-
-        System.out.println("11111111111111111111");
-//        ConnectionFactory rabbitTemplate = config.connectionFactory();
-//        AmqpTemplate rabbitTemplate = config.rabbitTemplate();
-//        rabbitTemplate.convertAndSend(exchange, queueName, message);
-        System.out.println("product object has been sent successfully to Queue");
+        rabbitTemplate.convertAndSend(exchange, queueName, message);
 
         return "Send message: " + message.getFromUser().getUserName();
     }
