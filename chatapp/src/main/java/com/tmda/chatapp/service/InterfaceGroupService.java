@@ -2,11 +2,13 @@ package com.tmda.chatapp.service;
 
 import com.tmda.chatapp.model.Group;
 
+import java.util.Optional;
+
 public interface InterfaceGroupService {
 
     Group create(Group group);
 
-    Group find(long id);
+    Optional<Group> find(long id);
 
     Group findByName(String username);
 
@@ -15,7 +17,5 @@ public interface InterfaceGroupService {
     Group update(int id, Group group);
 
     boolean delete(long id);
-
-    boolean deleteAll();
 
 }
