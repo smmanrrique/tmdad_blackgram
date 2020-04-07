@@ -3,10 +3,12 @@ package com.tmda.chatapp.service;
 import com.tmda.chatapp.model.Contact;
 import com.tmda.chatapp.repositories.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class ContactService implements  InterfaceContactService {
 
     @Autowired

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package com.tmda.chatapp.blackgram;
 
-option java_package = "com.tmda.chatapp.image";
+option java_package = "com.tmda.chatapp.mulyimedia";
 option java_multiple_files = true;
 
 message UploadImageRequest {

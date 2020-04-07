@@ -7,7 +7,7 @@ option java_multiple_files = true;
 
 import "user_grpc.proto";
 
-message Group {
+message GroupGRPC {
     string id = 1;
     string name = 2;
     string description = 3;
@@ -19,5 +19,5 @@ message GroupMessage {
 }
 
 service GroupService {
-    rpc CreateGroup(Group) returns (GroupMessage) { }
+    rpc CreateGroup(GroupGRPC) returns (GroupMessage) { }
 }

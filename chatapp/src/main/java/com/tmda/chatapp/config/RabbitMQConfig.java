@@ -30,7 +30,6 @@ public class RabbitMQConfig {
     @Value("${spring.rabbitmq.password}")
     public  String RABBITMQ_PASSWORD;
 
-
     @Bean
     public CachingConnectionFactory rabbitConnectionFactory() throws NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
         System.out.println("-----------------------------------------------------------");

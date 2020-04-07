@@ -1,9 +1,11 @@
 package com.tmda.chatapp.service;
 
 import com.tmda.chatapp.model.Multimedia;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class MultimediaService implements InterfaceMultimediaService {
 
     @Override

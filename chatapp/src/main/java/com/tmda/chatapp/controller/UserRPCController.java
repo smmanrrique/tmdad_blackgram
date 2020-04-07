@@ -23,8 +23,6 @@ public class UserRPCController extends UserServiceGrpc.UserServiceImplBase {
 
     private static final Logger logger = LoggerFactory.getLogger(UserRPCController.class.getName());
 
-//    @Autowired
-//    UserService userService;
     private final UserService userService;
 
     @Autowired
