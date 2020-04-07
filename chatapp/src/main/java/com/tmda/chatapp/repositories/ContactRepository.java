@@ -1,4 +1,13 @@
 package com.tmda.chatapp.repositories;
 
-public interface ContactRepository {
+import com.tmda.chatapp.model.Contact;
+import org.springframework.data.repository.CrudRepository;
+
+import java.util.List;
+
+public interface ContactRepository extends CrudRepository<Contact, Long> {
+
+    Contact findByContactName(String userName);
+
+    List<Contact> findAll();
 }

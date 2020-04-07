@@ -27,8 +27,8 @@ public class GroupService implements  InterfaceGroupService {
     }
 
     @Override
-    public Group findByName(String username) {
-        return groupRepository.findByName(username);
+    public Group findByName(String groupName) {
+        return groupRepository.findByName(groupName);
     }
 
     @Override
