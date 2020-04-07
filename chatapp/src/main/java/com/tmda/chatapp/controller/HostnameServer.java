@@ -50,7 +50,7 @@ public final class HostnameServer {
     }
     HealthStatusManager health = new HealthStatusManager();
     final Server server = ServerBuilder.forPort(port)
-        .addService(new MyServiceImpl())
+//        .addService(new MyServiceImpl())
         .addService(ProtoReflectionService.newInstance())
         .addService(health.getHealthService())
         .build()

@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package com.tmda.chatapp.group;
+package com.tmda.chatapp.blackgram;
 
-//option java_package = "com.tmda.chatapp.user";
+option java_package = "com.tmda.chatapp.group";
 option java_multiple_files = true;
 
 import "user_grpc.proto";
@@ -11,7 +11,7 @@ message Group {
     string id = 1;
     string name = 2;
     string description = 3;
-    repeated string user = 4;
+    repeated UserRequest user = 4;
 }
 
 message GroupMessage {
@@ -19,5 +19,5 @@ message GroupMessage {
 }
 
 service GroupService {
-    rpc CreateUser(Group) returns (GroupMessage) { }
+    rpc CreateGroup(Group) returns (GroupMessage) { }
 }

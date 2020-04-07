@@ -19,7 +19,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeoutException;
 
 @GRpcService
-public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplBase{
+public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplBase {
 
     private static final Logger logger = LoggerFactory.getLogger(MessageRPCController.class.getName());
 

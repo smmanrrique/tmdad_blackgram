@@ -1,12 +1,18 @@
 syntax = "proto3";
 
-package com.tmda.chatapp.message;
+package com.tmda.chatapp.blackgram;
 
+option java_package = "com.tmda.chatapp.message";
 option java_multiple_files = true;
+
+//enum Driver {
+//    UNKNOWN = 0;
+//    HDD = 1;
+//    SSD = 2;
+//}
 
 message Topic{
     string topicName = 1;
-
 }
 
 message MessageRequest {
