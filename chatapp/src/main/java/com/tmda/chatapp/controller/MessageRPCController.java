@@ -13,15 +13,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.URISyntaxException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 import java.util.concurrent.TimeoutException;
 
 @GRpcService
 public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplBase {
 
     private static final Logger logger = LoggerFactory.getLogger(MessageRPCController.class.getName());
+
+    private String serverName;
+
+    public MessageRPCController() {
+        serverName = "localhost";
+    }
 
     @Override
     public void sendMessage(MessageRequest request, StreamObserver<MessageResponse> responseObserver)  {
@@ -50,20 +58,6 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-//        try {
-//            String result = rs.Send(exchange, receiver, message);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (NoSuchAlgorithmException e) {
-//            e.printStackTrace();
-//        } catch (KeyManagementException e) {
-//            e.printStackTrace();
-//        } catch (URISyntaxException e) {
-//            e.printStackTrace();
-//        } catch (TimeoutException e) {
-//            e.printStackTrace();
-//        }
-
 
         MessageResponse reply = MessageResponse.newBuilder()
                 .setUserMessage("Send new Message " + request.getBody())
@@ -107,4 +101,15 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
         responseObserver.onCompleted();
 
     }
+
+    private static String determineHostname() {
+        try {
+            return InetAddress.getLocalHost().getHostName();
+        } catch (IOException ex) {
+            logger.error( "Failed to determine hostname. Will generate one", ex);
+        }
+        // Strange. Well, let's make an identifier for ourselves.
+        return "generated-" + new Random().nextInt();
+    }
+
 }
