@@ -18,6 +18,15 @@ message GroupMessage {
     string groupMessage=1;
 }
 
+message AddUserGroup{
+    string groupName = 1;
+    string userName = 2;
+}
+
 service GroupService {
+
     rpc CreateGroup(GroupGRPC) returns (GroupMessage) { }
+
+    rpc AddUser(AddUserGroup) returns(GroupMessage){}
+
 }
