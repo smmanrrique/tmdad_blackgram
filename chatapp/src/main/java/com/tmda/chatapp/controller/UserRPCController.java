@@ -82,7 +82,7 @@ public class UserRPCController extends UserServiceGrpc.UserServiceImplBase {
 ////        connectionFactory.setCloseTimeout(0);
 //        connection.close();
 
-        Channel channel = connectionRabbitMQ.rabbitConnectionFactory().createConnection().createChannel(false);
+        Channel channel = connectionRabbitMQ.connectionFactory().createConnection().createChannel(false);
 
         channel.queueDeclare(userName,  true, false, false, null);
 
