@@ -12,6 +12,9 @@ import lombok.SneakyThrows;
 import org.lognet.springboot.grpc.GRpcService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Queue;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
@@ -25,12 +28,8 @@ public class UserRPCController extends UserServiceGrpc.UserServiceImplBase {
     @Resource(name="rabbitConnection")
     private ConnectionRabbitMQ connectionRabbitMQ;
 
-    private final UserService userService;
-
     @Autowired
-    public UserRPCController(UserService userService) {
-        this.userService = userService;
-    }
+    private UserService userService;
 
     @SneakyThrows
     @Override
@@ -40,7 +39,6 @@ public class UserRPCController extends UserServiceGrpc.UserServiceImplBase {
         String userName= request.getUserName();
 
         User user = new User();
-//        use
         user.setUserName(userName);
 //        user.setBirthDay(request.getBirthDay());
         user.setFirstName(request.getFirstName());
@@ -51,40 +49,20 @@ public class UserRPCController extends UserServiceGrpc.UserServiceImplBase {
             user.setPassword(userName);
         }
 
-//       Created user
-//        userService.create(user);
+        // Create user in DB
+        userService.create(user);
 
-//      Cread queue user
-//        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
-//        try {
-//            connectionFactory.getRabbitConnectionFactory().setUri("amqp://bzwbihsx:mo3CwoHiRL6V-ZBmGqrUX0S-_2CnHVcR@hawk.rmq.cloudamqp.com/bzwbihsx");
-//        } catch (URISyntaxException e) {
-//            e.printStackTrace();
-//        } catch (NoSuchAlgorithmException e) {
-//            e.printStackTrace();
-//        } catch (KeyManagementException e) {
-//            e.printStackTrace();
-//        }
-//
-//        org.springframework.amqp.rabbit.connection.Connection connection = connectionFactory.createConnection();
-        System.out.println(connectionRabbitMQ.toString());
-//        org.springframework.amqp.rabbit.connection.Connection connection = connectionRabbitMQ.connectionFactory().createConnection();
-//
-//
-//        Channel channel = connection.createChannel(false);
-//
-//        try {
-//            channel.queueDeclare(userName, true, false, false, null);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-////        connectionFactory.setCloseTimeout(0);
-//        connection.close();
+        // Create Channel
+        Channel channel = connectionRabbitMQ.channel();
 
-        Channel channel = connectionRabbitMQ.connectionFactory().createConnection().createChannel(false);
-
+        // Create Queue
         channel.queueDeclare(userName,  true, false, false, null);
+
+        // Create routing key
+        BindingBuilder.bind(new Queue(userName)).to(new DirectExchange("directmessage") ).with(userName);
+
+        // Create direct Binding
+        channel.queueBind(userName,"directmessage",  userName);
 
         UserResponse reply = UserResponse.newBuilder()
                 .setUserMessage("Created new User " + request.getUserName() )

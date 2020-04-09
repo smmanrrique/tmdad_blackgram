@@ -1,8 +1,9 @@
 package com.tmda.chatapp.config;
 
+import com.rabbitmq.client.Channel;
 import lombok.Data;
 import lombok.SneakyThrows;
-import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.Connection;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -21,9 +22,11 @@ public class ConnectionRabbitMQ {
 
     private  String RABBITMQ_PASSWORD;
 
-    private  CachingConnectionFactory connection;
+    private  CachingConnectionFactory connectionFactory;
 
-    private AmqpTemplate template;
+    private AmqpTemplate amqpTemplate;
+
+    private Connection connection;
 
     public ConnectionRabbitMQ() { }
 
@@ -32,9 +35,9 @@ public class ConnectionRabbitMQ {
         this.RABBITMQ_HOST = RABBITMQ_HOST;
         this.RABBITMQ_USERNAME = RABBITMQ_USERNAME;
         this.RABBITMQ_PASSWORD = RABBITMQ_PASSWORD;
-        this.connection = connectionFactory();
-        this.template = rabbitTemplate();
-
+        this.connectionFactory = connectionFactory();
+        this.amqpTemplate = rabbitTemplate();
+        this.connection = connectionFactory.createConnection();
     }
 
     @SneakyThrows
@@ -48,10 +51,38 @@ public class ConnectionRabbitMQ {
          return this.connectionFactory().createConnection();
     }
 
+    public Channel channel(){
+        return  connection.createChannel(false);
+    }
+
     public AmqpTemplate rabbitTemplate() {
-        final RabbitTemplate rabbitTemplate = new RabbitTemplate(connection);
+        final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
         return rabbitTemplate;
+    }
+
+    public DirectExchange directExchange(String directName) {
+        return new DirectExchange(directName);
+    }
+
+    public TopicExchange topicExchange(String topicName) {
+        return new TopicExchange(topicName);
+    }
+
+    public Queue queueGeneric(String name) {
+        return new Queue(name);
+    }
+
+    public Queue queueSpecific(String name) {
+        return new Queue(name);
+    }
+
+    public Binding bindingGeneric(String name, String topicName) {
+        return BindingBuilder.bind(queueGeneric(name)).to(topicExchange(topicName)).with("directmessage");
+    }
+
+    public Binding bindingSpecific(String name, String directName) {
+        return BindingBuilder.bind(queueSpecific(name)).to(directExchange(directName)).with("directmessage");
     }
 
     @Override
