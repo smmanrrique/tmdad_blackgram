@@ -9,19 +9,13 @@ import com.tmda.chatapp.model.User;
 import com.tmda.chatapp.service.RabbitMQReceiver;
 import com.tmda.chatapp.service.RabbitMQSender;
 import io.grpc.stub.StreamObserver;
+import lombok.SneakyThrows;
 import org.lognet.springboot.grpc.GRpcService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.URISyntaxException;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.util.Random;
-import java.util.concurrent.TimeoutException;
 
 @GRpcService
 public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplBase {
@@ -34,6 +28,9 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
 
     @Autowired
     RabbitMQSender rabbitMQSender;
+
+    @Autowired
+    RabbitMQReceiver rabbitMQReceiver;
 
     @Override
     public void sendMessage(MessageRequest request, StreamObserver<MessageResponse> responseObserver)  {
@@ -59,30 +56,15 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
     }
 
 
+    @SneakyThrows
     @Override
     public void receiverMessage(MessageResponse request, StreamObserver<MessageResponse> responseObserver) {
 
         logger.info("server Received{}", request.toByteString());
 
+        String userName = request.getUserMessage();
 
-        String receiver = request.getUserMessage();
-
-        RabbitMQReceiver rs =  new RabbitMQReceiver();
-        System.out.println("Call Receiver");
-        try {
-            String result = rs.Receiver(receiver);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TimeoutException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-
+        String result = rabbitMQReceiver.Receiver(request.getUserMessage());
 
         MessageResponse reply = MessageResponse.newBuilder()
                 .setUserMessage("Received message:  " + request.getUserMessage())
@@ -91,16 +73,6 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
         responseObserver.onNext(reply);
         responseObserver.onCompleted();
 
-    }
-
-    private static String determineHostname() {
-        try {
-            return InetAddress.getLocalHost().getHostName();
-        } catch (IOException ex) {
-            logger.error( "Failed to determine hostname. Will generate one", ex);
-        }
-        // Strange. Well, let's make an identifier for ourselves.
-        return "generated-" + new Random().nextInt();
     }
 
 }

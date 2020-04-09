@@ -12,9 +12,6 @@ import lombok.SneakyThrows;
 import org.lognet.springboot.grpc.GRpcService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Queue;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
@@ -23,6 +20,8 @@ import javax.annotation.Resource;
 public class UserRPCController extends UserServiceGrpc.UserServiceImplBase {
 
     private static final Logger logger = LoggerFactory.getLogger(UserRPCController.class.getName());
+
+    private final String DIRECT_EXCHANGE = "directmessage";
 
     @Autowired
     @Resource(name="rabbitConnection")
@@ -59,7 +58,7 @@ public class UserRPCController extends UserServiceGrpc.UserServiceImplBase {
         channel.queueDeclare(userName,  true, false, false, null);
 
         // Create routing key
-        BindingBuilder.bind(new Queue(userName)).to(new DirectExchange("directmessage") ).with(userName);
+        channel.queueBind(userName, DIRECT_EXCHANGE, userName);
 
         // Create direct Binding
         channel.queueBind(userName,"directmessage",  userName);
