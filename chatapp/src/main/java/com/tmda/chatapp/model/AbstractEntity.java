@@ -8,16 +8,11 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Data
-@Getter
-@Setter
-@NoArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable {
 
     @Id
-    @Getter
-    @Setter
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
