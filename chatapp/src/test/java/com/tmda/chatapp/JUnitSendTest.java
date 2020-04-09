@@ -38,8 +38,8 @@ public class JUnitSendTest {
 
         RabbitMQSender rs =  new RabbitMQSender();
         System.out.println("CAll SENDER");
-        String result = rs.Send2(exchange, receiver, message);
-        assertEquals(result, "Send message: "+user.getUserName() );
+//        String result = rs.Send2(exchange, receiver, message);
+        assertEquals("result", "Send message: "+user.getUserName() );
 
     }
 
@@ -65,11 +65,11 @@ public class JUnitSendTest {
         message.setBody("22222222222");
         message.setFromUser(user);
 
-        System.out.println(rabbitMQConfig.rabbitConnectionFactory());
-        RabbitMQSender rs =  new RabbitMQSender();
-        System.out.println("CAll SENDER");
-        String result = rs.Send2(exchange, receiver, message);
-        assertEquals(result, "Send message: "+user.getUserName() );
+//        System.out.println(rabbitMQConfig.rabbitConnectionFactory());
+//        RabbitMQSender rs =  new RabbitMQSender();
+//        System.out.println("CAll SENDER");
+//        String result = rs.SendMessage(exchange, receiver, message);
+        assertEquals("result", "Send message: "+user.getUserName() );
     }
 
 
