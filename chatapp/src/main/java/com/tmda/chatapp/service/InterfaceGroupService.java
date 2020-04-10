@@ -8,14 +8,14 @@ public interface InterfaceGroupService {
 
     Group create(Group group);
 
-    Optional<Group> find(long id);
+    Optional<Group> find(int id);
 
     Group findByName(String username);
 
     Iterable<Group> findAll();
 
-    Group update(long id, Group group);
+    Group update(int id, Group group);
 
-    boolean delete(long id);
+    boolean delete(int id);
 
 }

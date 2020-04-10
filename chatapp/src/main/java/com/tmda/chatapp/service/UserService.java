@@ -40,12 +40,6 @@ public class UserService implements InterfaceUserService {
     }
 
     @Override
-    public User update(long id, User user) {
-//        user.setId(id);
-        return userRepository.save(user);
-    }
-
-    @Override
     public boolean delete(long id) {
         try {
             userRepository.deleteById(id);

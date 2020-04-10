@@ -16,10 +16,9 @@ import org.lognet.springboot.grpc.GRpcService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.HashSet;
-import java.util.Set;
 
 
 @GRpcService
@@ -63,6 +62,7 @@ public class GroupRPCController extends GroupServiceGrpc.GroupServiceImplBase {
         responseObserver.onCompleted();
     }
 
+    @Transactional(readOnly = false)
     @Override
     public void addUser(AddUserGroup request, StreamObserver<GroupMessage> responseObserver) {
 
@@ -72,13 +72,10 @@ public class GroupRPCController extends GroupServiceGrpc.GroupServiceImplBase {
         System.out.println(user.toString());
 
         // Add user to group and group to user
-        Set<Group> groups = new HashSet<>();
-        groups.addAll(user.getGroups());
-        groups.add(group);
-        user.setGroups(groups);
+        group.getUsers().add(user);
 
-        userService.update(user.getId(), user);
-
+//        userService.create(user);
+        groupService.create(group);
         GroupMessage reply = GroupMessage.newBuilder()
                 .setGroupMessage("Add user:"+ user.getUserName()+ "  new Group: " + group.getName())
                 .build();

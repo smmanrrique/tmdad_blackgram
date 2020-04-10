@@ -23,8 +23,9 @@ public class GroupService implements  InterfaceGroupService {
         return groupRepository.save(group);
     }
 
+
     @Override
-    public Optional<Group> find(long id) {
+    public Optional<Group> find(int id) {
         return groupRepository.findById(id);
     }
 
@@ -39,15 +40,15 @@ public class GroupService implements  InterfaceGroupService {
     }
 
     @Override
-    public Group update(long id, Group group) {
-//        group.setId(id);
+    public Group update(int id, Group group) {
+        group.setId(id);
         return groupRepository.save(group);
     }
 
     @Override
-    public boolean delete(long id) {
+    public boolean delete(int id) {
         try {
-            groupRepository.deleteById(id);
+            groupRepository.deleteById( id);
             return true;
         } catch (DataAccessException e) {
             LOGGER.info(e.getMessage());

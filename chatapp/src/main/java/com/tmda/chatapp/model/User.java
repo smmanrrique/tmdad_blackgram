@@ -41,8 +41,9 @@ public class User extends AbstractEntity {
     @OneToMany(fetch= FetchType.LAZY,mappedBy = "id")
     private  Set<User> contacts = new HashSet<>();
 
-    @ManyToMany(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Group> groups = new HashSet<>();
+//    @ManyToMany(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Set<Group> groups = new HashSet<Group>();
 
 
 }
