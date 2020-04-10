@@ -4,6 +4,7 @@ import com.rabbitmq.client.Channel;
 import com.tmda.chatapp.config.ConnectionRabbitMQ;
 import com.tmda.chatapp.model.User;
 import com.tmda.chatapp.service.UserService;
+import com.tmda.chatapp.user.ContactAdd;
 import com.tmda.chatapp.user.UserRequest;
 import com.tmda.chatapp.user.UserResponse;
 import com.tmda.chatapp.user.UserServiceGrpc;
@@ -70,5 +71,23 @@ public class UserRPCController extends UserServiceGrpc.UserServiceImplBase {
         responseObserver.onCompleted();
     }
 
+    @Override
+    public void addContact(ContactAdd request, StreamObserver<UserResponse> responseObserver) {
+        logger.info("server received{}", request);
 
+        User user = userService.findByUsername(request.getUsername());
+        User contact = userService.findByUsername(request.getContact());
+
+        // Add contact
+        user.getContacts().add(contact);
+
+        // Save in DB
+        userService.create(user);
+
+        UserResponse reply = UserResponse.newBuilder()
+                .setUserMessage("Added contact: "+request.getContact() +" to User: " + request.getUsername() )
+                .build();
+        responseObserver.onNext(reply);
+        responseObserver.onCompleted();
+    }
 }

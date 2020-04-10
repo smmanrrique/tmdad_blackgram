@@ -36,8 +36,14 @@ message UserResponse {
     string userMessage=1;
 }
 
+message ContactAdd {
+    string Username = 1;
+    string contact = 2;
+}
+
 service UserService {
     rpc CreateUser(UserRequest) returns (UserResponse) { }
 
+    rpc AddContact(ContactAdd) returns (UserResponse){}
 
 }
