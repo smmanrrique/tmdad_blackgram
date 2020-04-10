@@ -33,5 +33,9 @@ service MessageService {
 
     rpc SendMessage(MessageRequest) returns (MessageResponse) { }
 
+    rpc SendMessageGroup(MessageRequest) returns (MessageResponse) { }
+
+    rpc SendMessageAll(MessageRequest) returns (MessageResponse) { }
+
     rpc ReceiverMessage(MessageResponse) returns (MessageResponse) { }
 }

@@ -37,6 +37,7 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
         logger.info("Server Send{}", request.toByteString());
 
         String username =  request.getFromUser();
+
         // Create Message and User
         Message message = new Message();
         User user = new User();
@@ -55,6 +56,53 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
         responseObserver.onCompleted();
     }
 
+    @Override
+    public void sendMessageGroup(MessageRequest request, StreamObserver<MessageResponse> responseObserver) {
+        logger.info("Server Send{}", request.toByteString());
+
+        String username =  request.getFromUser();
+
+        // Create Message and User
+        Message message = new Message();
+        User user = new User();
+
+        user.setUserName(request.getFromUser());
+        message.setBody(request.getBody());
+        message.setFromUser(user);
+
+        String result = rabbitMQSender.SendGroupMessage(connectionRabbitMQ, username, message);
+
+        MessageResponse reply = MessageResponse.newBuilder()
+                .setUserMessage("Send new Message " + request.getBody())
+                .build();
+
+        responseObserver.onNext(reply);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void sendMessageAll(MessageRequest request, StreamObserver<MessageResponse> responseObserver) {
+        logger.info("Server Send{}", request.toByteString());
+
+        String username =  request.getFromUser();
+
+        // Create Message and User
+        Message message = new Message();
+        User user = new User();
+
+        user.setUserName(request.getFromUser());
+        message.setBody(request.getBody());
+        message.setFromUser(user);
+
+        String result = rabbitMQSender.SendAllMessage(connectionRabbitMQ, username, message);
+
+        MessageResponse reply = MessageResponse.newBuilder()
+                .setUserMessage("Send new Message " + request.getBody())
+                .build();
+
+        responseObserver.onNext(reply);
+        responseObserver.onCompleted();
+    }
 
     @SneakyThrows
     @Override

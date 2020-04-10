@@ -22,6 +22,12 @@ public class ConnectionRabbitMQ {
 
     private  String RABBITMQ_PASSWORD;
 
+    private  String DIRECT_EXCHANGE;
+
+    private  String GROUP_EXCHANGE;
+
+    private  String ALL_EXCHANGE;
+
     private  CachingConnectionFactory connectionFactory;
 
     private AmqpTemplate amqpTemplate;
@@ -30,11 +36,15 @@ public class ConnectionRabbitMQ {
 
     public ConnectionRabbitMQ() { }
 
-    public ConnectionRabbitMQ(String RABBITMQ_URL, String RABBITMQ_HOST, String RABBITMQ_USERNAME, String RABBITMQ_PASSWORD) {
+    public ConnectionRabbitMQ(String RABBITMQ_URL, String RABBITMQ_HOST, String RABBITMQ_USERNAME,
+                              String RABBITMQ_PASSWORD, String DIRECT_EXCHANGE, String GROUP_EXCHANGE, String ALL_EXCHANGE) {
         this.RABBITMQ_URL = RABBITMQ_URL;
         this.RABBITMQ_HOST = RABBITMQ_HOST;
         this.RABBITMQ_USERNAME = RABBITMQ_USERNAME;
         this.RABBITMQ_PASSWORD = RABBITMQ_PASSWORD;
+        this.DIRECT_EXCHANGE = DIRECT_EXCHANGE;
+        this.GROUP_EXCHANGE = GROUP_EXCHANGE;
+        this.ALL_EXCHANGE = ALL_EXCHANGE;
         this.connectionFactory = connectionFactory();
         this.amqpTemplate = rabbitTemplate();
         this.connection = connectionFactory.createConnection();
