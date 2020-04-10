@@ -5,9 +5,12 @@ import com.tmda.chatapp.message.MessageRequest;
 import com.tmda.chatapp.message.MessageResponse;
 import com.tmda.chatapp.message.MessageServiceGrpc;
 import com.tmda.chatapp.model.Message;
+import com.tmda.chatapp.model.Topic;
 import com.tmda.chatapp.model.User;
+import com.tmda.chatapp.service.MessageService;
 import com.tmda.chatapp.service.RabbitMQReceiver;
 import com.tmda.chatapp.service.RabbitMQSender;
+import com.tmda.chatapp.service.UserService;
 import io.grpc.stub.StreamObserver;
 import lombok.SneakyThrows;
 import org.lognet.springboot.grpc.GRpcService;
@@ -16,6 +19,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 @GRpcService
 public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplBase {
@@ -25,6 +30,12 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
     @Autowired
     @Resource(name="rabbitConnection")
     private ConnectionRabbitMQ connectionRabbitMQ;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    MessageService messageService;
 
     @Autowired
     RabbitMQSender rabbitMQSender;
@@ -62,14 +73,31 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
 
         String username =  request.getFromUser();
 
+        Integer n = request.getTopicsCount();
+        if ( n > 0 ){
+            List<Topic> topics = new ArrayList<Topic>();
+            for (int i = 0; i< n; i++) {
+                Topic topic = new Topic();
+                topic.setName(request.getTopics(i).getTopicName());
+                topics.add(topic);
+            }
+
+        }
+
         // Create Message and User
         Message message = new Message();
-        User user = new User();
+        User userFrom = userService.findByUsername(request.getFromUser());
+        User userTo = userService.findByUsername(request.getToUser());
 
-        user.setUserName(request.getFromUser());
         message.setBody(request.getBody());
-        message.setFromUser(user);
+        message.setFromUser(userFrom);
+        message.setToUser(userTo);
 
+        message.toString();
+        // Save message in DB
+        messageService.create(message);
+
+        // Send message to broker
         String result = rabbitMQSender.SendGroupMessage(connectionRabbitMQ, username, message);
 
         MessageResponse reply = MessageResponse.newBuilder()
