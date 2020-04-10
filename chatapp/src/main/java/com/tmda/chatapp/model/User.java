@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -32,10 +33,10 @@ public class User extends AbstractEntity {
     private String password;
 
     @OneToMany(mappedBy = "user")
-    private  Set<Contact> contacts;
+    private  Set<Contact> contacts = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private Set<Group> groups;
+    @ManyToMany(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Group> groups = new HashSet<>();
 
     @OneToMany(mappedBy = "fromUser")
     private List<Message> users = new ArrayList<>();
@@ -110,4 +111,15 @@ public class User extends AbstractEntity {
 //        this.groups = list;
 //    }
 
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userName='" + userName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

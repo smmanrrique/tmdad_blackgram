@@ -3,10 +3,8 @@ package com.tmda.chatapp.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -23,8 +21,8 @@ public class Group extends AbstractEntity {
     @Column(length = 255)
     private String description;
 
-    @ManyToMany(mappedBy = "groups")
-    private Set<User> users;
+    @ManyToMany(fetch= FetchType.LAZY, mappedBy = "groups")
+    private Set<User> users = new HashSet<>();
 
 //    public String getName() {
 //        return name;
