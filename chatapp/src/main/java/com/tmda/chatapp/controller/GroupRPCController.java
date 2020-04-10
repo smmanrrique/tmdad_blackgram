@@ -68,14 +68,14 @@ public class GroupRPCController extends GroupServiceGrpc.GroupServiceImplBase {
 
         Group group = groupService.findByName(request.getGroupName());
         User user = userService.findByUsername(request.getUserName());
-
-        System.out.println(user.toString());
+//        System.out.println(user.toString());
 
         // Add user to group and group to user
-        group.getUsers().add(user);
+        user.getGroups().add(group);
+//        group.getUsers().add(user);
 
-//        userService.create(user);
-        groupService.create(group);
+        userService.create(user);
+//        groupService.create(group);
         GroupMessage reply = GroupMessage.newBuilder()
                 .setGroupMessage("Add user:"+ user.getUserName()+ "  new Group: " + group.getName())
                 .build();

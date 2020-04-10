@@ -4,8 +4,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 
 
@@ -21,14 +21,7 @@ public class Group extends AbstractEntity {
     @Column(length = 255)
     private String description;
 
-//    @ManyToMany( fetch = FetchType.LAZY, mappedBy = "groups")
-
-    //    @JoinTable(name = "users_groups",
-//            joinColumns = @JoinColumn(name = "groups_id",
-//                    referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "users_id",
-//                    referencedColumnName = "id"))
     @ManyToMany( fetch = FetchType.LAZY, mappedBy = "groups")
-    private Set<User> users = new HashSet<User>();
+    private List<User> users = new ArrayList<User>();
 
 }

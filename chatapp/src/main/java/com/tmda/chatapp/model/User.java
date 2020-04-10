@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
@@ -39,11 +37,10 @@ public class User extends AbstractEntity {
     private List<Message> receivedMessage = new ArrayList<>();
 
     @OneToMany(fetch= FetchType.LAZY,mappedBy = "id")
-    private  Set<User> contacts = new HashSet<>();
+    private  List<User> contacts = new ArrayList<>();
 
-//    @ManyToMany(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
-    @ManyToMany(cascade = CascadeType.ALL)
-    private Set<Group> groups = new HashSet<Group>();
+    @ManyToMany(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Group> groups = new ArrayList<Group>();
 
 
 }
