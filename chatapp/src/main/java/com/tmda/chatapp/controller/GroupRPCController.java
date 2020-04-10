@@ -76,13 +76,8 @@ public class GroupRPCController extends GroupServiceGrpc.GroupServiceImplBase {
         groups.addAll(user.getGroups());
         groups.add(group);
         user.setGroups(groups);
-//        user.addGroup(group);
-//        group.addUser(user);
 
-        // Update Group and User in DB
-//        groupService.update(group.getId(), group);
         userService.update(user.getId(), user);
-        System.out.println(user.toString());
 
         GroupMessage reply = GroupMessage.newBuilder()
                 .setGroupMessage("Add user:"+ user.getUserName()+ "  new Group: " + group.getName())

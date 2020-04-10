@@ -14,13 +14,13 @@ import java.util.List;
 @EqualsAndHashCode(callSuper=false)
 public class Message extends AbstractEntity implements Serializable {
 
-    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     private User fromUser;
 
     @Column(columnDefinition = "text")
     private String body;
 
-    @ManyToOne(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch= FetchType.EAGER, cascade = CascadeType.ALL)
     private Multimedia multimedia = new Multimedia();
 
     @ManyToMany()
