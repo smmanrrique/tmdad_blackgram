@@ -27,7 +27,7 @@ public class Message extends AbstractEntity implements Serializable {
     private Multimedia multimedia = new Multimedia();
 
     @ManyToMany()
-    private List<Topic> topics = new ArrayList<>();
+    private List<Topic> topics = new ArrayList<Topic>();
 
     public Message() {
 

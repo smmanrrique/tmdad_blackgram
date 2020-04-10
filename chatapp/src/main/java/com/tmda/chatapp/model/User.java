@@ -31,13 +31,13 @@ public class User extends AbstractEntity {
     private String password;
 
     @OneToMany(fetch= FetchType.LAZY, mappedBy = "fromUser")
-    private List<Message> sendMessage = new ArrayList<>();
+    private List<Message> sendMessage = new ArrayList<Message>();
 
     @OneToMany(fetch= FetchType.LAZY, mappedBy = "toUser")
-    private List<Message> receivedMessage = new ArrayList<>();
+    private List<Message> receivedMessage = new ArrayList<Message>();
 
     @OneToMany(fetch= FetchType.LAZY,mappedBy = "id")
-    private  List<User> contacts = new ArrayList<>();
+    private  List<User> contacts = new ArrayList<User>();
 
     @ManyToMany(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Group> groups = new ArrayList<Group>();

@@ -26,6 +26,6 @@ public class Topic extends AbstractEntity {
     private String description;
 
     @ManyToMany(mappedBy = "topics")
-    private List<Message> messages = new ArrayList<>();
+    private List<Message> messages = new ArrayList<Message>();
 
 }
