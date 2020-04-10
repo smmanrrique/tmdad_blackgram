@@ -1,13 +1,14 @@
 package com.tmda.chatapp.controller;
 
 import com.rabbitmq.client.Channel;
-
 import com.tmda.chatapp.config.ConnectionRabbitMQ;
+import com.tmda.chatapp.group.AddUserGroup;
 import com.tmda.chatapp.group.GroupGRPC;
 import com.tmda.chatapp.group.GroupMessage;
 import com.tmda.chatapp.group.GroupServiceGrpc;
 import com.tmda.chatapp.model.Group;
 import com.tmda.chatapp.service.GroupService;
+import com.tmda.chatapp.service.UserService;
 import io.grpc.stub.StreamObserver;
 import lombok.SneakyThrows;
 import org.lognet.springboot.grpc.GRpcService;
@@ -28,6 +29,9 @@ public class GroupRPCController extends GroupServiceGrpc.GroupServiceImplBase {
 
     @Autowired
     private GroupService groupService;
+
+    @Autowired
+    private UserService userService;
 
     @SneakyThrows
     @Override
@@ -56,36 +60,29 @@ public class GroupRPCController extends GroupServiceGrpc.GroupServiceImplBase {
         responseObserver.onCompleted();
     }
 
-//    @Override
-//    public void addUser(AddUser request, StreamObserver<GroupMessage> responseObserver)  {
-////        logger.info("server received{}", request);
-////
-////        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
-////        try {
-////            connectionFactory.getRabbitConnectionFactory().setUri("amqp://bzwbihsx:mo3CwoHiRL6V-ZBmGqrUX0S-_2CnHVcR@hawk.rmq.cloudamqp.com/bzwbihsx");
-////        } catch (URISyntaxException e) {
-////            e.printStackTrace();
-////        } catch (NoSuchAlgorithmException e) {
-////            e.printStackTrace();
-////        } catch (KeyManagementException e) {
-////            e.printStackTrace();
-////        }
-////        Connection connection = connectionFactory.createConnection();
-////
-////        Channel channel = connection.createChannel(false);
-////
-//////        new TopicExchange(regue)
-//////        String queue = request.getGroupName();
-//////        String exchange = request.getGroupName();
-//////        String topic = request.getGroupName()+".*";
-//////        BindingBuilder.bind(queue).to(exchange).with(topic);
-////
-////        connection.close();
-////
-////        GroupMessage reply = GroupMessage.newBuilder()
-////                .setGroupMessage("Added user: "+ request.getUserName()+" to Group: "+request.getGroupName())
-////                .build();
-////        responseObserver.onNext(reply);
-////        responseObserver.onCompleted();
-//    }
+    @Override
+    public void addUser(AddUserGroup request, StreamObserver<GroupMessage> responseObserver) {
+
+//        Group group = groupService.findByName(request.getGroupName());
+//        User user = userService.findByUsername(request.getUserName());
+
+//        System.out.println(user.toString());
+//        // Add user to group and group to user
+//        user.addGroup(group);
+//        group.addUser(user);
+//
+//        // Update Group and User in DB
+//        groupService.update(group.getId(), group);
+//        userService.update(user.getId(), user);
+//        System.out.println(user.toString());
+
+//        "Add user:"+ user.getUserName()+ "  new Group: " + group.getName()
+        GroupMessage reply = GroupMessage.newBuilder()
+                .setGroupMessage("")
+                .build();
+        responseObserver.onNext(reply);
+        responseObserver.onCompleted();
+
+    }
+
 }

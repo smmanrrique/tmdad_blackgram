@@ -39,7 +39,8 @@ public class GroupService implements  InterfaceGroupService {
     }
 
     @Override
-    public Group update(int id, Group group) {
+    public Group update(long id, Group group) {
+//        group.setId(id);
         return groupRepository.save(group);
     }
 

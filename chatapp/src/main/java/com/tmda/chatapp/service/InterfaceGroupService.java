@@ -14,7 +14,7 @@ public interface InterfaceGroupService {
 
     Iterable<Group> findAll();
 
-    Group update(int id, Group group);
+    Group update(long id, Group group);
 
     boolean delete(long id);
 

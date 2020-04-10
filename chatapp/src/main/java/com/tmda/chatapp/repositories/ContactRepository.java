@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ContactRepository extends CrudRepository<Contact, Long> {
 
-    Contact findByContactName(String userName);
+    Contact findByUser(String userName);
 
     List<Contact> findAll();
 }

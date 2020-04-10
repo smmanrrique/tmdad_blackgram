@@ -8,10 +8,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 @Data
-@EqualsAndHashCode(callSuper = false)
+@Entity
 @Table(name = "messages")
+@EqualsAndHashCode(callSuper=false)
 public class Message extends AbstractEntity implements Serializable {
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -30,45 +30,45 @@ public class Message extends AbstractEntity implements Serializable {
 
     }
 
-    public User getFromUser() {
-        return fromUser;
-    }
+//    public User getFromUser() {
+//        return fromUser;
+//    }
+//
+//    public void setFromUser(User fromUser) {
+//        this.fromUser = fromUser;
+//    }
+//
+//    public String getBody() {
+//        return body;
+//    }
+//
+//    public void setBody(String body) {
+//        this.body = body;
+//    }
+//
+//    public Multimedia getMultimedia() {
+//        return multimedia;
+//    }
+//
+//    public void setMultimedia(Multimedia multimedia) {
+//        this.multimedia = multimedia;
+//    }
+//
+//    public List<Topic> getTopics() {
+//        return topics;
+//    }
+//
+//    public void setTopics(List<Topic> topics) {
+//        this.topics = topics;
+//    }
 
-    public void setFromUser(User fromUser) {
-        this.fromUser = fromUser;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    public Multimedia getMultimedia() {
-        return multimedia;
-    }
-
-    public void setMultimedia(Multimedia multimedia) {
-        this.multimedia = multimedia;
-    }
-
-    public List<Topic> getTopics() {
-        return topics;
-    }
-
-    public void setTopics(List<Topic> topics) {
-        this.topics = topics;
-    }
-
-    @Override
-    public String toString() {
-        return "Message{" +
-                "fromUser=" + fromUser +
-                ", body='" + body + '\'' +
-                ", multimedia=" + multimedia +
-                ", topics=" + topics +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Message{" +
+//                "fromUser=" + fromUser +
+//                ", body='" + body + '\'' +
+//                ", multimedia=" + multimedia +
+//                ", topics=" + topics +
+//                '}';
+//    }
 }

@@ -13,7 +13,7 @@ public interface InterfaceUserService {
 
     List<User> findAll();
 
-    User update(int id, User user);
+    User update(long id, User user);
 
     boolean delete(long id);
 

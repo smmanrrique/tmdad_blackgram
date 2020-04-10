@@ -8,14 +8,13 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Data
-@EqualsAndHashCode(callSuper=false)
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
 //    @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")

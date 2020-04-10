@@ -40,7 +40,7 @@ public class UserService implements InterfaceUserService {
     }
 
     @Override
-    public User update(int id, User user) {
+    public User update(long id, User user) {
 //        user.setId(id);
         return userRepository.save(user);
     }

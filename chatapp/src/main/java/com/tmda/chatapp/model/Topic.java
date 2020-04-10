@@ -1,13 +1,19 @@
 package com.tmda.chatapp.model;
 
-import lombok.*;
-import java.util.*;
-import javax.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
-@Entity
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
+
+
 @Data
-@Getter
-@Setter
+@Entity
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "topics")

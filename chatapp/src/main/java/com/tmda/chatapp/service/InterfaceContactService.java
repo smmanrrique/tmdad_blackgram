@@ -11,7 +11,7 @@ public interface InterfaceContactService {
 
     Optional<Contact> findById(long id);
 
-    Contact findByContactName(String contactName);
+    Contact findByUser(String contactName);
 
     List<Contact> findAll();
 

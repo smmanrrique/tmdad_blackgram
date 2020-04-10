@@ -25,7 +25,7 @@ public class ContactService implements  InterfaceContactService {
     }
 
     @Override
-    public Contact findByContactName(String contactName) {
+    public Contact findByUser(String contactName) {
         return null;
     }
 
