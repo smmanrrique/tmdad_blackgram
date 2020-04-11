@@ -2,7 +2,6 @@ package com.tmda.chatapp.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,7 +10,6 @@ import java.util.List;
 
 @Data
 @Entity
-@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "multimedias")
 public class Multimedia extends AbstractEntity {
@@ -31,5 +29,6 @@ public class Multimedia extends AbstractEntity {
     @OneToMany(mappedBy = "multimedia")
     private List<Message> messages = new ArrayList<>();
 
-
+    public Multimedia() {
+    }
 }

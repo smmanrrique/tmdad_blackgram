@@ -5,7 +5,10 @@ import com.tmda.chatapp.model.Message;
 import java.util.Optional;
 
 public interface InterfaceMessageService {
+
     Message create(Message message);
+
+    Iterable<Message> saveAll(Iterable<Message> messages);
 
     Optional<Message> find(long id);
 

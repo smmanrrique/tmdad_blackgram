@@ -18,6 +18,11 @@ public class MessageService implements  InterfaceMessageService {
         return messageRepository.save(message);
     }
 
+    @Override
+    public Iterable<Message> saveAll(Iterable<Message> messages) {
+        return messageRepository.saveAll(messages);
+    }
+
     // TODO INSERT MANY USERS SAME TIME
     @Override
     public Optional<Message> find(long id) {

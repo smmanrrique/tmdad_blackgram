@@ -7,10 +7,7 @@ import com.tmda.chatapp.message.MessageServiceGrpc;
 import com.tmda.chatapp.model.Message;
 import com.tmda.chatapp.model.Topic;
 import com.tmda.chatapp.model.User;
-import com.tmda.chatapp.service.MessageService;
-import com.tmda.chatapp.service.RabbitMQReceiver;
-import com.tmda.chatapp.service.RabbitMQSender;
-import com.tmda.chatapp.service.UserService;
+import com.tmda.chatapp.service.*;
 import io.grpc.stub.StreamObserver;
 import lombok.SneakyThrows;
 import org.lognet.springboot.grpc.GRpcService;
@@ -19,10 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @GRpcService
 public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplBase {
@@ -37,6 +31,9 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
     UserService userService;
 
     @Autowired
+    GroupService groupService;
+
+    @Autowired
     MessageService messageService;
 
     @Autowired
@@ -49,14 +46,14 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
     public void sendMessage(MessageRequest request, StreamObserver<MessageResponse> responseObserver)  {
         logger.info("Server Send{}", request.toByteString());
 
-        String userFromName =  request.getFromUser();
+        String userToName =  request.getToUser();
 
         Integer n = request.getTopicsCount();
         Set<Topic> topics = new HashSet<Topic>();
+
+        // If exist get all message topics
         if ( n > 0 ){
-            for (int i = 0; i< n; i++) {
-                topics.add(new Topic(request.getTopics(i).getTopicName()));
-            }
+            topics = extractTopic(request.getTopicsCount(), request.getTopicsList());
         }
 
         // Create Message and User
@@ -68,7 +65,7 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
         // Save message in DB
         messageService.create(message);
 
-        String result = rabbitMQSender.SendDirectMessage(connectionRabbitMQ, userFromName, message);
+//        String result = rabbitMQSender.SendDirectMessage(connectionRabbitMQ, userToName, message);
 
         MessageResponse reply = MessageResponse.newBuilder()
                 .setUserMessage("Send new Message " + request.getBody())
@@ -80,41 +77,19 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
 
     @Override
     public void sendMessageGroup(MessageRequest request, StreamObserver<MessageResponse> responseObserver) {
-        logger.info("Server Send{}", request.toByteString());
+        logger.info("Server sendMessageGroup{}", request.toByteString());
 
-        String username =  request.getFromUser();
+        String groupName = request.getToUser();
 
-        Integer n = request.getTopicsCount();
-        if ( n > 0 ){
-            List<Topic> topics = new ArrayList<Topic>();
-            for (int i = 0; i< n; i++) {
-                Topic topic = new Topic();
-                topic.setName(request.getTopics(i).getTopicName());
-                topics.add(topic);
-            }
+        Message message = messagesUsers(request, true);
 
-        }
-
-        // Create Message and User
-        Message message = new Message();
-        User userFrom = userService.findByUsername(request.getFromUser());
-        User userTo = userService.findByUsername(request.getToUser());
-
-        message.setBody(request.getBody());
-        message.setFromUser(userFrom);
-        message.setToUser(userTo);
-
-        message.toString();
-        // Save message in DB
-        messageService.create(message);
-
+        message.getToUser().setUserName(groupName);
         // Send message to broker
-        String result = rabbitMQSender.SendGroupMessage(connectionRabbitMQ, username, message);
+//        String result = rabbitMQSender.SendGroupMessage(connectionRabbitMQ, groupName, message);
 
         MessageResponse reply = MessageResponse.newBuilder()
-                .setUserMessage("Send new Message " + request.getBody())
+                .setUserMessage("Send new Message to group" + request.getBody())
                 .build();
-
         responseObserver.onNext(reply);
         responseObserver.onCompleted();
     }
@@ -123,17 +98,13 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
     public void sendMessageAll(MessageRequest request, StreamObserver<MessageResponse> responseObserver) {
         logger.info("Server Send{}", request.toByteString());
 
-        String username =  request.getFromUser();
+        String groupName = request.getToUser();
 
-        // Create Message and User
-        Message message = new Message();
-        User user = new User();
+        Message message = messagesUsers(request, false);
 
-        user.setUserName(request.getFromUser());
-        message.setBody(request.getBody());
-        message.setFromUser(user);
+        message.getToUser().setUserName(groupName);
 
-        String result = rabbitMQSender.SendAllMessage(connectionRabbitMQ, username, message);
+//        String result = rabbitMQSender.SendAllMessage(connectionRabbitMQ, username, message);
 
         MessageResponse reply = MessageResponse.newBuilder()
                 .setUserMessage("Send new Message " + request.getBody())
@@ -160,6 +131,46 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
         responseObserver.onNext(reply);
         responseObserver.onCompleted();
 
+    }
+
+    public Set<Topic> extractTopic(int n , List<com.tmda.chatapp.message.Topic> topic){
+        Set<Topic> topics = new HashSet<Topic>();
+        for (int i = 0; i< n; i++) {
+            topics.add(new Topic(topic.get(i).getTopicName()));
+        }
+        return topics;
+    }
+
+    public Message messagesUsers( MessageRequest request, boolean isGroup){
+        String groupName = request.getToUser();
+
+        // If exist get all message topics
+        Integer n = request.getTopicsCount();
+        Set<Topic> topics = new HashSet<Topic>();
+        if ( n > 0 ){
+            topics = extractTopic(request.getTopicsCount(), request.getTopicsList());
+        }
+
+        // Create Message and User
+        User userFrom = userService.findByUsername(request.getFromUser());
+
+//        List<User> users = groupService.findByName(groupName).getUsers();
+        List<Message> messages = new ArrayList<>();
+        List<User> userList;
+        if (isGroup){
+            userList = groupService.findByName(groupName).getUsers();
+        }else{
+            userList = userService.findAll();
+        }
+
+        for (User user: userList) {
+            messages.add(new Message(userFrom, user, request.getBody(), topics));
+        }
+
+        // Save message in DB
+        messageService.saveAll(messages);
+
+        return messages.get(0);
     }
 
 }
