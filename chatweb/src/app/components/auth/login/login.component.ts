@@ -41,25 +41,27 @@ export class LoginComponent implements OnInit {
 
 	login(): void {
 		if (this.form.valid) {
-			this.authorizationRequest.username = this.form.value['email'];
-			this.authorizationRequest.password = this.form.value['password'];
+			this.main()
 
-			this.authService.login(this.authorizationRequest).subscribe(authorizationResponse => {
-				sessionStorage.setItem('token', authorizationResponse.access_token);
-				sessionStorage.setItem('refresh_token', authorizationResponse.refresh_token);
+			// this.authorizationRequest.username = this.form.value['email'];
+			// this.authorizationRequest.password = this.form.value['password'];
 
-				this.userService.getByAuthUserId(authorizationResponse.user_id).subscribe(user => {
-					sessionStorage.setItem('user', JSON.stringify(user));
-					window.location.href = window.location.href + 'admin';
-				}, error => {
-					let err = error.json();
-					console.log(error);
-				});
-			},
-				err => {
-					console.log(err);
-					this.notificationService.error(err);
-				});
+			// this.authService.login(this.authorizationRequest).subscribe(authorizationResponse => {
+			// 	sessionStorage.setItem('token', authorizationResponse.access_token);
+			// 	sessionStorage.setItem('refresh_token', authorizationResponse.refresh_token);
+
+			// 	this.userService.getByAuthUserId(authorizationResponse.user_id).subscribe(user => {
+			// 		sessionStorage.setItem('user', JSON.stringify(user));
+			// 		window.location.href = window.location.href + 'admin';
+			// 	}, error => {
+			// 		let err = error.json();
+			// 		// console.log(error);
+			// 	});
+			// },
+			// 	err => {
+			// 		console.log(err);
+			// 		this.notificationService.error(err);
+			// 	});
 		}
 	}
 
