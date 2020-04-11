@@ -4,10 +4,9 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Entity
+
 @Data
-@Getter
-@Setter
+@Entity
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 public class LogSyncApp extends  AbstractEntity{

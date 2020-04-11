@@ -15,12 +15,9 @@ import java.util.List;
 public class UserService implements InterfaceUserService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
-    private final UserRepository userRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private UserRepository userRepository;
 
     @Override
     public User create(User user) {
@@ -40,12 +37,6 @@ public class UserService implements InterfaceUserService {
     @Override
     public List<User> findAll() {
         return userRepository.findAll();
-    }
-
-    @Override
-    public User update(int id, User user) {
-//        user.setId(id);
-        return userRepository.save(user);
     }
 
     @Override

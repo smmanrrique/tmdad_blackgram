@@ -1,38 +1,52 @@
 package com.tmda.chatapp.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
-@Entity
 @Data
-@Getter
-@Setter
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@Entity
 @Table(name = "messages")
-public class Message extends AbstractEntity {
+@EqualsAndHashCode(callSuper=false)
+public class Message extends AbstractEntity implements Serializable {
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonBackReference
+    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
     private User fromUser;
 
-    @Column(columnDefinition = "text")
-    @Setter private String body;
+    @JsonBackReference
+    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
+    private User toUser;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @Column(columnDefinition = "text")
+    private String body;
+
+    @ManyToOne(fetch= FetchType.LAZY, cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     private Multimedia multimedia = new Multimedia();
 
-    @ManyToMany()
-    private List<Topic> topics = new ArrayList<>();
 
-    @Override
-    public String toString() {
-        return "CustomMessage{" + "id=" + ", body='" + body + '\'' + '}';
+    @ManyToMany(fetch= FetchType.LAZY, cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    private Set<Topic> topics = new HashSet<Topic>();
+
+    public Message() {}
+
+    public Message(User from, User to, String message, Set<Topic> topics) {
+        this.fromUser = from;
+        this.toUser = to;
+        this.body = message;
+        this.topics = topics;
     }
 
-    public Message(String bodyCont) {
-        body = bodyCont;
-    }
+
 }

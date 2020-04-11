@@ -1,19 +1,17 @@
 package com.tmda.chatapp.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
 @Data
-@Getter
-@Setter
-@NoArgsConstructor
+//@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "users")
 public class User extends AbstractEntity {
@@ -33,16 +31,32 @@ public class User extends AbstractEntity {
     @Column(nullable = false, length = 30)
     private String password;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date birthDay;
+    @JsonManagedReference
+    @OneToMany(fetch= FetchType.LAZY, mappedBy = "fromUser")
+    private List<Message> sendMessage = new ArrayList<Message>();
 
-    @OneToMany(mappedBy = "contactName")
-    private final List<Contact> myContacts = new ArrayList<>();
+    @JsonManagedReference
+    @OneToMany(fetch= FetchType.LAZY, mappedBy = "toUser")
+    private List<Message> receivedMessage = new ArrayList<Message>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private final List<Group> groups = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(fetch= FetchType.LAZY,mappedBy = "id")
+    private  List<User> contacts = new ArrayList<User>();
 
-    @OneToMany(mappedBy = "fromUser")
-    private List<Message> users = new ArrayList<>();
+    @ManyToMany(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Group> groups = new ArrayList<Group>();
 
+    public User() {
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userName='" + userName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
