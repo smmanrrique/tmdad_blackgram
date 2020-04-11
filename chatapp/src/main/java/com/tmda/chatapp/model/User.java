@@ -36,7 +36,7 @@ public class User extends AbstractEntity {
     @OneToMany(fetch= FetchType.LAZY, mappedBy = "toUser")
     private List<Message> receivedMessage = new ArrayList<Message>();
 
-    @OneToMany(fetch= FetchType.LAZY,mappedBy = "id")
+    @OneToMany(fetch= FetchType.EAGER,mappedBy = "id")
     private  List<User> contacts = new ArrayList<User>();
 
     @ManyToMany(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
