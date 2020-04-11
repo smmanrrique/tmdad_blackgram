@@ -1,5 +1,6 @@
 package com.tmda.chatapp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -14,9 +15,11 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper=false)
 public class Message extends AbstractEntity implements Serializable {
 
+    @JsonBackReference
     @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
     private User fromUser;
 
+    @JsonBackReference
     @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
     private User toUser;
 

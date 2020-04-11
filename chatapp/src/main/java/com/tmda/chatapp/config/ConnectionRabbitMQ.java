@@ -62,12 +62,18 @@ public class ConnectionRabbitMQ {
     }
 
     public Channel channel(){
-        return  connection.createChannel(false);
+        return connection.createChannel(false);
+    }
+
+//    @Bean
+    public Jackson2JsonMessageConverter jsonConverter() {
+        return new Jackson2JsonMessageConverter();
     }
 
     public AmqpTemplate rabbitTemplate() {
         final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
+//        rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
+        rabbitTemplate.setMessageConverter(jsonConverter());
         return rabbitTemplate;
     }
 

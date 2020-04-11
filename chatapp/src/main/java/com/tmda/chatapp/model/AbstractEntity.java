@@ -19,14 +19,12 @@ public abstract class AbstractEntity implements Serializable {
 //    @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", updatable = false, insertable = false)
-//    @JsonIgnore
     private Timestamp created;
 
 //    TODO  ON UPDATE CURRENT_TIMESTAMP
 //    @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false)
-//    @JsonIgnore
     private Timestamp updated;
 
 }

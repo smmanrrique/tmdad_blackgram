@@ -22,8 +22,6 @@ public class UserRPCController extends UserServiceGrpc.UserServiceImplBase {
 
     private static final Logger logger = LoggerFactory.getLogger(UserRPCController.class.getName());
 
-    private final String DIRECT_EXCHANGE = "directmessage";
-
     @Autowired
     @Resource(name="rabbitConnection")
     private ConnectionRabbitMQ connectionRabbitMQ;
@@ -59,10 +57,16 @@ public class UserRPCController extends UserServiceGrpc.UserServiceImplBase {
         channel.queueDeclare(userName,  true, false, false, null);
 
         // Create routing key
-        channel.queueBind(userName, DIRECT_EXCHANGE, userName);
+        channel.queueBind(userName, connectionRabbitMQ.getDIRECT_EXCHANGE(), userName);
+
+        // Create routing key from direct exchange
+        channel.queueBind(userName, connectionRabbitMQ.getDIRECT_EXCHANGE(), userName);
+
+        // Create routing key from broadcast exchange
+        channel.queueBind(userName, connectionRabbitMQ.getALL_EXCHANGE(), connectionRabbitMQ.getALL_EXCHANGE());
 
         // Create direct Binding
-        channel.queueBind(userName,"directmessage",  userName);
+        channel.queueBind(userName,connectionRabbitMQ.getDIRECT_EXCHANGE(),  userName);
 
         UserResponse reply = UserResponse.newBuilder()
                 .setUserMessage("Created new User " + request.getUserName() )

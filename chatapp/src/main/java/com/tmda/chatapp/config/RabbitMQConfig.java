@@ -3,7 +3,6 @@ package com.tmda.chatapp.config;
 import lombok.SneakyThrows;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.Connection;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -33,11 +32,6 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Jackson2JsonMessageConverter jsonConverter() {
-        return new Jackson2JsonMessageConverter();
-    }
-
-    @Bean
     @SneakyThrows
     public void connectionFactory()  {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
@@ -46,7 +40,7 @@ public class RabbitMQConfig {
         connection.createChannel(false).exchangeDeclare(environment.getProperty("DIRECT_EXCHANGE"),"direct", true);
         connection.createChannel(false).exchangeDeclare(environment.getProperty("GROUP_EXCHANGE"),"topic", true);
         connection.createChannel(false).exchangeDeclare(environment.getProperty("ALL_EXCHANGE"),"topic", true);
-    }
 
+    }
 
 }

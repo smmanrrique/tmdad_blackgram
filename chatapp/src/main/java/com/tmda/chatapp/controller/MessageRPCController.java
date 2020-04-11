@@ -65,7 +65,7 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
         // Save message in DB
         messageService.create(message);
 
-//        String result = rabbitMQSender.SendDirectMessage(connectionRabbitMQ, userToName, message);
+        String result = rabbitMQSender.SendDirectMessage(connectionRabbitMQ, userToName, message);
 
         MessageResponse reply = MessageResponse.newBuilder()
                 .setUserMessage("Send new Message " + request.getBody())
@@ -85,7 +85,7 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
 
         message.getToUser().setUserName(groupName);
         // Send message to broker
-//        String result = rabbitMQSender.SendGroupMessage(connectionRabbitMQ, groupName, message);
+        String result = rabbitMQSender.SendGroupMessage(connectionRabbitMQ, groupName, message);
 
         MessageResponse reply = MessageResponse.newBuilder()
                 .setUserMessage("Send new Message to group" + request.getBody())
@@ -98,13 +98,11 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
     public void sendMessageAll(MessageRequest request, StreamObserver<MessageResponse> responseObserver) {
         logger.info("Server Send{}", request.toByteString());
 
-        String groupName = request.getToUser();
-
         Message message = messagesUsers(request, false);
 
-        message.getToUser().setUserName(groupName);
+        message.getToUser().setUserName(connectionRabbitMQ.getALL_EXCHANGE());
 
-//        String result = rabbitMQSender.SendAllMessage(connectionRabbitMQ, username, message);
+        String result = rabbitMQSender.SendAllMessage(connectionRabbitMQ, connectionRabbitMQ.getALL_EXCHANGE(), message);
 
         MessageResponse reply = MessageResponse.newBuilder()
                 .setUserMessage("Send new Message " + request.getBody())
@@ -154,7 +152,6 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
         // Create Message and User
         User userFrom = userService.findByUsername(request.getFromUser());
 
-//        List<User> users = groupService.findByName(groupName).getUsers();
         List<Message> messages = new ArrayList<>();
         List<User> userList;
         if (isGroup){
