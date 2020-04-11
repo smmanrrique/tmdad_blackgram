@@ -2,7 +2,6 @@ package com.tmda.chatapp.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Data
-@NoArgsConstructor
+//@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "users")
 public class User extends AbstractEntity {
@@ -42,5 +41,17 @@ public class User extends AbstractEntity {
     @ManyToMany(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Group> groups = new ArrayList<Group>();
 
+    public User() {
+    }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "userName='" + userName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

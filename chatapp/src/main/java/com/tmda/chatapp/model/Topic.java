@@ -29,4 +29,12 @@ public class Topic extends AbstractEntity {
     public Topic() {
     }
 
+    public Topic(String name){
+        this.name = name;
+    }
+
+    public Topic(String name, String description){
+        this.name = name;
+        this.description = description;
+    }
 }

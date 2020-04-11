@@ -39,7 +39,6 @@ public class MessageService implements  InterfaceMessageService {
         return messageRepository.findAll();
     }
 
-
     @Override
     public void delete(long id) {
         messageRepository.deleteById(id);

@@ -14,23 +14,36 @@ import java.util.List;
 @EqualsAndHashCode(callSuper=false)
 public class Message extends AbstractEntity implements Serializable {
 
-    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
     private User fromUser;
 
-    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
     private User toUser;
 
     @Column(columnDefinition = "text")
     private String body;
 
-    @ManyToOne(fetch= FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch= FetchType.LAZY, cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     private Multimedia multimedia = new Multimedia();
 
-    @ManyToMany()
+
+    @ManyToMany(fetch= FetchType.LAZY, cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     private List<Topic> topics = new ArrayList<Topic>();
 
-    public Message() {
+    public Message() {}
 
+    public Message(User from, User to, String message, List<Topic> topics) {
+        this.fromUser = from;
+        this.toUser = to;
+        this.body = message;
+        this.topics = topics;
     }
+
 
 }

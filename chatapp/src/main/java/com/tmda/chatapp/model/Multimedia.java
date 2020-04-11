@@ -24,10 +24,11 @@ public class Multimedia extends AbstractEntity {
     @Transient
     private String mediaBase64;
 
-    @Column(columnDefinition = "text", nullable = false)
+//    @Column(columnDefinition = "text", nullable = false)
+    @Column(columnDefinition = "text")
     private String url;
 
-    @OneToMany(mappedBy = "multimedia", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "multimedia")
     private List<Message> messages = new ArrayList<>();
 
 

@@ -47,17 +47,29 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
     public void sendMessage(MessageRequest request, StreamObserver<MessageResponse> responseObserver)  {
         logger.info("Server Send{}", request.toByteString());
 
-        String username =  request.getFromUser();
+        String userFromName =  request.getFromUser();
+
+        Integer n = request.getTopicsCount();
+        List<Topic> topics = new ArrayList<Topic>();
+        if ( n > 0 ){
+            for (int i = 0; i< n; i++) {
+                topics.add(new Topic(request.getTopics(i).getTopicName()));
+            }
+        }
 
         // Create Message and User
-        Message message = new Message();
-        User user = new User();
+        User userFrom = userService.findByUsername(request.getFromUser());
+        User userTo = userService.findByUsername(request.getToUser());
 
-        user.setUserName(request.getFromUser());
-        message.setBody(request.getBody());
-        message.setFromUser(user);
+        Message message = new Message(userFrom, userTo, request.getBody(), topics);
 
-        String result = rabbitMQSender.SendDirectMessage(connectionRabbitMQ, username, message);
+
+        // Save message in DB
+        messageService.create(message);
+
+        System.out.println("MessageRPCController.sendMessage");
+
+//        String result = rabbitMQSender.SendDirectMessage(connectionRabbitMQ, userFromName, message);
 
         MessageResponse reply = MessageResponse.newBuilder()
                 .setUserMessage("Send new Message " + request.getBody())
