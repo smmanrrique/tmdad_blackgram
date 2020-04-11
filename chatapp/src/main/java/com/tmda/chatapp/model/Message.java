@@ -5,8 +5,8 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -34,11 +34,11 @@ public class Message extends AbstractEntity implements Serializable {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
-    private List<Topic> topics = new ArrayList<Topic>();
+    private Set<Topic> topics = new HashSet<Topic>();
 
     public Message() {}
 
-    public Message(User from, User to, String message, List<Topic> topics) {
+    public Message(User from, User to, String message, Set<Topic> topics) {
         this.fromUser = from;
         this.toUser = to;
         this.body = message;

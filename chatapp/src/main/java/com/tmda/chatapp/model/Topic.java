@@ -17,7 +17,7 @@ import java.util.List;
 @Table(name = "topics")
 public class Topic extends AbstractEntity {
 
-    @Column(length = 20, unique = true, nullable = false)
+    @Column(length = 20, nullable = false)
     private String name;
 
     @Column(length = 255)

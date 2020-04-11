@@ -20,7 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @GRpcService
 public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplBase {
@@ -50,7 +52,7 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
         String userFromName =  request.getFromUser();
 
         Integer n = request.getTopicsCount();
-        List<Topic> topics = new ArrayList<Topic>();
+        Set<Topic> topics = new HashSet<Topic>();
         if ( n > 0 ){
             for (int i = 0; i< n; i++) {
                 topics.add(new Topic(request.getTopics(i).getTopicName()));
@@ -63,13 +65,10 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
 
         Message message = new Message(userFrom, userTo, request.getBody(), topics);
 
-
         // Save message in DB
         messageService.create(message);
 
-        System.out.println("MessageRPCController.sendMessage");
-
-//        String result = rabbitMQSender.SendDirectMessage(connectionRabbitMQ, userFromName, message);
+        String result = rabbitMQSender.SendDirectMessage(connectionRabbitMQ, userFromName, message);
 
         MessageResponse reply = MessageResponse.newBuilder()
                 .setUserMessage("Send new Message " + request.getBody())
