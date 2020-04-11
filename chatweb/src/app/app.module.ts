@@ -17,6 +17,7 @@ import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ng6-toastr-notifications';
 import { DatePickerModule } from './core/utils/custom-date-adapter.component';
 import { UserComponent } from './components/user/user.component';
+import { MessageComponent } from './components/message/message.component';
 
 @NgModule({
 	declarations: [
@@ -25,6 +26,8 @@ import { UserComponent } from './components/user/user.component';
 		TableColumnDirective,
 
 		UserComponent,
+
+		MessageComponent,
 
 	],
 	imports: [

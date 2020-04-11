@@ -2,9 +2,10 @@ package com.tmda.chatapp.service;
 
 
 import com.rabbitmq.client.*;
-import com.tmda.chatapp.config.Config;
-import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.MessageListener;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -17,32 +18,18 @@ import java.util.concurrent.TimeoutException;
 @Service
 public class RabbitMQReceiver {
 
-    @Autowired
-    private AmqpTemplate rabbitTemplate;
-    ConnectionFactory factory;
-    private Config config;
+    private static final Logger logger = LoggerFactory.getLogger(RabbitMQReceiver.class.getName());
 
-    public RabbitMQReceiver() throws NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
-//        factory = new ConnectionFactory();
-//        factory.setUri(config.getRoutingKey());
+    public String Receiver(String queueName) throws IOException, TimeoutException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
 
-    }
+        logger.info("Call connection factory into Receiver Function");
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+        connectionFactory.getRabbitConnectionFactory().setUri("amqp://bzwbihsx:mo3CwoHiRL6V-ZBmGqrUX0S-_2CnHVcR@hawk.rmq.cloudamqp.com/bzwbihsx");
+        org.springframework.amqp.rabbit.connection.Connection connection = connectionFactory.createConnection();
 
-    public void Receiver(String queue) throws  IOException, TimeoutException {
+        Channel channel = connection.createChannel(false);
 
-        Connection connection = factory.newConnection();
-
-        // Con un solo canal
-        Channel channel = connection.createChannel();
-
-        // Declaramos una cola en el broker a través del canal
-        // recién creado llamada QUEUE_NAME (operación
-        // idempotente: solo se creará si no existe ya)
-        // Se crea tanto en el emisor como en el receptor, porque no
-        // sabemos cuál se lanzará antes
-        // Indicamos que no sea durable ni exclusiva
-        channel.queueDeclare(queue, false, false, false, null);
-        System.out.println(" [*] Esperando mensajes. CTRL+C para salir");
+        channel.queueDeclare(queueName, true, false, false, null);
 
         Consumer consumer = new DefaultConsumer(channel) {
             @Override
@@ -52,8 +39,38 @@ public class RabbitMQReceiver {
             }
         };
 
-        channel.basicConsume(queue, true, consumer);
+        channel.basicConsume(queueName, true, consumer);
+        return "Receive message: ";
 
     }
+
+
+    public MessageListener exampleListener() {
+        return new MessageListener() {
+            @Override
+            public void onMessage(org.springframework.amqp.core.Message message) {
+                System.out.println("received: " + message.getMessageProperties());
+
+            }
+        };
+    }
+
+    public String Receiver2(String queueName) throws IOException, TimeoutException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
+
+        logger.info("Receiver2");
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+        connectionFactory.getRabbitConnectionFactory().setUri("amqp://bzwbihsx:mo3CwoHiRL6V-ZBmGqrUX0S-_2CnHVcR@hawk.rmq.cloudamqp.com/bzwbihsx");
+//        AmqpTemplate rabbitTemplate = new RabbitMQConfig().rabbitTemplate(connectionFactory);
+//        System.out.println("22222222222222222222");
+//        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+//        container.setConnectionFactory(connectionFactory);
+//        container.setQueueNames(queueName);
+//        container.setMessageListener(exampleListener());
+
+        return "Receive message: ";
+
+    }
+
+
 
 }

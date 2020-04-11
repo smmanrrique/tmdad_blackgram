@@ -1,22 +1,18 @@
 package com.tmda.chatapp.model;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
+
 @Entity
 @Data
-@Getter
-@Setter
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper=false)
 @Table(name="groups")
+@EqualsAndHashCode(callSuper = false)
 public class Group extends AbstractEntity {
 
     @Column(length = 50, unique = true, nullable = false)
@@ -25,7 +21,7 @@ public class Group extends AbstractEntity {
     @Column(length = 255)
     private String description;
 
-    @ManyToMany(mappedBy = "groups")
-    private List<User> users = new ArrayList<>();
+    @ManyToMany( fetch = FetchType.LAZY, mappedBy = "groups")
+    private List<User> users = new ArrayList<User>();
 
 }

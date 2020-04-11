@@ -1,6 +1,7 @@
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home.component';
 import { NgModule } from '@angular/core';
+import { messageRoutes } from '../message/message.routing';
 
 const homeRoutes: Routes = [
 	{
@@ -9,16 +10,19 @@ const homeRoutes: Routes = [
 		children: [
 			{
 				path: '',
-				redirectTo: '/admin/',
+				redirectTo: '/admin/messages',
 				pathMatch: 'full',
 				data: {
 					breadcrumb: '',
 					icon: '',
+					expectedRoles: ['super', 'employee']
 				}
-			}
-
-			// ADD NEW ROUTES
+			},
+			...messageRoutes
 			// ...providerRoutes,
+			// ...lotRoutes,
+			// ...invoiceRoutes,
+			// ...invoiceDetailRoutes,
 		],
 		data: {
 			breadcrumb: 'home'
