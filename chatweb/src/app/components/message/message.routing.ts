@@ -15,7 +15,7 @@ export const messageRoutes: Routes = [
                 pathMatch: 'full',
                 component: MessageComponent,
                 data: {
-                    expectedRoles: ['super', 'employee']
+                    breadcrumb: 'Messages'
                 }
             }
         ]
