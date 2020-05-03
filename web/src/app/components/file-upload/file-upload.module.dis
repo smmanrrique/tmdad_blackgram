@@ -1,0 +1,35 @@
+import { FileUploadService } from './file-upload.service';
+import { FileUploadComponent } from './file-upload.component';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { UtilsModule } from 'src/app/core/utils/utils.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatTableModule, MatCheckboxModule, MatPaginatorModule, MatSelectModule, MatFormFieldModule, MatSortModule, MatInputModule } from '@angular/material';
+
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatTableModule,
+    MatCheckboxModule,
+    MatPaginatorModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSortModule,
+    ReactiveFormsModule,
+
+    UtilsModule
+  ],
+  declarations: [
+    FileUploadComponent,
+  ],
+  exports: [
+    FileUploadComponent
+  ],
+  providers: [
+    FileUploadService,
+  ]
+})
+export class FileUploadModule { }

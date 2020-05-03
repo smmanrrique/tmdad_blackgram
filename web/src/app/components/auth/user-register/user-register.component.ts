@@ -27,13 +27,14 @@ export class UserRegisterComponent implements OnInit {
   create() {
     console.log('create');
     console.log(this.form);
-    this.userService.create(<User>this.form.value)
-      .subscribe(provider => {
-        this.notificationService.sucessInsert('User');
-        this.location.back();
-      }, err => {
-        this.notificationService.error(err);
-      });
+    
+    // this.userService.create(<User>this.form.value)
+    //   .subscribe(provider => {
+    //     this.notificationService.sucessInsert('User');
+    //     this.location.back();
+    //   }, err => {
+    //     this.notificationService.error(err);
+    //   });
   }
 
 }

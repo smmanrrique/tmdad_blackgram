@@ -8,9 +8,9 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.frao {
+/* .frao {
     background-color: black;
-}
+} */
 
 html,
 body {
@@ -192,11 +192,11 @@ submit {
 }
 
 .dialog-options .btn-text {
-    margin-right: 10px;
+    margin-left: 10px;
 }
 
 .dialog-options .btn-text:last-child {
-    margin-right: 0;
+    margin-left: 0;
 }
 
 
@@ -300,7 +300,7 @@ button .text {
 }
 
 .btn-text {
-    width: 92px;
+    width: 192px;
     border: 1px solid #8c8c8c;
     text-transform: uppercase;
 }

@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
 
 	toFormGroup(): FormGroup {
 		return this.fb.group({
-			email: new FormControl('', [Validators.required, CustomValidators.emailRegex, Validators.maxLength(100)]),
+			userName: new FormControl('', [Validators.required, Validators.maxLength(30)]),
 			password: new FormControl('', Validators.required)
 		});
 	}
@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit {
 
 	getForm(): FormGroup {
 		return this.fb.group({
-			email: new FormControl('', [Validators.required, CustomValidators.emailRegex, Validators.maxLength(50)]),
+			userName: new FormControl('', [Validators.required, Validators.maxLength(30)]),
 			password: new FormControl('', Validators.required)
 		});
 	}

@@ -50,11 +50,10 @@ export class UserService {
 		return this.fb.group({
 			id: new FormControl(user.id),
 			userName: new FormControl(user.userName, [Validators.required, Validators.maxLength(30)]),
-			firstName: new FormControl(user.firstName, [Validators.required, Validators.maxLength(50)]),
-			lastName: new FormControl(user.lastName, [Validators.required, Validators.maxLength(50)]),
+			firstName: new FormControl(user.firstName, [Validators.maxLength(50)]),
+			lastName: new FormControl(user.lastName, [Validators.maxLength(50)]),
 			email: new FormControl(user.email, [CustomValidators.emailRegex]),
-			password: new FormControl(user.password, [Validators.required, Validators.maxLength(50)]),
-			birthDay: new FormControl(user.birthDay),
+			password: new FormControl(user.password, [Validators.maxLength(50)]),
 		});
 	}
 

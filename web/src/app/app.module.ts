@@ -1,3 +1,4 @@
+import { MessageModule } from './components/message/message.module';
 import { MatNativeDateModule, MatDatepickerModule } from '@angular/material';
 import { HomeModule } from './components/home/home.module';
 import { AuthModule } from './components/auth/auth.module';
@@ -18,6 +19,7 @@ import { ToastrModule } from 'ng6-toastr-notifications';
 import { DatePickerModule } from './core/utils/custom-date-adapter.component';
 import { UserComponent } from './components/user/user.component';
 import { MessageComponent } from './components/message/message.component';
+import { MultimediaComponent } from './components/multimedia/multimedia.component';
 
 @NgModule({
 	declarations: [
@@ -26,9 +28,7 @@ import { MessageComponent } from './components/message/message.component';
 		TableColumnDirective,
 
 		UserComponent,
-
-		MessageComponent,
-
+		MultimediaComponent,
 	],
 	imports: [
 		CommonModule,

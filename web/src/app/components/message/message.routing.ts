@@ -30,4 +30,4 @@ export const messageRoutes: Routes = [
         RouterModule
     ]
 })
-export class LotRoutingModule { }
+export class MessageRoutingModule { }

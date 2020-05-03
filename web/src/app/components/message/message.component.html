@@ -1,3 +1,89 @@
-<p>
-  message works!
-</p>
+<h2 class="title">API: It’s quick and easy</h2>
+<fieldset>
+  <legend><span>Command to Execute</span></legend>
+  <mat-form-field required>
+    <mat-select [(value)]="selected">
+      <mat-option>--</mat-option>
+      <mat-option *ngFor="let c of commands" [value]="c.name">
+        {{c.command}}
+      </mat-option>
+    </mat-select>
+    <mat-label><b>Command Name</b></mat-label>
+  </mat-form-field>
+</fieldset>
+
+<!-- ADD_USER_TO_SYSTEM -->
+<div *ngIf="selected=='ADD_USER_TO_SYSTEM'">
+  <form *ngIf="userform" [formGroup]="userform" (ngSubmit)="add_user_to_system()">
+    <div class="wrap-fields">
+      <div class="field">
+        <mat-form-field required>
+          <input matInput formControlName="userName" placeholder="User Name">
+        </mat-form-field>
+        <app-validator [control]="userform.controls['userName']"></app-validator>
+      </div>
+    </div>
+
+    <div class="options row">
+      <button mat-raised-button class="btn-text" type="submit" [disabled]="!userform.valid">Execute</button>
+    </div>
+  </form>
+</div>
+
+<!-- CREATE_CHAT_ROOM -->
+<div *ngIf="selected=='CREATE_CHAT_ROOM'">
+  <form *ngIf="groupform" [formGroup]="groupform" (ngSubmit)="create_chat_room()">
+    <div class="wrap-fields">
+      <div class="field">
+        <mat-form-field required>
+          <input matInput formControlName="name" placeholder="Group Name">
+        </mat-form-field>
+        <app-validator [control]="groupform.controls['name']"></app-validator>
+      </div>
+    </div>
+
+    <div class="options row">
+      <button mat-raised-button class="btn-text" type="submit" [disabled]="!groupform.valid">Execute</button>
+    </div>
+  </form>
+</div>
+
+<!-- ADD_USER_TO_CHAT_ROOM -->
+<div *ngIf="selected=='ADD_USER_TO_CHAT_ROOM'">
+  <form *ngIf="groupform" [formGroup]="groupform" (ngSubmit)="add_user_chat_room()">
+
+    <div class="wrap-fields">
+      <div class="field">
+        <mat-form-field required>
+          <input matInput formControlName="name" placeholder="Group Name">
+        </mat-form-field>
+        <app-validator [control]="groupform.controls['name']"></app-validator>
+      </div>
+    </div>
+
+    <div class="wrap-fields">
+      <div class="field">
+        <mat-form-field required>
+          <input matInput formControlName="user" placeholder="Add User">
+        </mat-form-field>
+        <app-validator [control]="groupform.controls['user']"></app-validator>
+      </div>
+    </div>
+
+    <div class="options row">
+      <button mat-raised-button class="btn-text" type="submit" [disabled]="!groupform.valid">Execute</button>
+    </div>
+  </form>
+</div>
+
+<!-- SEND_MESSAGE -->
+
+
+<!-- SEND_MESSAGE_TO_ROOM -->
+
+
+<!-- SEND_FILE -->
+<app-file-upload *ngIf="selected=='SEND_FILE'"></app-file-upload>
+
+
+<!-- SEND_MESSAGE_TO_ALL -->
