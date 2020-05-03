@@ -19,6 +19,7 @@ public class StorageService {
 
     Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
+//   TODO PATH FILES
     private final Path rootLocation = Paths.get("upload-dir");
 
     public void store(MultipartFile file) {
