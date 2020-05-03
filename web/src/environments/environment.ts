@@ -5,5 +5,7 @@
 export const environment = {
 	production: false,
 	// backendUrl: '#'
-	backendUrl: 'http://localhost:8080'
+	backendUrl: 'http://localhost:8080',
+	fileUrl: 'http://localhost:8080'
+
 };

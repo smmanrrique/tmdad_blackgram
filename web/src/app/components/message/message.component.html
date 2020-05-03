@@ -83,7 +83,22 @@
 
 
 <!-- SEND_FILE -->
-<app-file-upload *ngIf="selected=='SEND_FILE'"></app-file-upload>
+<!-- <app-file-upload *ngIf="selected=='SEND_FILE'"></app-file-upload> -->
+
+<div class="container" style="width:400px" *ngIf="selected=='SEND_FILE'">
+  <!-- <div class="container" style="width:400px"> -->
+  <div style="color: blue; margin-bottom: 20px">
+    <h1>{{title}}</h1>
+    <h3>{{description}}</h3>
+  </div>
+
+  <form-upload></form-upload>
+
+  <br />
+  <br />
+
+  <list-upload></list-upload>
+</div>
 
 
 <!-- SEND_MESSAGE_TO_ALL -->

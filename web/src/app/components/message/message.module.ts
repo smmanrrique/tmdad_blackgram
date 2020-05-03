@@ -1,4 +1,4 @@
-import { FileUploadComponent } from './../file-upload/file-upload.component';
+
 import { UserService } from './../user/user.service';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgModule } from '@angular/core';
@@ -9,6 +9,10 @@ import { MatTableModule, MatCheckboxModule, MatPaginatorModule, MatSelectModule,
 import { UtilsModule } from 'src/app/core/utils/utils.module';
 import { MessageRoutingModule } from './message.routing';
 import { MessageComponent } from './message.component';
+import { FormUploadComponent } from '../upload/form-upload/form-upload.component';
+import { ListUploadComponent } from '../upload/list-upload/list-upload.component';
+import { DetailsUploadComponent } from '../upload/details-upload/details-upload.component';
+import { UploadFileService } from '../upload/upload-file.service';
 
 
 @NgModule({
@@ -31,14 +35,25 @@ import { MessageComponent } from './message.component';
   ],
   declarations: [
     MessageComponent,
-    FileUploadComponent
+    // FileUploadComponent,
+    // FormUploadComponent,
+    ListUploadComponent,
+    DetailsUploadComponent,
+    FormUploadComponent,
   ],
   exports: [
     MessageComponent,
-    FileUploadComponent
+    // FileUploadComponent,
+    // FormUploadComponent,
+    // ListUploadComponent,
+    // DetailsUploadComponent,
+    ListUploadComponent,
+    DetailsUploadComponent,
+    FormUploadComponent,
   ],
   providers: [
     UserService,
+    UploadFileService,
   ]
 })
 export class MessageModule { }
