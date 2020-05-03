@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 })
 export class FileUploadService {
 
-  private static readonly BASE_URL: string = environment.fileUrl + '/post';
+  private static readonly BASE_URL: string = environment.fileUrl + '/uploadFile';
 
   constructor(private http: HttpClient) { }
 
@@ -29,6 +29,6 @@ export class FileUploadService {
   }
 
   getFiles(): Observable<any> {
-    return this.http.get(environment.fileUrl + '/getallfiles');
+    return this.http.get(FileUploadService.BASE_URL + '/getallfiles');
   }
 }

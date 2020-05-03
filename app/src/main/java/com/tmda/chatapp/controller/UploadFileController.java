@@ -19,15 +19,17 @@ import java.util.stream.Collectors;
 
 
 @Controller
-public class UploadController {
+public class UploadFileController {
+
+    public final String CROSS_ORIGIN = "http://localhost:4200";
 
     @Autowired
     StorageService storageService;
 
     List<String> files = new ArrayList<String>();
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/post")
+    @CrossOrigin(origins =CROSS_ORIGIN)
+    @PostMapping("/uploadFile")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
         String message = "";
         try {
@@ -42,19 +44,19 @@ public class UploadController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("/getallfiles")
+    @CrossOrigin(origins = CROSS_ORIGIN)
+    @GetMapping("/uploadFile/getallfiles")
     public ResponseEntity<List<String>> getListFiles(Model model) {
         List<String> fileNames = files
                 .stream().map(fileName -> MvcUriComponentsBuilder
-                        .fromMethodName(UploadController.class, "getFile", fileName).build().toString())
+                        .fromMethodName(UploadFileController.class, "getFile", fileName).build().toString())
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok().body(fileNames);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("/files/{filename:.+}")
+    @CrossOrigin(origins = CROSS_ORIGIN)
+    @GetMapping("//uploadFile/{filename:.+}")
     @ResponseBody
     public ResponseEntity<Resource> getFile(@PathVariable String filename) {
         Resource file = storageService.loadFile(filename);

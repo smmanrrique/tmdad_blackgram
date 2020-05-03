@@ -8,8 +8,6 @@ import { User } from '../auth/user-register/user';
 import { Group } from '../group/group';
 import { FileUploader } from 'ng2-file-upload';
 
-// const UploadURL = 'http://localhost:3000/home/shamuel/upload';
-
 @Component({
   selector: 'app-message',
   templateUrl: './message.component.html',
@@ -17,11 +15,6 @@ import { FileUploader } from 'ng2-file-upload';
 })
 
 export class MessageComponent implements OnInit {
-
-  // fileToUpload: File = null;
-  // title = 'Upload a File';
-
-  // public uploader: FileUploader = new FileUploader({ url: URL, itemAlias: 'photo' });
 
   userform: FormGroup;
   groupform: FormGroup;
@@ -37,7 +30,6 @@ export class MessageComponent implements OnInit {
 
 
   constructor(
-    // private location: Location,
     private userService: UserService,
     private groupService: GroupService,
   ) { }

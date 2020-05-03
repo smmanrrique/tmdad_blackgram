@@ -1,10 +1,7 @@
-import { HttpClient, HttpEvent, HttpErrorResponse, HttpEventType } from '@angular/common/http';
-import { throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { OnInit, Component } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { FileUploadService } from './file-upload.service';
-import { FileUploader } from 'ng2-file-upload';
+
+import { HttpClient, HttpEvent, HttpErrorResponse, HttpEventType, HttpResponse } from '@angular/common/http';
+import { OnInit, Component } from '@angular/core';
 
 @Component({
   selector: 'app-file-upload',
@@ -14,6 +11,34 @@ import { FileUploader } from 'ng2-file-upload';
 
 export class FileUploadComponent {
 
+  selectedFiles: FileList;
+  currentFileUpload: File;
+  progress: { percentage: number } = { percentage: 0 };
+
+  constructor(private fileUploadService: FileUploadService) { }
+
+  ngOnInit() {
+  }
+
+  selectFile(event) {
+    this.selectedFiles = event.target.files;
+  }
+
+  upload() {
+    this.progress.percentage = 0;
+
+    this.currentFileUpload = this.selectedFiles.item(0);
+
+    this.fileUploadService.pushFileToStorage(this.currentFileUpload).subscribe(event => {
+      if (event.type === HttpEventType.UploadProgress) {
+        this.progress.percentage = Math.round(100 * event.loaded / event.total);
+      } else if (event instanceof HttpResponse) {
+        console.log('File is completely uploaded!');
+      }
+    });
+
+    this.selectedFiles = undefined;
+  }
 
 
 }

@@ -1,6 +1,6 @@
+import { FileUploadService } from './file-upload.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UploadFileService } from './upload-file.service';
 
 @Component({
   selector: 'list-upload',
@@ -27,7 +27,7 @@ export class ListUploadComponent implements OnInit {
   showFile = false;
   fileUploads: Observable<string[]>;
 
-  constructor(private uploadService: UploadFileService) { }
+  constructor(private fileUploadService: FileUploadService) { }
 
   ngOnInit() {
   }
@@ -36,7 +36,7 @@ export class ListUploadComponent implements OnInit {
     this.showFile = enable;
 
     if (enable) {
-      this.fileUploads = this.uploadService.getFiles();
+      this.fileUploads = this.fileUploadService.getFiles();
     }
   }
 }
