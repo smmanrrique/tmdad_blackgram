@@ -38,4 +38,9 @@ service MessageService {
     rpc SendMessageAll(MessageRequest) returns (MessageResponse) { }
 
     rpc ReceiverMessage(MessageResponse) returns (MessageResponse) { }
+
+    rpc ReceiverMessage3(MessageResponse) returns (MessageResponse) { }
+
+    rpc ReceiverMessage2(MessageResponse) returns (stream MessageRequest) { }
+
 }

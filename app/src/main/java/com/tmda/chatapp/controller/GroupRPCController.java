@@ -38,7 +38,7 @@ public class GroupRPCController extends GroupServiceGrpc.GroupServiceImplBase {
     @SneakyThrows
     @Override
     public void createGroup(GroupGRPC request, StreamObserver<GroupMessage> responseObserver) {
-        logger.info("server received{}", request);
+        logger.info("Call createGroup and server received {}", request);
 
         String groupName = request.getName();
 
@@ -53,28 +53,34 @@ public class GroupRPCController extends GroupServiceGrpc.GroupServiceImplBase {
         Channel channel = connectionRabbitMQ.channel();
 
         // Create Exchange to group
-        channel.exchangeDeclare(groupName, "topic", true);
+        channel.exchangeDeclare(connectionRabbitMQ.getGROUP_EXCHANGE(), "topic", true);
 
         GroupMessage reply = GroupMessage.newBuilder()
-                .setGroupMessage("Created new Group: " + groupName)
+                .setGroupMessage(" Group "+ groupName + " was created")
                 .build();
         responseObserver.onNext(reply);
         responseObserver.onCompleted();
     }
 
+    @SneakyThrows
     @Transactional(readOnly = false)
     @Override
     public void addUser(AddUserGroup request, StreamObserver<GroupMessage> responseObserver) {
-
+        logger.info("Call addUserGroup and server received {}", request);
         Group group = groupService.findByName(request.getGroupName());
         User user = userService.findByUsername(request.getUserName());
 
+        Channel channel = connectionRabbitMQ.channel();
+
+        // Create routing key
+        channel.queueBind(request.getUserName(), connectionRabbitMQ.getGROUP_EXCHANGE(), request.getGroupName());
+
         // Add user to group and group to user
-        user.getGroups().add(group);
+        user.getGroup().add(group);
 
         userService.create(user);
         GroupMessage reply = GroupMessage.newBuilder()
-                .setGroupMessage("Add user:"+ user.getUserName()+ "  new Group: " + group.getName())
+                .setGroupMessage("Added user:"+ user.getUserName()+ " to Group: " + group.getName())
                 .build();
         responseObserver.onNext(reply);
         responseObserver.onCompleted();

@@ -32,13 +32,12 @@ public class UserRPCController extends UserServiceGrpc.UserServiceImplBase {
     @SneakyThrows
     @Override
     public void createUser(UserRequest request, StreamObserver<UserResponse> responseObserver) {
-        logger.info("server received{}", request);
+        logger.info("Call createUser and server received {}", request);
 
         String userName= request.getUserName();
 
         User user = new User();
         user.setUserName(userName);
-//        user.setBirthDay(request.getBirthDay());
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         if(request.getPassword()!= null) {
@@ -69,7 +68,7 @@ public class UserRPCController extends UserServiceGrpc.UserServiceImplBase {
         channel.queueBind(userName,connectionRabbitMQ.getDIRECT_EXCHANGE(),  userName);
 
         UserResponse reply = UserResponse.newBuilder()
-                .setUserMessage("Created new User " + request.getUserName() )
+                .setUserMessage(" User account "+ request.getUserName() + " was created" )
                 .build();
         responseObserver.onNext(reply);
         responseObserver.onCompleted();
@@ -77,7 +76,7 @@ public class UserRPCController extends UserServiceGrpc.UserServiceImplBase {
 
     @Override
     public void addContact(ContactAdd request, StreamObserver<UserResponse> responseObserver) {
-        logger.info("server received{}", request);
+        logger.info("Call addContact and server received {}", request);
 
         User user = userService.findByUsername(request.getUsername());
         User contact = userService.findByUsername(request.getContact());
@@ -89,7 +88,7 @@ public class UserRPCController extends UserServiceGrpc.UserServiceImplBase {
         userService.create(user);
 
         UserResponse reply = UserResponse.newBuilder()
-                .setUserMessage("Added contact: "+request.getContact() +" to User: " + request.getUsername() )
+                .setUserMessage("Added new contact: "+request.getContact() +" to User: " + request.getUsername() )
                 .build();
         responseObserver.onNext(reply);
         responseObserver.onCompleted();

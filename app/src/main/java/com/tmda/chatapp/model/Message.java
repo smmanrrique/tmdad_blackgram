@@ -15,13 +15,17 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper=false)
 public class Message extends AbstractEntity implements Serializable {
 
-    @JsonBackReference
+    @JsonBackReference(value = "fromUser")
     @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
     private User fromUser;
 
-    @JsonBackReference
+    @JsonBackReference(value = "toUser")
     @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
     private User toUser;
+
+    @JsonBackReference(value = "group_message")
+    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
+    private Group group_message;
 
     @Column(columnDefinition = "text")
     private String body;
@@ -44,6 +48,13 @@ public class Message extends AbstractEntity implements Serializable {
     public Message(User from, User to, String message, Set<Topic> topics) {
         this.fromUser = from;
         this.toUser = to;
+        this.body = message;
+        this.topics = topics;
+    }
+
+    public Message(User from, Group to, String message, Set<Topic> topics) {
+        this.fromUser = from;
+        this.group_message = to;
         this.body = message;
         this.topics = topics;
     }

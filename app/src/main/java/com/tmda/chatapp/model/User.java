@@ -11,7 +11,6 @@ import java.util.List;
 
 @Entity
 @Data
-//@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "users")
 public class User extends AbstractEntity {
@@ -31,11 +30,11 @@ public class User extends AbstractEntity {
     @Column(nullable = false, length = 30)
     private String password;
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "fromUser" )
     @OneToMany(fetch= FetchType.LAZY, mappedBy = "fromUser")
     private List<Message> sendMessage = new ArrayList<Message>();
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "toUser" )
     @OneToMany(fetch= FetchType.LAZY, mappedBy = "toUser")
     private List<Message> receivedMessage = new ArrayList<Message>();
 
@@ -44,7 +43,7 @@ public class User extends AbstractEntity {
     private  List<User> contacts = new ArrayList<User>();
 
     @ManyToMany(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Group> groups = new ArrayList<Group>();
+    private List<Group> group = new ArrayList<Group>();
 
     public User() {
     }

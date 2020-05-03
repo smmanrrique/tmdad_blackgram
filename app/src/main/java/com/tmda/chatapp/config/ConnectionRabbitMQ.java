@@ -6,6 +6,7 @@ import lombok.SneakyThrows;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.Connection;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.stereotype.Component;
@@ -52,6 +53,13 @@ public class ConnectionRabbitMQ {
 
     @SneakyThrows
     public CachingConnectionFactory connectionFactory()  {
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+        connectionFactory.getRabbitConnectionFactory().setUri(RABBITMQ_URL);
+        return connectionFactory;
+    }
+
+    @SneakyThrows
+    public ConnectionFactory connFactory()  {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
         connectionFactory.getRabbitConnectionFactory().setUri(RABBITMQ_URL);
         return connectionFactory;
@@ -111,4 +119,20 @@ public class ConnectionRabbitMQ {
                 ", connection=" + connection +
                 '}';
     }
+
+
+//    @Bean
+//    public MappingJackson2MessageConverter consumerJackson2MessageConverter() {
+//        return new MappingJackson2MessageConverter();
+//    }
+//    @Bean
+//    public DefaultMessageHandlerMethodFactory messageHandlerMethodFactory() {
+//        DefaultMessageHandlerMethodFactory factory = new DefaultMessageHandlerMethodFactory();
+//        factory.setMessageConverter(consumerJackson2MessageConverter());
+//        return factory;
+//    }
+//    @Override
+//    public void configureRabbitListeners(final RabbitListenerEndpointRegistrar registrar) {
+//        registrar.setMessageHandlerMethodFactory(messageHandlerMethodFactory());
+//    }
 }
