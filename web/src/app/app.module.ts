@@ -8,7 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TableColumnDirective } from './core/table/tableColumnDirective';
@@ -37,7 +36,6 @@ import { MultimediaComponent } from './components/multimedia/multimedia.componen
 		HttpClientModule,
 		FormsModule,
 		RouterModule,
-		Ng2SmartTableModule,
 		DatePickerModule,
 		ToastrModule.forRoot(),
 		DatePickerModule,

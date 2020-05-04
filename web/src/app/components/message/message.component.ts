@@ -6,7 +6,6 @@ import { FormGroup } from '@angular/forms';
 import { UserService } from '../auth/user-register/user.service';
 import { User } from '../auth/user-register/user';
 import { Group } from '../group/group';
-import { FileUploader } from 'ng2-file-upload';
 
 @Component({
   selector: 'app-message',
