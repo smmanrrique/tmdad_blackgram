@@ -7,7 +7,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // tslint:disable-next-line:max-line-length
-import { MatTableModule, MatCheckboxModule, MatPaginatorModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatSortModule } from '@angular/material';
+import { MatTableModule, MatCheckboxModule, MatPaginatorModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatSortModule, MatGridListModule } from '@angular/material';
 import { UtilsModule } from 'src/app/core/utils/utils.module';
 import { MessageRoutingModule } from './message.routing';
 import { MessageComponent } from './message.component';
@@ -24,6 +24,7 @@ import { FileUploadComponent } from '../file-upload/file-upload.component';
     MatTableModule,
     MatCheckboxModule,
     MatPaginatorModule,
+    MatGridListModule,
     MatSelectModule,
     MatFormFieldModule,
     MatInputModule,
