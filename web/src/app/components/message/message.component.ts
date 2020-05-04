@@ -63,4 +63,8 @@ export class MessageComponent implements OnInit {
   //   this.fileToUpload = files.item(0);
   // }
 
+  send_message() {
+    console.log("send_message");
+  }
+
 }

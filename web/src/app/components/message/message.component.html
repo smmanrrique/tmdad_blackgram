@@ -1,32 +1,47 @@
-<mat-grid-list cols="4" rowHeight="150px">
-  <mat-grid-tile colspan="4" rowspan="2" style.background="lightblue">
-    <!-- <h2 class="title">API: It’s quick and easy</h2>   -->
-    <fieldset>
-      <legend><span>Command to Execute</span></legend>
-      <mat-form-field required>
-        <mat-select [(value)]="selected">
-          <mat-option *ngFor="let c of commands" [value]="c.name">
-            {{c.command}}
-          </mat-option>
-        </mat-select>
-        <mat-label><b>Command Name</b></mat-label>
-      </mat-form-field>
-    </fieldset>
+<div class="container1">
+  <div class="title">
+    <h2>API</h2>
+  </div>
+
+  <div class="button1">
+    <div class="buttons">
+      <button class="b1 fa fa-twitter fa-5x" title="New Contact" (click)="add_user_to_system()">
+        <i class="material-icons">person_add</i>
+      </button>
+      <button (click)="add_user_chat_room()" title="New Group">
+        <i class="material-icons">group_add</i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>Execute command</mat-card-title>
+    <mat-card-subtitle>It’s quick and easy.</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+
+    <mat-form-field required>
+      <mat-select [(value)]="selected">
+        <mat-option>----------</mat-option>
+        <mat-option *ngFor="let c of commands" [value]="c.name">
+          {{c.command}}
+        </mat-option>
+      </mat-select>
+      <mat-label><b>Command</b></mat-label>
+    </mat-form-field>
 
     <!-- ADD_USER_TO_SYSTEM -->
     <div *ngIf="selected=='ADD_USER_TO_SYSTEM'">
       <form *ngIf="userform" [formGroup]="userform" (ngSubmit)="add_user_to_system()">
-        <div class="wrap-fields">
-          <div class="field">
-            <mat-form-field required>
-              <input matInput formControlName="userName" placeholder="User Name">
-            </mat-form-field>
-            <app-validator [control]="userform.controls['userName']"></app-validator>
-          </div>
-        </div>
+        <mat-form-field required>
+          <input matInput formControlName="userName" placeholder="User Name">
+        </mat-form-field>
+        <app-validator [control]="userform.controls['userName']"></app-validator>
 
-        <div class="options row">
-          <button mat-raised-button class="btn-text" type="submit" [disabled]="!userform.valid">Execute</button>
+        <div class="field">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!userform.valid">Execute</button>
         </div>
       </form>
     </div>
@@ -34,16 +49,12 @@
     <!-- CREATE_CHAT_ROOM -->
     <div *ngIf="selected=='CREATE_CHAT_ROOM'">
       <form *ngIf="groupform" [formGroup]="groupform" (ngSubmit)="create_chat_room()">
-        <div class="wrap-fields">
-          <div class="field">
-            <mat-form-field required>
-              <input matInput formControlName="name" placeholder="Group Name">
-            </mat-form-field>
-            <app-validator [control]="groupform.controls['name']"></app-validator>
-          </div>
-        </div>
+        <mat-form-field required>
+          <input matInput formControlName="name" placeholder="Group Name">
+        </mat-form-field>
+        <app-validator [control]="groupform.controls['name']"></app-validator>
 
-        <div class="options row">
+        <div class="field">
           <button mat-raised-button class="btn-text" type="submit" [disabled]="!groupform.valid">Execute</button>
         </div>
       </form>
@@ -53,35 +64,43 @@
     <div *ngIf="selected=='ADD_USER_TO_CHAT_ROOM'">
       <form *ngIf="groupform" [formGroup]="groupform" (ngSubmit)="add_user_chat_room()">
 
-        <div class="wrap-fields">
-          <div class="field">
-            <mat-form-field required>
-              <input matInput formControlName="name" placeholder="Group Name">
-            </mat-form-field>
-            <app-validator [control]="groupform.controls['name']"></app-validator>
-          </div>
-        </div>
+        <mat-form-field required>
+          <input matInput formControlName="name" placeholder="Group Name">
+        </mat-form-field>
+        <app-validator [control]="groupform.controls['name']"></app-validator>
 
-        <div class="wrap-fields">
-          <div class="field">
-            <mat-form-field required>
-              <input matInput formControlName="user" placeholder="Add User">
-            </mat-form-field>
-            <app-validator [control]="groupform.controls['user']"></app-validator>
-          </div>
-        </div>
+        <mat-form-field required>
+          <input matInput formControlName="user" placeholder="Add User">
+        </mat-form-field>
+        <app-validator [control]="groupform.controls['user']"></app-validator>
 
-        <div class="options row">
+        <div class="field">
           <button mat-raised-button class="btn-text" type="submit" [disabled]="!groupform.valid">Execute</button>
         </div>
       </form>
     </div>
 
     <!-- SEND_MESSAGE -->
+    <div *ngIf="selected=='SEND_MESSAGE'">
+      <form *ngIf="groupform" [formGroup]="groupform" (ngSubmit)="send_message()">
 
+        <mat-form-field required>
+          <input matInput formControlName="name" placeholder="Group Name">
+        </mat-form-field>
+        <app-validator [control]="groupform.controls['name']"></app-validator>
+
+        <mat-form-field required>
+          <input matInput formControlName="user" placeholder="Add User">
+        </mat-form-field>
+        <app-validator [control]="groupform.controls['user']"></app-validator>
+
+        <div class="field">
+          <button mat-raised-button class="btn-text" type="submit" [disabled]="!groupform.valid">Execute</button>
+        </div>
+      </form>
+    </div>
 
     <!-- SEND_MESSAGE_TO_ROOM -->
-
 
     <!-- SEND_FILE -->
     <div *ngIf="selected=='SEND_FILE'">
@@ -103,7 +122,9 @@
 
     <!-- SEND_MESSAGE_TO_ALL -->
 
-  </mat-grid-tile>
-  <mat-grid-tile colspan="2" rowspan="4" style.background="lightgreen">2</mat-grid-tile>
-  <mat-grid-tile colspan="2" rowspan="4" style.background="lightpink">3</mat-grid-tile>
-</mat-grid-list>
+  </mat-card-content>
+  <mat-card-actions>
+    <!-- <button mat-button>LIKE</button>
+    <button mat-button>SHARE</button> -->
+  </mat-card-actions>
+</mat-card>
