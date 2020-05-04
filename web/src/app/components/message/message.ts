@@ -1,4 +1,4 @@
-import { Multimedia } from '../multimedia/multimedia';
+import { Multimedia } from '../file-upload/multimedia';
 import { BaseModel } from "src/app/core/models/base-model";
 import { Topic } from "./topic";
 
