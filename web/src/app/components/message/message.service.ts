@@ -20,9 +20,10 @@ export class MessageService {
   getMessage(message: Message): FormGroup {
     return this.fb.group({
       id: new FormControl(message.id),
-      toUser: new FormControl(message.toUser, Validators.required),
-      fromUser: new FormControl(message.fromUser, Validators.required),
-      group_message: new FormControl(message.group_message, Validators.required),
+      toUser: new FormControl(message.toUser),
+      fromUser: new FormControl(message.fromUser),
+      group_message: new FormControl(message.group_message),
+      body: new FormControl(message.group_message),
       multimedia: new FormControl(message.multimedia ? message.multimedia.url : undefined),
       topics: this.fb.array([
         this.initTopic(new Topic())
@@ -37,5 +38,18 @@ export class MessageService {
       description: new FormControl(topic.description),
     });
   }
+
+  // getMessage(message: Message): FormGroup {
+  //   return this.fb.group({
+  //     id: new FormControl(message.id),
+  //     toUser: new FormControl(message.toUser),
+  //     fromUser: new FormControl(message.fromUser),
+  //     group_message: new FormControl(message.group_message),
+  //     multimedia: new FormControl(message.multimedia ? message.multimedia.url : undefined),
+  //     topics: this.fb.array([
+  //       this.initTopic(new Topic())
+  //     ])
+  //   });
+  // }
 
 }

@@ -48,7 +48,7 @@ export class MessageComponent implements OnInit {
 
     this.userform = this.userService.getUser(new User());
     this.groupform = this.groupService.getGroup(new Group());
-    this.messageform = this.messageService.getMessage(new Message);
+    this.messageform = this.messageService.getMessage(new Message());
   }
 
   add_user_to_system() {
