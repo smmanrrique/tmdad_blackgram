@@ -70,7 +70,7 @@
         <app-validator [control]="groupform.controls['name']"></app-validator>
 
         <mat-form-field required>
-          <input matInput formControlName="user" placeholder="Add User">
+          <input matInput formControlName="user" placeholder="User Name">
         </mat-form-field>
         <app-validator [control]="groupform.controls['user']"></app-validator>
 
@@ -85,12 +85,12 @@
       <form *ngIf="groupform" [formGroup]="groupform" (ngSubmit)="send_message()">
 
         <mat-form-field required>
-          <input matInput formControlName="name" placeholder="Group Name">
+          <input matInput formControlName="name" placeholder="To">
         </mat-form-field>
         <app-validator [control]="groupform.controls['name']"></app-validator>
 
         <mat-form-field required>
-          <input matInput formControlName="user" placeholder="Add User">
+          <input matInput formControlName="user" placeholder="From">
         </mat-form-field>
         <app-validator [control]="groupform.controls['user']"></app-validator>
 
@@ -101,6 +101,24 @@
     </div>
 
     <!-- SEND_MESSAGE_TO_ROOM -->
+    <div *ngIf="selected=='SEND_MESSAGE_TO_ROOM'">
+      <form *ngIf="groupform" [formGroup]="groupform" (ngSubmit)="send_message()">
+
+        <mat-form-field required>
+          <input matInput formControlName="name" placeholder="To">
+        </mat-form-field>
+        <app-validator [control]="groupform.controls['name']"></app-validator>
+
+        <mat-form-field required>
+          <input matInput formControlName="user" placeholder="From">
+        </mat-form-field>
+        <app-validator [control]="groupform.controls['user']"></app-validator>
+
+        <div class="field">
+          <button mat-raised-button class="btn-text" type="submit" [disabled]="!groupform.valid">Execute</button>
+        </div>
+      </form>
+    </div>
 
     <!-- SEND_FILE -->
     <div *ngIf="selected=='SEND_FILE'">
