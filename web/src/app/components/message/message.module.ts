@@ -17,7 +17,6 @@ import { FileUploadComponent } from '../file-upload/file-upload.component';
 
 @NgModule({
   imports: [
-    // FileUploadModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
