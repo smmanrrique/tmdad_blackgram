@@ -17,6 +17,7 @@ import { ToastrModule } from 'ng6-toastr-notifications';
 import { DatePickerModule } from './core/utils/custom-date-adapter.component';
 import { UserComponent } from './components/user/user.component';
 import { GroupComponent } from './components/group/group.component';
+import { TrendingComponent } from './components/trending/trending.component';
 
 @NgModule({
 	declarations: [
@@ -27,6 +28,8 @@ import { GroupComponent } from './components/group/group.component';
 		UserComponent,
 
 		GroupComponent,
+
+		TrendingComponent,
 	],
 	imports: [
 		CommonModule,
