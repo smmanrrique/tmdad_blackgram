@@ -16,7 +16,6 @@ import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ng6-toastr-notifications';
 import { DatePickerModule } from './core/utils/custom-date-adapter.component';
 import { UserComponent } from './components/user/user.component';
-import { GroupComponent } from './components/group/group.component';
 import { TrendingComponent } from './components/trending/trending.component';
 
 @NgModule({
@@ -26,10 +25,6 @@ import { TrendingComponent } from './components/trending/trending.component';
 		TableColumnDirective,
 
 		UserComponent,
-
-		GroupComponent,
-
-		TrendingComponent,
 	],
 	imports: [
 		CommonModule,

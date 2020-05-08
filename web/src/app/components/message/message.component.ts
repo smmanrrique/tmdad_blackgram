@@ -9,7 +9,7 @@ import { Group } from '../group/group';
 import { Message } from './message';
 
 @Component({
-  selector: 'app-message',
+  // selector: 'app-message',
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.css']
 })
