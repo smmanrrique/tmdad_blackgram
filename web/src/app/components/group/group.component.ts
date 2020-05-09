@@ -32,7 +32,7 @@ export class GroupComponent implements OnInit {
   ];
 
   sms: Sms[] = [
-    {fromUser: 'U1', body: 'asssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
+    {fromUser: 'U1 SHAMUEL AMS', body: 'asssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
     {fromUser: 'U2', body: 'asssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
     {fromUser: 'U3', body: 'asssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
     {fromUser: 'U4', body: 'asssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
@@ -45,7 +45,7 @@ export class GroupComponent implements OnInit {
 
   displayedColumns: string[] = ['message.fromUser', 'message'];
 
-
+  g1 = new Group();
   dataSource = this.sms;
   ngOnInit() {
     // this.dataSource.data = this.sms;
