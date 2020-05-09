@@ -1,3 +1,43 @@
-<p>
-  group works!
-</p>
+<div class="container1">
+  <div class="title">
+    <h2>My Groups</h2>
+  </div>
+
+  <div class="button1">
+    <div class="buttons">
+      <button (click)="add_user_chat_room()" title="New Group">
+        <i class="material-icons">group_add</i>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="wrap">
+  <div class="floatleft">
+    <ul class="groups">
+      <li *ngFor="let group of groups_test"
+          [class.selected]="group === selectedGroup"
+          (click)="onSelect(group)">
+        <span class="badge">{{group.name}}</span> {{group.description}}
+      </li>
+    </ul>
+  </div>
+
+  <div class="floatright">
+    <div *ngIf="selectedGroup">
+
+      <h2>{{selectedGroup.name | uppercase}} Details</h2>
+      <div>
+        <label>name:
+          <input [(ngModel)]="selectedGroup.name" placeholder="name"/>
+        </label>
+      </div>
+
+    </div>
+  </div>
+
+  <div style="clear: both;">
+  </div>
+  </div>
