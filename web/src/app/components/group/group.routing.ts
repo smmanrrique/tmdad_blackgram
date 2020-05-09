@@ -4,7 +4,7 @@ import {GroupComponent} from "./group.component";
 
 export const groupRoutes: Routes = [
   {
-    path: 'group',
+    path: 'groups',
     component: GroupComponent,
     data: {
       breadcrumb: 'Groups'

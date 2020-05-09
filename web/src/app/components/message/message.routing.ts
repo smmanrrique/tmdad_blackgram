@@ -16,17 +16,23 @@ export const messageRoutes: Routes = [
               pathMatch: 'full',
               component: MessageComponent,
               data: {
-                breadcrumb: 'Chat'
+                breadcrumb: 'API'
               }
             },
             {
               path: 'api',
-              // pathMatch: 'full',
-              component: ChatComponent,
+              component: MessageComponent,
               data: {
                 breadcrumb: 'API'
               }
+            },
+          {
+            path: 'chats',
+            component: ChatComponent,
+            data: {
+              breadcrumb: 'Chats'
             }
+          }
         ]
     }
 ];

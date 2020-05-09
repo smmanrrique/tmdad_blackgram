@@ -4,7 +4,7 @@ import {TrendingComponent} from "./trending.component";
 
 export const trendingRoutes: Routes = [
   {
-    path: 'trending',
+    path: 'trendings',
     component: TrendingComponent,
     data: {
       breadcrumb: 'Trendings'
