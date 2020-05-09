@@ -14,6 +14,7 @@ import { MessageComponent } from './message.component';
 import { ListUploadComponent } from '../file-upload/list-upload.component';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
 import {ChatComponent} from "./chat.component";
+import {ApiComponent} from "./api.component";
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import {ChatComponent} from "./chat.component";
   ],
   declarations: [
     ChatComponent,
+    ApiComponent,
     MessageComponent,
     FileUploadComponent,
     ListUploadComponent,
@@ -44,6 +46,7 @@ import {ChatComponent} from "./chat.component";
   ],
   exports: [
     ChatComponent,
+    ApiComponent,
     MessageComponent,
     FileUploadComponent,
     ListUploadComponent,

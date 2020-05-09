@@ -2,6 +2,7 @@ import { MessageComponent } from "./message.component";
 import { RouterModule, Routes } from "@angular/router";
 import { NgModule } from '@angular/core';
 import {ChatComponent} from "./chat.component";
+import {ApiComponent} from "./api.component";
 
 export const messageRoutes: Routes = [
     {
@@ -14,14 +15,14 @@ export const messageRoutes: Routes = [
             {
               path: '',
               pathMatch: 'full',
-              component: MessageComponent,
+              component: ApiComponent,
               data: {
                 breadcrumb: 'API'
               }
             },
             {
               path: 'api',
-              component: MessageComponent,
+              component: ApiComponent,
               data: {
                 breadcrumb: 'API'
               }
