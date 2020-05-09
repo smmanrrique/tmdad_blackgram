@@ -1,6 +1,14 @@
 import {Component, OnInit} from "@angular/core";
 import {Group} from "./group";
 import {User} from "../auth/user-register/user";
+import {MatTableDataSource} from "@angular/material/table";
+
+export interface Sms {
+  fromUser: string;
+  body: string;
+  topics: string;
+  multimedia: string;
+}
 
 @Component({
   selector: "app-group",
@@ -9,9 +17,11 @@ import {User} from "../auth/user-register/user";
 })
 export class GroupComponent implements OnInit {
 
+  // dataSource = new MatTableDataSource<Message>();
+  // dataSource = new MatTableDataSource<Sms>();
   selectedGroup: Group;
 
-  User = new User();
+    User = new User();
 
   // @ts-ignore
   groups_test: Group[] = [
@@ -21,8 +31,24 @@ export class GroupComponent implements OnInit {
     { name: "g3", description: "ADD_USER_TO_SYSTEM", user: "[]" },
   ];
 
-  ngOnInit() {
+  sms: Sms[] = [
+    {fromUser: 'U1', body: 'asssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
+    {fromUser: 'U2', body: 'asssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
+    {fromUser: 'U3', body: 'asssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
+    {fromUser: 'U4', body: 'asssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
+    {fromUser: 'U5', body: 'asssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
+    {fromUser: 'U6', body: 'asssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
+    {fromUser: 'U1', body: 'asssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
+    {fromUser: 'U1', body: 'asssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
+    {fromUser: 'U1', body: 'asssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
+  ];
 
+  displayedColumns: string[] = ['message.fromUser', 'message'];
+
+
+  dataSource = this.sms;
+  ngOnInit() {
+    // this.dataSource.data = this.sms;
   }
 
   constructor() { }
