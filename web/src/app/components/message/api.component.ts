@@ -7,6 +7,7 @@ import { UserService } from '../auth/user-register/user.service';
 import { User } from '../auth/user-register/user';
 import { Group } from '../group/group';
 import { Message } from './message';
+import {NotificationService} from "../../core/utils/notification/notification.service";
 
 @Component({
   // selector: 'app-message',
@@ -35,6 +36,7 @@ export class ApiComponent implements OnInit {
     private userService: UserService,
     private groupService: GroupService,
     private messageService: MessageService,
+    private notificationService: NotificationService
   ) { }
 
 
@@ -44,25 +46,38 @@ export class ApiComponent implements OnInit {
     this.messageform = this.messageService.getMessage(new Message());
   }
 
+  // Function to create user
   add_user_to_system() {
-    console.log("add_user_to_system");
+    // console.log(this.form);
+    // this.lotService.create(<Lot> this.form.value)
+    //   .subscribe(lot => {
+    //     this.notificationService.sucessInsert('Lote');
+    //     this.location.back();
+    //   }, err =>  {
+    //     this.notificationService.error(err);
+    //   });
 
+    console.log("add_user_to_system");
+    console.log(this.userform)
+    this.notificationService.sucessInsert('User');
   }
 
   create_chat_room() {
     console.log("create_chat_room");
+    console.log(this.groupform)
+    this.notificationService.sucessInsert('Group');
   }
 
   add_user_chat_room() {
     console.log("create_chat_room");
+    console.log(this.groupform)
+    this.notificationService.sucessUpdate('added user to Group');
   }
-
-  // handleFileInput(files: FileList) {
-  //   this.fileToUpload = files.item(0);
-  // }
 
   send_message() {
     console.log("send_message");
+    console.log(this.messageform)
+    this.notificationService.showInfo('Send Message');
   }
 
 }
