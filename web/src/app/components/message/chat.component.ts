@@ -24,6 +24,21 @@ export class ChatComponent implements OnInit {
     { name: "g2", description: "ADD_USER_TO_SYSTEM", user: "[]" },
     { name: "g4", description: "ADD_USER_TO_SYSTEM", user: "[]" },
     { name: "g3", description: "ADD_USER_TO_SYSTEM", user: "[]" },
+    { name: "g3", description: "ADD_USER_TO_SYSTEM", user: "[]" },
+    { name: "g3", description: "ADD_USER_TO_SYSTEM", user: "[]" },
+    { name: "g3", description: "ADD_USER_TO_SYSTEM", user: "[]" },
+    { name: "g3", description: "ADD_USER_TO_SYSTEM", user: "[]" },
+    { name: "g3", description: "ADD_USER_TO_SYSTEM", user: "[]" },
+    { name: "g3", description: "ADD_USER_TO_SYSTEM", user: "[]" },
+    { name: "g3", description: "ADD_USER_TO_SYSTEM", user: "[]" },
+    { name: "g3", description: "ADD_USER_TO_SYSTEM", user: "[]" },
+    { name: "g3", description: "ADD_USER_TO_SYSTEM", user: "[]" },
+    { name: "g3", description: "ADD_USER_TO_SYSTEM", user: "[]" },
+    { name: "g3", description: "ADD_USER_TO_SYSTEM", user: "[]" },
+    { name: "g3", description: "ADD_USER_TO_SYSTEM", user: "[]" },
+    { name: "g3", description: "ADD_USER_TO_SYSTEM", user: "[]" },
+    { name: "g3", description: "ADD_USER_TO_SYSTEM", user: "[]" },
+    { name: "g3", description: "ADD_USER_TO_SYSTEM", user: "[]" },
   ];
 
   sms: Sms[] = [
