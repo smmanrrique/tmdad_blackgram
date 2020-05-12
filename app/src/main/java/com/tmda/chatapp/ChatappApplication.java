@@ -11,17 +11,13 @@ import javax.annotation.Resource;
 @SpringBootApplication
 @EnableScheduling
 public class ChatappApplication implements CommandLineRunner {
-    @Resource
-    StorageService storageService;
-
+    
     public static void main(String[] args) throws Exception {
         SpringApplication.run(ChatappApplication.class, args);
     }
 
     public void run(String... args) throws Exception {
         System.out.println("ChatappApplication");
-        storageService.deleteAll();
-        storageService.init();
     }
 
 }

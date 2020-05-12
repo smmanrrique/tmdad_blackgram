@@ -1,34 +1,34 @@
 <div id="side-nav">
     <header>
-        <img id="logo" src="./assets/images/logo.png" routerLink="/home" />
+        <img id="logo" src="./assets/images/logo.png" routerLink="/admin/messages" />
     </header>
 
     <nav class="nav-item">
-        <div class="nav-item">
-            <div class="item header" data-menu-item="Groups" [ngClass]="{'selected': dataMenuItem == 'Groups'}"
-                (click)="select($event)" routerLink="./providers">
-                <span> Groups</span>
-            </div>
+
+      <div class="nav-item">
+          <div class="item header" data-menu-item="Topics" [ngClass]="{'selected': dataMenuItem == 'chats'}"
+              (click)="select($event)" routerLink="./messages/chats">
+              <span>Chats</span>
+          </div>
+      </div>
+
+      <div class="nav-item">
+        <div class="item header" data-menu-item="Groups" [ngClass]="{'selected': dataMenuItem == 'groups'}"
+             (click)="select($event)" routerLink="./groups">
+          <span>Groups</span>
         </div>
+      </div>
 
         <div class="nav-item">
-            <div class="item header" data-menu-item="Topics" [ngClass]="{'selected': dataMenuItem == 'Topics'}"
-                (click)="select($event)" routerLink="./lots">
-                <span> Topics </span>
-            </div>
-        </div>
-
-
-        <div class="nav-item">
-            <div class="item header" data-menu-item="Chat" [ngClass]="{'selected': dataMenuItem == 'Chat'}"
-                (click)="select($event)" routerLink="./invoices">
+            <div class="item header" data-menu-item="Chat" [ngClass]="{'selected': dataMenuItem == 'trendings'}"
+                (click)="select($event)" routerLink="./trendings">
                 <span> Trending </span>
             </div>
         </div>
 
         <nav class="nav-item">
             <div class="item header" (click)="selection.toggle(NAV_USERS)"
-                [ngClass]="{'expanded': selection.isSelected(NAV_USERS), 
+                [ngClass]="{'expanded': selection.isSelected(NAV_USERS),
                     'selected': dataMenuItem == 'userClients' || dataMenuItem == 'userEmployees' || dataMenuItem == 'userGenerics'}">
                 <span>Perfil</span>
                 <i class="material-icons">keyboard_arrow_right</i>

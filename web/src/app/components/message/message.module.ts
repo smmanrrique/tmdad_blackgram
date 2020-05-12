@@ -13,11 +13,12 @@ import { MessageRoutingModule } from './message.routing';
 import { MessageComponent } from './message.component';
 import { ListUploadComponent } from '../file-upload/list-upload.component';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
+import {ChatComponent} from "./chat.component";
+import {ApiComponent} from "./api.component";
 
 
 @NgModule({
   imports: [
-    // FileUploadModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -36,12 +37,16 @@ import { FileUploadComponent } from '../file-upload/file-upload.component';
     MessageRoutingModule,
   ],
   declarations: [
+    ChatComponent,
+    ApiComponent,
     MessageComponent,
     FileUploadComponent,
     ListUploadComponent,
     DetailsUploadComponent,
   ],
   exports: [
+    ChatComponent,
+    ApiComponent,
     MessageComponent,
     FileUploadComponent,
     ListUploadComponent,

@@ -3,9 +3,11 @@ import { BaseModel } from "src/app/core/models/base-model";
 import { Topic } from "./topic";
 
 export class Message extends BaseModel {
-    fromUser: string;
+    id: number;
     toUser: string;
+    fromUser: string;
+    group_message: string;
     body: string;
-    topic: Topic[];
-    // multimedia: Multimedia;
+    topics: Topic[];
+    multimedia: Multimedia;
 } 

@@ -70,7 +70,7 @@
         <app-validator [control]="groupform.controls['name']"></app-validator>
 
         <mat-form-field required>
-          <input matInput formControlName="user" placeholder="Add User">
+          <input matInput formControlName="user" placeholder="User Name">
         </mat-form-field>
         <app-validator [control]="groupform.controls['user']"></app-validator>
 
@@ -82,17 +82,16 @@
 
     <!-- SEND_MESSAGE -->
     <div *ngIf="selected=='SEND_MESSAGE'">
-      <form *ngIf="groupform" [formGroup]="groupform" (ngSubmit)="send_message()">
+      <form *ngIf="messageform" [formGroup]="messageform" (ngSubmit)="send_message()">
+        <mat-form-field required>
+          <input matInput formControlName="toUser" placeholder="To">
+        </mat-form-field>
+        <app-validator [control]="messageform.controls['toUser']"></app-validator>
 
         <mat-form-field required>
-          <input matInput formControlName="name" placeholder="Group Name">
+          <input matInput formControlName="body" placeholder="body">
         </mat-form-field>
-        <app-validator [control]="groupform.controls['name']"></app-validator>
-
-        <mat-form-field required>
-          <input matInput formControlName="user" placeholder="Add User">
-        </mat-form-field>
-        <app-validator [control]="groupform.controls['user']"></app-validator>
+        <app-validator [control]="messageform.controls['body']"></app-validator>
 
         <div class="field">
           <button mat-raised-button class="btn-text" type="submit" [disabled]="!groupform.valid">Execute</button>
@@ -101,30 +100,81 @@
     </div>
 
     <!-- SEND_MESSAGE_TO_ROOM -->
+    <div *ngIf="selected=='SEND_MESSAGE_TO_ROOM'">
+      <form *ngIf="messageform" [formGroup]="messageform" (ngSubmit)="send_message()">
+
+        <mat-form-field required>
+          <input matInput formControlName="group_message" placeholder="Group">
+        </mat-form-field>
+        <app-validator [control]="messageform.controls['group_message']"></app-validator>
+
+        <mat-form-field required>
+          <input matInput formControlName="body" placeholder="body">
+        </mat-form-field>
+        <app-validator [control]="messageform.controls['body']"></app-validator>
+
+        <div class="field">
+          <button mat-raised-button class="btn-text" type="submit" [disabled]="!groupform.valid">Execute</button>
+        </div>
+      </form>
+    </div>
 
     <!-- SEND_FILE -->
     <div *ngIf="selected=='SEND_FILE'">
+
+      <mat-form-field required>
+        <input matInput formControlName="toUser" placeholder="To">
+      </mat-form-field>
+      <app-validator [control]="messageform.controls['toUser']"></app-validator>
+
+      <mat-form-field required>
+        <input matInput formControlName="body" placeholder="body">
+      </mat-form-field>
+      <app-validator [control]="messageform.controls['body']"></app-validator>
+
+
+
       <div>
         <div style="color: blue; margin-bottom: 20px">
           <h1>{{title}}</h1>
           <h3>{{description}}</h3>
         </div>
-
         <app-file-upload></app-file-upload>
-
         <br />
         <br />
-
         <list-upload></list-upload>
       </div>
 
     </div>
 
     <!-- SEND_MESSAGE_TO_ALL -->
+    <div *ngIf="selected=='SEND_MESSAGE_TO_ALL'">
+      <form *ngIf="messageform" [formGroup]="messageform" (ngSubmit)="send_message()">
+
+        <mat-form-field required>
+          <input matInput formControlName="body" placeholder="body">
+        </mat-form-field>
+        <app-validator [control]="messageform.controls['body']"></app-validator>
+
+        <div class="field">
+          <button mat-raised-button class="btn-text" type="submit" [disabled]="!groupform.valid">Execute</button>
+        </div>
+      </form>
+    </div>
 
   </mat-card-content>
-  <mat-card-actions>
-    <!-- <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button> -->
-  </mat-card-actions>
+
 </mat-card>
+
+
+
+<!--<div>-->
+<!--  <div style="color: blue; margin-bottom: 20px">-->
+<!--    <h1>{{title}}</h1>-->
+<!--    <h3>{{description}}</h3>-->
+<!--  </div>-->
+<!--  <app-file-upload></app-file-upload>-->
+<!--  <br />-->
+<!--  <br />-->
+<!--  <list-upload></list-upload>-->
+<!--</div>-->

@@ -5,5 +5,5 @@ export class Group extends BaseModel {
     name: string;
     description: string;
     user: string;
-    users: User[];
-} 
+    // users: User[];
+}
