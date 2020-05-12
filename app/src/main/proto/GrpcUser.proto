@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package com.tmdad.app.server;
+
+option java_package = "com.tmdad.app.user";
+option java_multiple_files = true;
+
+message UserRequest {
+    string userName = 1;
+    string password = 2;
+    string firstName = 3;
+    string lastName = 4;
+    string email = 5;
+}
+
+message UserResponse {
+    string userMessage=1;
+}
+
+message ContactAdd {
+    string Username = 1;
+    string contact = 2;
+}
+
+service UserService {
+
+    rpc CreateUser(UserRequest) returns (UserResponse) { }
+
+    rpc AddContact(ContactAdd) returns (UserResponse){}
+
+}

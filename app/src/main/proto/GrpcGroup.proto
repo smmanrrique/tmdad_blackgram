@@ -1,17 +1,14 @@
 syntax = "proto3";
 
-package com.tmda.chatapp.blackgram;
+package com.tmdad.app.server;
 
-option java_package = "com.tmda.chatapp.group";
+option java_package = "com.tmdad.app.group";
 option java_multiple_files = true;
 
-import "user_grpc.proto";
-
 message GroupGRPC {
-    string id = 1;
-    string name = 2;
-    string description = 3;
-    repeated UserRequest user = 4;
+    string name = 1;
+    string description = 2;
+    repeated string user = 3;
 }
 
 message GroupMessage {
