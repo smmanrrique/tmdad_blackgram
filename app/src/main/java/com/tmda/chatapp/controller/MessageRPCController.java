@@ -1,14 +1,15 @@
 package com.tmda.chatapp.controller;
 
+import com.rabbitmq.client.*;
 import com.tmda.chatapp.config.ConnectionRabbitMQ;
 import com.tmda.chatapp.model.Group;
 import com.tmda.chatapp.model.Message;
 import com.tmda.chatapp.model.Topic;
 import com.tmda.chatapp.model.User;
 import com.tmda.chatapp.service.*;
-import  com.tmdad.app.message.MessageRequest;
-import  com.tmdad.app.message.MessageResponse;
-import  com.tmdad.app.message.MessageServiceGrpc;
+import com.tmdad.app.message.MessageRequest;
+import com.tmdad.app.message.MessageResponse;
+import com.tmdad.app.message.MessageServiceGrpc;
 import io.grpc.stub.StreamObserver;
 import lombok.SneakyThrows;
 import org.lognet.springboot.grpc.GRpcService;
@@ -17,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -138,6 +140,7 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
     public void receiverMessage2(MessageResponse request, StreamObserver<MessageRequest> responseObserver) {
         logger.info("Call receiverMessage and server received {}", request.toByteString());
 
+        System.out.println("11111111111111111111111111111111111");
         String userName = request.getUserMessage();
 
         List<String> result = rabbitMQReceiver.Receiver2(connectionRabbitMQ,request.getUserMessage());
@@ -156,17 +159,30 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
     public void receiverMessage3(MessageResponse request, StreamObserver<MessageResponse> responseObserver) {
         logger.info("Call receiverMessage and server received {}", request.toByteString());
 
+        System.out.println("11111111111111111111111111111111111");
         String userName = request.getUserMessage();
 
-        String result = rabbitMQReceiver.Receiver3(connectionRabbitMQ,request.getUserMessage());
+        Channel channel = connectionRabbitMQ.channel();
 
-        MessageResponse reply = MessageResponse.newBuilder()
-                .setUserMessage("User "+ userName +" Received messages:  " + request.getUserMessage())
-                .build();
+        System.out.println("22222222222222222222222222222222222222222");
+        Consumer consumer = new DefaultConsumer(channel) {
+            @Override
+            public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
+                String message = new String(body, "UTF-8");
 
-        responseObserver.onNext(reply);
-        responseObserver.onCompleted();
+                System.out.println("=======================================================");
+                System.out.println("ReceiveLogsDirect2 Received '" + envelope.getRoutingKey() + "':'" + message + "'");
+                MessageResponse reply = MessageResponse.newBuilder()
+                        .setUserMessage(message)
+                        .build();
 
+                responseObserver.onNext(reply);
+                responseObserver.onCompleted();
+
+            }
+        };
+
+        channel.basicConsume(request.getUserMessage(), true, consumer);
     }
 
 
