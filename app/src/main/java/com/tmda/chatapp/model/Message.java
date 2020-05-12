@@ -59,5 +59,13 @@ public class Message extends AbstractEntity implements Serializable {
         this.topics = topics;
     }
 
+    @Override
+    public String toString() {
+        return "Message{" +
+                "fromUser=" + fromUser.toString() +
+                ", toUser=" + toUser.toString() +
+                ", body='" + body + '\'' +
+                '}';
+    }
 
 }

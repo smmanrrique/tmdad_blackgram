@@ -1,14 +1,14 @@
 package com.tmda.chatapp.controller;
 
 import com.tmda.chatapp.config.ConnectionRabbitMQ;
-import com.tmda.chatapp.message.MessageRequest;
-import com.tmda.chatapp.message.MessageResponse;
-import com.tmda.chatapp.message.MessageServiceGrpc;
 import com.tmda.chatapp.model.Group;
 import com.tmda.chatapp.model.Message;
 import com.tmda.chatapp.model.Topic;
 import com.tmda.chatapp.model.User;
 import com.tmda.chatapp.service.*;
+import  com.tmdad.app.message.MessageRequest;
+import  com.tmdad.app.message.MessageResponse;
+import  com.tmdad.app.message.MessageServiceGrpc;
 import io.grpc.stub.StreamObserver;
 import lombok.SneakyThrows;
 import org.lognet.springboot.grpc.GRpcService;
@@ -133,6 +133,24 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
 
     }
 
+    @Override
+    @SneakyThrows
+    public void receiverMessage2(MessageResponse request, StreamObserver<MessageRequest> responseObserver) {
+        logger.info("Call receiverMessage and server received {}", request.toByteString());
+
+        String userName = request.getUserMessage();
+
+        List<String> result = rabbitMQReceiver.Receiver2(connectionRabbitMQ,request.getUserMessage());
+
+//        MessageRequest reply = MessageRequest.newBuilder();
+//                .setUserMessage("User "+ userName +" Received messages:  " + request.getUserMessage())
+//                .build();
+//
+//        responseObserver.onNext(reply);
+//        responseObserver.onCompleted();
+    }
+
+
     @SneakyThrows
     @Override
     public void receiverMessage3(MessageResponse request, StreamObserver<MessageResponse> responseObserver) {
@@ -151,27 +169,11 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
 
     }
 
-    @Override
-    @SneakyThrows
-    public void receiverMessage2(MessageResponse request, StreamObserver<MessageRequest> responseObserver) {
-        logger.info("Call receiverMessage and server received {}", request.toByteString());
 
-        String userName = request.getUserMessage();
-
-        List<String> result = rabbitMQReceiver.Receiver2(connectionRabbitMQ,request.getUserMessage());
-
-//        MessageRequest reply = MessageRequest.newBuilder();
-//                .setUserMessage("User "+ userName +" Received messages:  " + request.getUserMessage())
-//                .build();
-//
-//        responseObserver.onNext(reply);
-//        responseObserver.onCompleted();
-    }
-
-    public Set<Topic> extractTopic(int n , List<com.tmda.chatapp.message.Topic> topic){
+    public Set<Topic> extractTopic(int n , List<String> topic){
         Set<Topic> topics = new HashSet<Topic>();
         for (int i = 0; i< n; i++) {
-            topics.add(new Topic(topic.get(i).getTopicName()));
+            topics.add(new Topic(topic.get(i)));
         }
         return topics;
     }

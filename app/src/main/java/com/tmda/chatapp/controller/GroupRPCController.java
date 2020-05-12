@@ -2,14 +2,14 @@ package com.tmda.chatapp.controller;
 
 import com.rabbitmq.client.Channel;
 import com.tmda.chatapp.config.ConnectionRabbitMQ;
-import com.tmda.chatapp.group.AddUserGroup;
-import com.tmda.chatapp.group.GroupGRPC;
-import com.tmda.chatapp.group.GroupMessage;
-import com.tmda.chatapp.group.GroupServiceGrpc;
+import  com.tmdad.app.group.GroupGRPC;
+import  com.tmdad.app.group.GroupMessage;
+import  com.tmdad.app.group.GroupServiceGrpc;
 import com.tmda.chatapp.model.Group;
 import com.tmda.chatapp.model.User;
 import com.tmda.chatapp.service.GroupService;
 import com.tmda.chatapp.service.UserService;
+import com.tmdad.app.group.AddUserGroup;
 import io.grpc.stub.StreamObserver;
 import lombok.SneakyThrows;
 import org.lognet.springboot.grpc.GRpcService;

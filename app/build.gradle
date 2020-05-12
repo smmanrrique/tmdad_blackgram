@@ -2,8 +2,13 @@ plugins {
     id 'org.springframework.boot' version '2.2.6.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
+<<<<<<< HEAD
     id "com.google.protobuf" version "0.8.12"
     id 'idea'
+=======
+    id 'idea'
+
+>>>>>>> dev
 }
 
 group = 'com.TMDA'
