@@ -1,0 +1,54 @@
+group 'com.atb.grpc.ninja.blockchain'
+version '1.0-SNAPSHOT'
+apply plugin: 'java'
+apply plugin: 'com.google.protobuf'
+apply plugin: 'idea'
+sourceCompatibility = 1.8
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.5',
+                  'org.springframework.boot:spring-boot-gradle-plugin:2.1.0.RELEASE'
+    }
+}
+repositories {
+    mavenCentral()
+}
+dependencies {
+    // grpc
+    compile 'io.grpc:grpc-netty-shaded:1.16.1'
+    compile 'io.grpc:grpc-protobuf:1.16.1'
+    compile 'io.grpc:grpc-stub:1.16.1'
+    compile "io.grpc:grpc-services:1.16.1"
+    //spring
+    compile group:'org.springframework.boot',name: 'spring-boot-starter-web',version: '2.1.0.RELEASE'
+    compile group:'org.springframework.boot',name: 'spring-boot-starter-test',version: '2.1.0.RELEASE'
+    compile group: 'io.github.lognet',name: 'grpc-spring-boot-starter',version: '3.0.0'
+    // Mongo reactive
+    compile group: 'org.mongodb', name: 'mongodb-driver-sync', version: '3.8.2'
+    // Junit
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+    protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.5.1-1"
+    }
+    plugins {
+        grpc {
+           artifact = 'io.grpc:protoc-gen-grpc-java:1.16.1'
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}
+sourceSets.main.java.srcDir new File(buildDir, 'generated/source2')
+idea {
+    module {
+        generatedSourceDirs += file('build/generated/source2')
+    }
+}
