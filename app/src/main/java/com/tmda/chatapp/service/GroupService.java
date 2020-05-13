@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class GroupService implements  InterfaceGroupService {
@@ -25,8 +25,8 @@ public class GroupService implements  InterfaceGroupService {
 
 
     @Override
-    public Optional<Group> find(int id) {
-        return groupRepository.findById(id);
+    public Group findById(int id) {
+        return groupRepository.findById(id).get();
     }
 
     @Override
@@ -35,8 +35,8 @@ public class GroupService implements  InterfaceGroupService {
     }
 
     @Override
-    public Iterable<Group> findAll() {
-        return groupRepository.findAll();
+    public List<Group> findAll() {
+        return (List<Group>) groupRepository.findAll();
     }
 
     @Override

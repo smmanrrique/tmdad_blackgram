@@ -24,10 +24,25 @@ public class UserController {
         this.userService = userService;
     }
 
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<User> create(@RequestBody User user) {
+        try {
+            LOGGER.info("start creating user: ", user);
+            LOGGER.info("start creating user: ", user.getUserName());
+            String pass = user.getUserName();
+            user.setPassword(pass);
+            userService.create(user);
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
+        } catch (DataAccessException e) {
+            LOGGER.info(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
     @RequestMapping
     public ResponseEntity<List<User>> loadAll() {
-        LOGGER.info("start loadAll users");
         try {
+            LOGGER.info("start loadAll users");
             List<User> users = userService.findAll();
             LOGGER.info("Found {} users", users.size());
             return new ResponseEntity<>(users, HttpStatus.OK);
@@ -50,17 +65,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<User> create(@RequestBody User user) {
-        LOGGER.info("start creating user: ", user);
-        try {
-            // User user = userService.create(user);
-            return new ResponseEntity<>(user, HttpStatus.CREATED);
-        } catch (DataAccessException e) {
-            LOGGER.info(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-        }
-    }
+
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<User> update(@PathVariable int id, @RequestBody User user) {
