@@ -8,14 +8,10 @@ public interface InterfaceTopicService {
 
     Topic create(Topic multimedia);
 
-    Topic find(long id);
+//    Topic findById(int id);
 
-    Topic findByTopic(String topic);
+    Topic findByName(String name);
 
     List<Topic> findAll();
-
-    Topic update(int id, Topic topic);
-
-    boolean delete(long id);
 
 }
