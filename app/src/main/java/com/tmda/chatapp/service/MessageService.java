@@ -5,7 +5,7 @@ import com.tmda.chatapp.repositories.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class MessageService implements  InterfaceMessageService {
@@ -19,14 +19,8 @@ public class MessageService implements  InterfaceMessageService {
     }
 
     @Override
-    public Iterable<Message> saveAll(Iterable<Message> messages) {
+    public List<Message> saveAll(List<Message> messages) {
         return messageRepository.saveAll(messages);
-    }
-
-    // TODO INSERT MANY USERS SAME TIME
-    @Override
-    public Optional<Message> find(long id) {
-        return messageRepository.findById(id);
     }
 
     @Override
@@ -35,18 +29,19 @@ public class MessageService implements  InterfaceMessageService {
     }
 
     @Override
-    public Message findByFromUser(String username) {
+    public List<Message> findByFromUser(String username) {
         return messageRepository.findByFromUser(username);
     }
 
     @Override
-    public Iterable<Message> findAll() {
+    public List<Message> findAll() {
         return messageRepository.findAll();
     }
 
     @Override
-    public void delete(long id) {
-        messageRepository.deleteById(id);
+    public void delete(int id) {
+        messageRepository.delete(id);
+//        return true;
     }
 
     @Override

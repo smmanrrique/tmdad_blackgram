@@ -2,23 +2,21 @@ package com.tmda.chatapp.service;
 
 import com.tmda.chatapp.model.Message;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface InterfaceMessageService {
 
     Message create(Message message);
 
-    Iterable<Message> saveAll(Iterable<Message> messages);
+    List<Message> saveAll(List<Message> messages);
 
-    Optional<Message> find(long id);
+    List<Message> findByFromUser(String username);
 
-    Message findByFromUser(String username);
-
-    Iterable<Message> findAll();
+    List<Message> findAll();
 
     Message update(int id, Message user);
 
-    void delete(long id);
+    void delete(int id);
 
     boolean deleteAll();
 }

@@ -38,11 +38,11 @@ public class TopicController {
         }
     }
 
-    @RequestMapping("/{id}")
-    public ResponseEntity<Topic> loadOne(@PathVariable int id) {
-        LOGGER.info("start loadOne user by id: ", id);
+    @RequestMapping("/{name}")
+    public ResponseEntity<Topic> loadOne(@PathVariable String name) {
+        LOGGER.info("start loadOne user by id: ", name);
         try {
-            Topic user = topicService.find(id);
+            Topic user = topicService.findByName(name);
             LOGGER.info("Found: {}", user);
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (DataAccessException e) {
