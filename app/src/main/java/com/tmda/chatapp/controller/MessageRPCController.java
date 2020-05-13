@@ -132,7 +132,6 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
 
         responseObserver.onNext(reply);
         responseObserver.onCompleted();
-
     }
 
     @Override
@@ -153,7 +152,6 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
 //        responseObserver.onCompleted();
     }
 
-
     @SneakyThrows
     @Override
     public void receiverMessage3(MessageResponse request, StreamObserver<MessageResponse> responseObserver) {
@@ -168,6 +166,8 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
         Consumer consumer = new DefaultConsumer(channel) {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
+
+//                return new StreamObserver<MessageResponse>
                 String message = new String(body, "UTF-8");
 
                 System.out.println("=======================================================");
@@ -177,12 +177,14 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
                         .build();
 
                 responseObserver.onNext(reply);
-                responseObserver.onCompleted();
-
+//                responseObserver.onCompleted();
             }
         };
 
         channel.basicConsume(request.getUserMessage(), true, consumer);
+
+
+        responseObserver.onCompleted();
     }
 
 
