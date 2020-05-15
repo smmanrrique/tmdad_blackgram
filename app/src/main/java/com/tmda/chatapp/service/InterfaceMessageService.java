@@ -10,13 +10,13 @@ public interface InterfaceMessageService {
 
     List<Message> saveAll(List<Message> messages);
 
-    List<Message> findByFromUser(String username);
+//    List<Message> findByFromUser(String username);
 
     List<Message> findAll();
 
-    Message update(int id, Message user);
+//    Message update(int id, Message user);
 
-    void delete(int id);
+    boolean deleteById(int id);
 
-    boolean deleteAll();
+//    boolean deleteAll();
 }

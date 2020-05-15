@@ -78,8 +78,8 @@ public class UserRPCController extends UserServiceGrpc.UserServiceImplBase {
     public void addContact(ContactAdd request, StreamObserver<UserResponse> responseObserver) {
         logger.info("Call addContact and server received {}", request);
 
-        User user = userService.findByUsername(request.getUsername());
-        User contact = userService.findByUsername(request.getContact());
+        User user = userService.findByUserName(request.getUsername());
+        User contact = userService.findByUserName(request.getContact());
 
         // Add contact
         user.getContacts().add(contact);

@@ -68,7 +68,8 @@ public class GroupRPCController extends GroupServiceGrpc.GroupServiceImplBase {
     public void addUser(AddUserGroup request, StreamObserver<GroupMessage> responseObserver) {
         logger.info("Call addUserGroup and server received {}", request);
         Group group = groupService.findByName(request.getGroupName());
-        User user = userService.findByUsername(request.getUserName());
+//        User user = userService.findByUsername(request.getUserName());
+        User user = new User();
 
         Channel channel = connectionRabbitMQ.channel();
 

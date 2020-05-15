@@ -20,18 +20,18 @@ public class MessageService implements  InterfaceMessageService {
 
     @Override
     public List<Message> saveAll(List<Message> messages) {
-        return messageRepository.saveAll(messages);
+        return (List<Message>) messageRepository.saveAll( messages);
     }
 
-    @Override
-    public Message update(int id, Message user) {
-        return null;
-    }
+//    @Override
+//    public Message update(int id, Message user) {
+//        return null;
+//    }
 
-    @Override
-    public List<Message> findByFromUser(String username) {
-        return messageRepository.findByFromUser(username);
-    }
+//    @Override
+//    public List<Message> findByFromUser(String username) {
+//        return messageRepository.findByFromUser(username);
+//    }
 
     @Override
     public List<Message> findAll() {
@@ -39,14 +39,8 @@ public class MessageService implements  InterfaceMessageService {
     }
 
     @Override
-    public void delete(int id) {
-        messageRepository.delete(id);
-//        return true;
+    public boolean deleteById(int id) {
+        return messageRepository.deleteById(id);
     }
 
-    @Override
-    public boolean deleteAll() {
-        messageRepository.deleteAll();
-        return true;
-    }
 }

@@ -63,8 +63,8 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
         }
 
         // Create Message and User
-        User userFrom = userService.findByUsername(request.getFromUser());
-        User userTo = userService.findByUsername(request.getToUser());
+        User userFrom = userService.findByUserName(request.getFromUser());
+        User userTo = userService.findByUserName(request.getToUser());
 
         Message message = new Message(userFrom, userTo, request.getBody(), topics);
 
@@ -208,7 +208,7 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
         }
 
         // Create Message and User
-        User userFrom = userService.findByUsername(request.getFromUser());
+        User userFrom = userService.findByUserName(request.getFromUser());
 
         if (isGroup){
             group = groupService.findByName(groupName);
@@ -221,7 +221,7 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
                 messages.add(new Message(userFrom, user, request.getBody(), topics));
             }
 
-            // Save message in DB
+            // Save message in DB TODO
             messageService.saveAll(messages);
             return messages.get(0);
         }
