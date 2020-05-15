@@ -77,7 +77,7 @@ public class GroupRPCController extends GroupServiceGrpc.GroupServiceImplBase {
         channel.queueBind(request.getUserName(), connectionRabbitMQ.getGROUP_EXCHANGE(), request.getGroupName());
 
         // Add user to group and group to user
-        user.getGroup().add(group);
+        user.getMyGroups().add(group);
 
         userService.create(user);
         GroupMessage reply = GroupMessage.newBuilder()

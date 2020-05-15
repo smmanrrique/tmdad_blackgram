@@ -31,4 +31,5 @@ public class Multimedia extends AbstractEntity {
 
     public Multimedia() {
     }
+
 }

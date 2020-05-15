@@ -18,6 +18,12 @@ public class User extends AbstractEntity {
     @Column(nullable = false, length = 30, unique = true)
     private String userName;
 
+    @Column(nullable = false, length = 30)
+    private String password;
+
+    @Column()
+    private boolean admin = false;
+
     @Column(length = 50)
     private String firstName;
 
@@ -26,9 +32,6 @@ public class User extends AbstractEntity {
 
     @Column(length = 50)                                                                            
     private String email;
-
-    @Column(nullable = false, length = 30)
-    private String password;
 
     @JsonManagedReference(value = "fromUser" )
     @OneToMany(fetch= FetchType.LAZY, mappedBy = "fromUser")
@@ -39,13 +42,21 @@ public class User extends AbstractEntity {
     private List<Message> receivedMessage = new ArrayList<Message>();
 
     @JsonIgnore
-    @OneToMany(fetch= FetchType.LAZY,mappedBy = "id")
+    @OneToMany(fetch= FetchType.LAZY, mappedBy = "id")
     private  List<User> contacts = new ArrayList<User>();
 
     @ManyToMany(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Group> group = new ArrayList<Group>();
+    private List<Group> myGroups = new ArrayList<Group>();
 
-    public User() {
+    @JsonManagedReference(value = "owner" )
+    @OneToMany(fetch= FetchType.LAZY, mappedBy = "owner")
+    private List<Group> adminGroups = new ArrayList<Group>();
+
+    public User() {}
+
+    public User(String userName) {
+        this.userName = userName;
+        this.password = userName;
     }
 
     @Override
@@ -58,4 +69,5 @@ public class User extends AbstractEntity {
                 ", password='" + password + '\'' +
                 '}';
     }
+
 }
