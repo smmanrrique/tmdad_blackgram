@@ -1,7 +1,6 @@
 package com.tmda.chatapp.service;
 
 import com.tmda.chatapp.model.Contact;
-import com.tmda.chatapp.model.User;
 import com.tmda.chatapp.repositories.ContactRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,17 +19,17 @@ public class ContactService implements  InterfaceContactService{
 
     @Override
     public Contact create(Contact contact) {
-        int id = contact.getContact().getId();
-        LOGGER.info("start creating Contact: {}", id);
-        User user = userService.findById(id);
-
-        LOGGER.info("============ get USER Contact: ", user);
-        System.out.println(contact.getContact().getId());
-        System.out.println("contact.getContact().getId()");
-        Contact newContact = new Contact(contact.getName(), user);
-
-        LOGGER.info("))))))) ", newContact);
-        return contactRepository.save(newContact);
+//        int id = contact.getContact().getId();
+//        LOGGER.info("start creating Contact: {}", id);
+//        User user = userService.findById(id);
+//
+//        LOGGER.info("============ get USER Contact: ", user);
+//        System.out.println(contact.getContact().getId());
+//        System.out.println("contact.getContact().getId()");
+//        Contact newContact = new Contact(contact.getName(), user);
+//
+//        LOGGER.info("))))))) ", newContact);
+        return contactRepository.save(contact);
     }
 
     @Override

@@ -50,10 +50,6 @@ public class User extends AbstractEntity {
     @OneToMany(fetch= FetchType.EAGER, mappedBy = "id")
     private  List<User> contacts = new ArrayList<User>();
 
-    @JsonManagedReference(value = "contact" )
-    @OneToMany(mappedBy = "contact")
-    private final List<Contact> myContacts = new ArrayList<>();
-
     @ManyToMany(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Group> myGroups = new ArrayList<Group>();
 

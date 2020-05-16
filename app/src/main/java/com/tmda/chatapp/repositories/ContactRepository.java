@@ -1,11 +1,11 @@
 package com.tmda.chatapp.repositories;
 
 import com.tmda.chatapp.model.Contact;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ContactRepository extends CrudRepository<Contact, Integer> {
+public interface ContactRepository extends JpaRepository<Contact, Integer> {
 
     Contact findById(int id);
 
