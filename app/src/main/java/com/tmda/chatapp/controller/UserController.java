@@ -1,5 +1,6 @@
 package com.tmda.chatapp.controller;
 
+import com.tmda.chatapp.model.Contact;
 import com.tmda.chatapp.model.User;
 import com.tmda.chatapp.service.UserService;
 import org.slf4j.Logger;
@@ -52,28 +53,11 @@ public class UserController {
         }
     }
 
-//    @RequestMapping(params = {"id"}, method = RequestMethod.GET)
-//    @GetMapping()
-//    @ResponseBody
-//    public ResponseEntity<User> FindById(@PathVariable int id) {
-//        LOGGER.info("start loadOne user by id: ", id);
-//        try {
-//            User user = userService.findById(id);
-//            LOGGER.info("Found: {}", user);
-//            return new ResponseEntity<>(user, HttpStatus.OK);
-//        } catch (DataAccessException e) {
-//            LOGGER.info(e.getMessage());
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
-
-
     //    @RequestMapping(value = "/{contacts}")   params = { "id", "second" },
     //    @RequestMapping(value = "/{contacts}")
     @RequestMapping(params = { "contacts" }, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity getContacts(@RequestParam("contacts") String contacts
-                                     ) {
+    public ResponseEntity getContacts(@RequestParam("contacts") String contacts) {
         try {
             LOGGER.info("start GetContacts _____");
             List<User> users = userService.getContacts(contacts);
@@ -101,10 +85,19 @@ public class UserController {
 
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<User> update(@PathVariable int id, @RequestBody User user) {
-        LOGGER.info("start update user: ", user);
+    public ResponseEntity<User> update(@PathVariable int id, @RequestBody Contact contact) {
+        LOGGER.info("start update user: ", contact);
         try {
-            // User user = userService.update(id, user);
+
+             User user = userService.findById(id);
+//             User cont = userService.findByUserName(contact.getContact().getUserName());
+             Contact contact1 = new Contact(contact.getContact().getUserName(), user);
+            LOGGER.info("get contacs ", user.getMyContacts());
+            user.getMyContacts().add(contact1);
+            LOGGER.info("get POST ", user.getMyContacts());
+            userService.create(user);
+
+
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (DataAccessException e) {
             LOGGER.info(e.getMessage());

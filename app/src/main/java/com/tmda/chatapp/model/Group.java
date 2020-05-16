@@ -24,8 +24,8 @@ public class Group extends AbstractEntity {
     @Column(length = 255)
     private String description;
 
-    @JsonManagedReference(value ="messageGroup")
-    @OneToMany(fetch= FetchType.LAZY, mappedBy = "messageGroup")
+    @JsonManagedReference(value ="toGroup")
+    @OneToMany(fetch= FetchType.LAZY, mappedBy = "toGroup")
     private List<Message> messages = new ArrayList<Message>();
 
     @ManyToMany( fetch = FetchType.LAZY, mappedBy = "myGroups")

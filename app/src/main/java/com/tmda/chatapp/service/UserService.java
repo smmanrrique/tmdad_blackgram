@@ -39,7 +39,7 @@ public class UserService implements InterfaceUserService {
         User contact = findByUserName(ContactName);
 
         // Add contact
-        user.getContacts().add(contact);
+//        user.getContacts().add(contact);
 
         // Save in DB
         return create(user);

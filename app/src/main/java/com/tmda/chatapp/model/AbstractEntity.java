@@ -20,6 +20,7 @@ public abstract class AbstractEntity implements Serializable {
     private Timestamp created;
 
     //  TODO  ON UPDATE CURRENT_TIMESTAMP
+//    @LastModifiedDate
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false)
     private Timestamp updated;

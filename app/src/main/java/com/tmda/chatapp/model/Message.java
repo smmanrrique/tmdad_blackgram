@@ -23,9 +23,9 @@ public class Message extends AbstractEntity implements Serializable {
     @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
     private User toUser;
 
-    @JsonBackReference(value = "messageGroup")
+    @JsonBackReference(value = "toGroup")
     @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
-    private Group messageGroup;
+    private Group toGroup;
 
     @Column(columnDefinition = "text")
     private String body;
@@ -54,7 +54,7 @@ public class Message extends AbstractEntity implements Serializable {
 
     public Message(User from, Group to, String message, Set<Topic> topics) {
         this.fromUser = from;
-        this.messageGroup = to;
+        this.toGroup = to;
         this.body = message;
         this.topics = topics;
     }
