@@ -39,11 +39,44 @@ public class UserController {
         }
     }
 
-    @RequestMapping
-    public ResponseEntity<List<User>> loadAll() {
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<User> loadOne(@PathVariable int id) {
+        LOGGER.info("start loadOne user by id: ", id);
         try {
-            LOGGER.info("start loadAll users");
-            List<User> users = userService.findAll();
+            User user = userService.findById(id);
+            LOGGER.info("Found: {}", user);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (DataAccessException e) {
+            LOGGER.info(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+//    @RequestMapping(params = {"id"}, method = RequestMethod.GET)
+//    @GetMapping()
+//    @ResponseBody
+//    public ResponseEntity<User> FindById(@PathVariable int id) {
+//        LOGGER.info("start loadOne user by id: ", id);
+//        try {
+//            User user = userService.findById(id);
+//            LOGGER.info("Found: {}", user);
+//            return new ResponseEntity<>(user, HttpStatus.OK);
+//        } catch (DataAccessException e) {
+//            LOGGER.info(e.getMessage());
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
+
+
+    //    @RequestMapping(value = "/{contacts}")   params = { "id", "second" },
+    //    @RequestMapping(value = "/{contacts}")
+    @RequestMapping(params = { "contacts" }, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity getContacts(@RequestParam("contacts") String contacts
+                                     ) {
+        try {
+            LOGGER.info("start GetContacts _____");
+            List<User> users = userService.getContacts(contacts);
             LOGGER.info("Found {} users", users.size());
             return new ResponseEntity<>(users, HttpStatus.OK);
         } catch (DataAccessException e) {
@@ -52,18 +85,18 @@ public class UserController {
         }
     }
 
-    @RequestMapping("/{id}")
-    public ResponseEntity<User> loadOne(@PathVariable int id) {
-        LOGGER.info("start loadOne user by id: ", id);
-        try {
-            User user = userService.find(id);
-            LOGGER.info("Found: {}", user);
-            return new ResponseEntity<>(user, HttpStatus.OK);
-        } catch (DataAccessException e) {
-            LOGGER.info(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+    //    @RequestMapping(value = "/{userName,contact}")
+//    public ResponseEntity addContact( @PathVariable String userName, @PathVariable String contact ) {
+//        try {
+//            LOGGER.info("start addContact");
+//            User user = userService.addContact(userName, contact);
+//            return new ResponseEntity<>(user, HttpStatus.OK);
+//        } catch (DataAccessException e) {
+//            LOGGER.info(e.getMessage());
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
+
 
 
 
@@ -85,4 +118,19 @@ public class UserController {
             return new ResponseEntity(HttpStatus.OK);
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
+
+    @RequestMapping
+    public ResponseEntity<List<User>> FindAll() {
+        try {
+            LOGGER.info("start loadAll users");
+            List<User> users = userService.findAll();
+            LOGGER.info("Found {} users", users.size());
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        } catch (DataAccessException e) {
+            LOGGER.info(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
 }

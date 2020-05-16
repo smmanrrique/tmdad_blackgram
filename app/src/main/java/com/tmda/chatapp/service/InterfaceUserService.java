@@ -8,11 +8,15 @@ public interface InterfaceUserService {
 
     User create(User user);
 
-    User find(long id);
+    User findById(int id);
 
     User findByUserName(String username);
 
     List<User> findAll();
+
+    List<User> getContacts(String userName);
+
+    boolean isAdmin(String userName);
 
     boolean delete(long id);
 

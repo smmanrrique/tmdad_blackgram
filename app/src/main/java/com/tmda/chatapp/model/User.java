@@ -42,13 +42,13 @@ public class User extends AbstractEntity {
     private List<Message> receivedMessage = new ArrayList<Message>();
 
     @JsonIgnore
-    @OneToMany(fetch= FetchType.LAZY, mappedBy = "id")
+    @OneToMany(fetch= FetchType.EAGER, mappedBy = "id")
     private  List<User> contacts = new ArrayList<User>();
 
     @ManyToMany(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Group> myGroups = new ArrayList<Group>();
 
-    @JsonManagedReference(value = "owner" )
+//    @JsonManagedReference(value = "owner" )
     @OneToMany(fetch= FetchType.LAZY, mappedBy = "owner")
     private List<Group> adminGroups = new ArrayList<Group>();
 

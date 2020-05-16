@@ -1,6 +1,5 @@
 package com.tmda.chatapp.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,7 +14,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 public class Group extends AbstractEntity {
 
-    @JsonBackReference(value = "adminGroups")
+//    @JsonBackReference(value = "adminGroups")
     @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
     private User owner;
 

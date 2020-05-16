@@ -25,8 +25,8 @@ public class UserService implements InterfaceUserService {
     }
 
     @Override
-    public User find(long id) {
-        return userRepository.findById(id).get();
+    public User findById(int id) {
+        return userRepository.findById(id);
     }
 
     @Override
@@ -34,9 +34,32 @@ public class UserService implements InterfaceUserService {
         return userRepository.findByUserName(username);
     }
 
+    public User addContact(String userName, String ContactName){
+        User user = findByUserName(userName);
+        User contact = findByUserName(ContactName);
+
+        // Add contact
+        user.getContacts().add(contact);
+
+        // Save in DB
+        return create(user);
+
+
+    }
+
     @Override
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public List<User> getContacts(String userName) {
+        return userRepository.getContacts(userName);
+    }
+
+    @Override
+    public boolean isAdmin(String userName) {
+        return userRepository.isAdmin(userName);
     }
 
     @Override
