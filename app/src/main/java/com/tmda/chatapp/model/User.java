@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +17,13 @@ import java.util.List;
 @Table(name = "users")
 public class User extends AbstractEntity {
 
-    @Column(nullable = false, length = 30, unique = true)
+    @NotNull
+    @Size(max = 30)
+    @Column( unique = true)
     private String userName;
 
-    @Column(nullable = false, length = 30)
+    @NotNull
+    @Size(max = 30)
     private String password;
 
     @Column()
