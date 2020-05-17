@@ -22,9 +22,6 @@ public interface  UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u.admin FROM User u WHERE u.userName=:userName")
     boolean isAdmin(@Param("userName") String userName);
 
-    @Query("SELECT u.contacts FROM User u WHERE u.userName=:userName")
-    List<User> getContacts(@Param("userName") String userName);
-
 //    List<Article> findByTitleAndCategory(String title, String category);
 
 //    @Query("SELECT a FROM Article a WHERE a.title=:title and a.category=:category")

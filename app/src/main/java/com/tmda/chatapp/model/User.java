@@ -1,6 +1,5 @@
 package com.tmda.chatapp.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -45,10 +44,6 @@ public class User extends AbstractEntity {
     @JsonManagedReference(value = "toUser" )
     @OneToMany(fetch= FetchType.LAZY, mappedBy = "toUser")
     private List<Message> receivedMessage = new ArrayList<Message>();
-
-    @JsonIgnore
-    @OneToMany(fetch= FetchType.EAGER, mappedBy = "id")
-    private  List<User> contacts = new ArrayList<User>();
 
     @ManyToMany(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Group> myGroups = new ArrayList<Group>();

@@ -78,34 +78,6 @@ public class UserController {
         }
     }
 
-    //    @RequestMapping(value = "/{contacts}")   params = { "id", "second" },
-    //    @RequestMapping(value = "/{contacts}")
-    @RequestMapping(params = { "contacts" }, method = RequestMethod.GET)
-    @ResponseBody
-    public ResponseEntity getContacts(@RequestParam("contacts") String contacts) {
-        try {
-            LOGGER.info("start GetContacts _____");
-            List<User> users = userService.getContacts(contacts);
-            LOGGER.info("Found {} users", users.size());
-            return new ResponseEntity<>(users, HttpStatus.OK);
-        } catch (DataAccessException e) {
-            LOGGER.info(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    //    @RequestMapping(value = "/{userName,contact}")
-//    public ResponseEntity addContact( @PathVariable String userName, @PathVariable String contact ) {
-//        try {
-//            LOGGER.info("start addContact");
-//            User user = userService.addContact(userName, contact);
-//            return new ResponseEntity<>(user, HttpStatus.OK);
-//        } catch (DataAccessException e) {
-//            LOGGER.info(e.getMessage());
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
-    
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity delete(@PathVariable int id) {

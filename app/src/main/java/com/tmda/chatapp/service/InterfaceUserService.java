@@ -14,8 +14,6 @@ public interface InterfaceUserService {
 
     List<User> findAll();
 
-    List<User> getContacts(String userName);
-
     boolean isAdmin(String userName);
 
     boolean delete(long id);

@@ -82,7 +82,7 @@ public class UserRPCController extends UserServiceGrpc.UserServiceImplBase {
         User contact = userService.findByUserName(request.getContact());
 
         // Add contact
-        user.getContacts().add(contact);
+//        user.getContacts().add(contact);
 
         // Save in DB
         userService.create(user);
