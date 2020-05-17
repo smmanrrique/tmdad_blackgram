@@ -25,9 +25,16 @@ public class GroupService implements  InterfaceGroupService {
     public Group create(Group group, int userId) {
         LOGGER.info("Find userById: {}", userId);
         User user = userRepository.findById(userId);
-        group.setOwner(user);
-        LOGGER.info("Save Group: {}", group);
-        return groupRepository.save(group);
+        Group newGroup = new Group(group.getName(), user);
+
+        // Add group references in  user
+        user.getMyGroups().add(newGroup);
+
+        // Add user reference in the group
+        group.getUsers().add(user);
+
+        userRepository.save(user);
+        return newGroup;
     }
 
 
