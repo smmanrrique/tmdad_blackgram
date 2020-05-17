@@ -21,7 +21,7 @@ public class UserService implements InterfaceUserService {
 
     @Override
     public User create(User user) {
-        return userRepository.save(user);
+        return userRepository.saveAndFlush(user);
     }
 
     @Override

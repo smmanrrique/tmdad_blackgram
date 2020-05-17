@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface InterfaceGroupService {
 
-    Group create(Group group);
+    Group create(Group group, int userId);
 
     Group findById(int id);
 

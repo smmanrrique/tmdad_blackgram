@@ -44,10 +44,10 @@ public class GroupRPCController extends GroupServiceGrpc.GroupServiceImplBase {
 
         Group group = new Group();
         group.setName(groupName);
-        group.setDescription(request.getDescription());
+//        group.setDescription(request.getDescription());
 
         // Create group in DB
-        groupService.create(group);
+//        groupService.create(group, request.getUser());
 
         // Create binding
         Channel channel = connectionRabbitMQ.channel();

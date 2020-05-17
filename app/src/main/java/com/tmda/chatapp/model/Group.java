@@ -1,5 +1,6 @@
 package com.tmda.chatapp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,10 +30,15 @@ public class Group extends AbstractEntity {
     @JsonIgnore
     private User owner;
 
-    @Size(max = 255)
-    private String description;
-
     @ManyToMany( fetch = FetchType.LAZY, mappedBy = "myGroups")
+    @JsonBackReference(value = "group")
     private List<User> users = new ArrayList<User>();
 
+    public Group() {
+    }
+
+    public Group(String name, User owner) {
+        this.name = name;
+        this.owner = owner;
+    }
 }

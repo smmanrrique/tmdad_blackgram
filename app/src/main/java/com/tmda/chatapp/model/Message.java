@@ -41,6 +41,7 @@ public class Message extends AbstractEntity implements Serializable {
 //            CascadeType.PERSIST,
 //            CascadeType.MERGE
 //    })
+
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "multimedias_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

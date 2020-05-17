@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,6 +23,19 @@ public class GroupController {
     @Autowired
     public GroupController(GroupService groupService) {
         this.groupService = groupService;
+    }
+
+    @PostMapping()
+    public ResponseEntity<Group> create(@RequestParam (value = "userId") int userId,
+                                        @Valid @RequestBody Group group) {
+        try {
+            LOGGER.info("start creating group: {}", group);
+            groupService.create(group, userId);
+            return new ResponseEntity<>(group, HttpStatus.CREATED);
+        } catch (DataAccessException e) {
+            LOGGER.info(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @RequestMapping
@@ -50,17 +64,7 @@ public class GroupController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Group> create(@RequestBody Group group) {
-        try {
-            LOGGER.info("start creating group: ", group);
-            groupService.create(group);
-            return new ResponseEntity<>(group, HttpStatus.CREATED);
-        } catch (DataAccessException e) {
-            LOGGER.info(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-        }
-    }
+
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Group> update(@PathVariable int id, @RequestBody Group group) {

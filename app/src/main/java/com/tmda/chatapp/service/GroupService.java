@@ -1,7 +1,9 @@
 package com.tmda.chatapp.service;
 
 import com.tmda.chatapp.model.Group;
+import com.tmda.chatapp.model.User;
 import com.tmda.chatapp.repositories.GroupRepository;
+import com.tmda.chatapp.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +19,14 @@ public class GroupService implements  InterfaceGroupService {
 
     @Autowired
     private GroupRepository groupRepository;
+    private UserRepository userRepository;
 
     @Override
-    public Group create(Group group) {
+    public Group create(Group group, int userId) {
+        LOGGER.info("Find userById: {}", userId);
+        User user = userRepository.findById(userId);
+        group.setOwner(user);
+        LOGGER.info("Save Group: {}", group);
         return groupRepository.save(group);
     }
 
