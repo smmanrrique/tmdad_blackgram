@@ -22,10 +22,6 @@ public class TopicService implements  InterfaceTopicService{
         return topicRepository.save(topic);
     }
 
-//    @Override
-//    public Topic find(int id) {
-//        return topicRepository.findById(id);
-//    }
 
     @Override
     public Topic findByName(String name) {

@@ -20,14 +20,6 @@ public class Contact extends AbstractEntity {
     @Size(max = 30)
     private String name;
 
-//    @JsonBackReference(value = "contact")
-////    @ManyToOne(fetch= FetchType.EAGER, cascade = CascadeType.ALL)
-//    @ManyToOne(fetch= FetchType.EAGER, cascade = {
-//            CascadeType.PERSIST,
-//            CascadeType.MERGE
-//    })
-//    private User contact = new User();
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "userName", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

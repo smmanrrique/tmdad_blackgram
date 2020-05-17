@@ -1,8 +1,9 @@
 package com.tmda.chatapp.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,25 +16,35 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper=false)
 public class Message extends AbstractEntity implements Serializable {
 
-    @JsonBackReference(value = "fromUser")
-    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "users_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JsonIgnore
     private User fromUser;
 
-    @JsonBackReference(value = "toUser")
-    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "userName", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JsonIgnore
     private User toUser;
 
-    @JsonBackReference(value = "toGroup")
-    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "groups_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JsonIgnore
     private Group toGroup;
 
     @Column(columnDefinition = "text")
     private String body;
 
-    @ManyToOne(fetch= FetchType.LAZY, cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
+//    @ManyToOne(fetch= FetchType.LAZY, cascade = {
+//            CascadeType.PERSIST,
+//            CascadeType.MERGE
+//    })
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "multimedias_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JsonIgnore
     private Multimedia multimedia = new Multimedia();
 
 
