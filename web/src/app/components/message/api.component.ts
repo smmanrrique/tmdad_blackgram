@@ -48,18 +48,15 @@ export class ApiComponent implements OnInit {
 
   // Function to create user
   add_user_to_system() {
-    // console.log(this.form);
-    // this.lotService.create(<Lot> this.form.value)
-    //   .subscribe(lot => {
-    //     this.notificationService.sucessInsert('Lote');
-    //     this.location.back();
-    //   }, err =>  {
-    //     this.notificationService.error(err);
-    //   });
-
     console.log("add_user_to_system");
-    console.log(this.userform)
-    this.notificationService.sucessInsert('User');
+    console.log(this.userform.value);
+    this.userService.create(<User> this.userform.value)
+      .subscribe(user => {
+        this.notificationService.sucessInsert('User');
+        // this.location.back();
+      }, err =>  {
+        this.notificationService.error(err);
+      });
   }
 
   create_chat_room() {

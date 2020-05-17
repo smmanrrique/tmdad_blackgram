@@ -12,21 +12,26 @@ import { User } from './user';
 })
 export class UserService {
 
-
 	private static readonly BASE_URL: string = BaseService.HOST + '/user';
-
-	private jwtHelper = new JwtHelperService();
 	private headers: HttpHeaders;
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+      observe: 'response',
+    })
+  };
 
 	constructor(
 		private http: HttpClient,
-		private fb: FormBuilder) {
-		this.headers = new HttpHeaders();
-		this.headers.set('Content-Type', 'application/x-www-form-urlencoded');
-	}
+		private fb: FormBuilder) {}
 
 	create(user: User): Observable<User> {
-		return this.http.post<any>(UserService.BASE_URL, User);
+	  if (user.password == null){
+      user.password = user.userName;
+    }
+    console.log(user);
+    return this.http.post<any>(UserService.BASE_URL, JSON.stringify(user), this.httpOptions);
 	}
 
 
@@ -47,13 +52,14 @@ export class UserService {
 	}
 
 	getUser(user: User): FormGroup {
-		return this.fb.group({
-			id: new FormControl(user.id),
+    return this.fb.group({
 			userName: new FormControl(user.userName, [Validators.required, Validators.maxLength(30)]),
+      password: new FormControl(user.password, [Validators.maxLength(50)]),
 			firstName: new FormControl(user.firstName, [Validators.maxLength(50)]),
 			lastName: new FormControl(user.lastName, [Validators.maxLength(50)]),
 			email: new FormControl(user.email, [CustomValidators.emailRegex]),
-			password: new FormControl(user.password, [Validators.maxLength(50)]),
+      admin: new FormControl(user.admin ),
+      myGroup: new FormControl(user.myGroups )
 		});
 	}
 
