@@ -19,18 +19,13 @@ public class ContactService implements  InterfaceContactService{
 
     @Override
     public Contact create(Contact contact) {
-//        int id = contact.getContact().getId();
-//        LOGGER.info("start creating Contact: {}", id);
-//        User user = userService.findById(id);
-//
-//        LOGGER.info("============ get USER Contact: ", user);
-//        System.out.println(contact.getContact().getId());
-//        System.out.println("contact.getContact().getId()");
-//        Contact newContact = new Contact(contact.getName(), user);
-//
-//        LOGGER.info("))))))) ", newContact);
         return contactRepository.save(contact);
     }
+    @Override
+    public Contact update(int id, Contact contact) {
+        return null;
+    }
+
 
     @Override
     public Contact findById(int id) {
@@ -38,8 +33,8 @@ public class ContactService implements  InterfaceContactService{
     }
 
     @Override
-    public Contact findByUser(String username) {
-        return null;
+    public List<Contact> findAllByUserId(int userId) {
+        return contactRepository.findAllByUserId(userId);
     }
 
     @Override
@@ -47,8 +42,5 @@ public class ContactService implements  InterfaceContactService{
         return contactRepository.findAll();
     }
 
-    @Override
-    public Contact update(int id, Contact contact) {
-        return null;
-    }
+
 }

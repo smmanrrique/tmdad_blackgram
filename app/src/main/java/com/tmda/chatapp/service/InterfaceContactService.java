@@ -8,12 +8,12 @@ public interface InterfaceContactService {
 
     Contact create(Contact contact);
 
+    Contact update(int id, Contact contact);
+
     Contact findById(int id);
 
-    Contact findByUser(String username);
+    List<Contact> findAllByUserId(int userId);
 
     List<Contact> findAll();
-
-    Contact update(int id, Contact contact);
 
 }

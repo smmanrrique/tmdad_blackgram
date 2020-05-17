@@ -35,14 +35,14 @@ public class UserService implements InterfaceUserService {
     }
 
     public User addContact(String userName, String ContactName){
-        User user = findByUserName(userName);
-        User contact = findByUserName(ContactName);
+//        User user = findByUserName(userName);
+//        User contact = findByUserName(ContactName);
 
         // Add contact
 //        user.getContacts().add(contact);
 
         // Save in DB
-        return create(user);
+        return null;
 
 
     }
