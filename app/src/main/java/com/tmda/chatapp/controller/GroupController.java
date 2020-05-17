@@ -1,6 +1,9 @@
 package com.tmda.chatapp.controller;
 
 import com.tmda.chatapp.model.Group;
+import com.tmda.chatapp.model.User;
+import com.tmda.chatapp.repositories.GroupRepository;
+import com.tmda.chatapp.repositories.UserRepository;
 import com.tmda.chatapp.service.GroupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,23 +21,32 @@ public class GroupController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(GroupController.class);
     private final GroupService groupService;
+    private final UserRepository userRepositorio;
+    private final GroupRepository groupRepository;
 
     @Autowired
-    public GroupController(GroupService groupService) {
+    public GroupController(GroupService groupService, UserRepository userRepositorio, GroupRepository groupRepository) {
         this.groupService = groupService;
+        this.userRepositorio = userRepositorio;
+        this.groupRepository = groupRepository;
+
     }
 
     @PostMapping()
-    public ResponseEntity<Group> create(@RequestParam (value = "userId") int userId,
-                                        @Valid @RequestBody Group group) {
+    public ResponseEntity<Group> createComment(@RequestParam (value = "userId") int userId,
+                                                 @RequestBody Group group) {
         try {
             LOGGER.info("start creating group: {}", group);
-            groupService.create(group, userId);
+            User user = userRepositorio.findById(userId);
+            LOGGER.info("User to add new contact: {}", user);
+            group.setOwner(user);
+            groupRepository.save(group);
             return new ResponseEntity<>(group, HttpStatus.CREATED);
         } catch (DataAccessException e) {
             LOGGER.info(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
+
     }
 
     @RequestMapping

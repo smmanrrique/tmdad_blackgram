@@ -35,7 +35,7 @@ public class ContactController {
 
 
     @PostMapping()
-    public ResponseEntity<Contact> createComment(@RequestParam (value = "userId") int userId,
+    public ResponseEntity<Contact> create(@RequestParam (value = "userId") int userId,
                                  @Valid @RequestBody Contact contact) {
         try {
             LOGGER.info("start creating Contact: {}", contact);
