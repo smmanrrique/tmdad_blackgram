@@ -25,10 +25,7 @@ export class GroupComponent implements OnInit {
 
   // @ts-ignore
   groups_test: Group[] = [
-    { name: "g1", description: "ADD_USER_TO_SYSTEM", user: "[{}]" },
-    { name: "g2", description: "ADD_USER_TO_SYSTEM", user: "[]" },
-    { name: "g4", description: "ADD_USER_TO_SYSTEM", user: "[]" },
-    { name: "g3", description: "ADD_USER_TO_SYSTEM", user: "[]" },
+    { name: "g1", owner: null, users: null }
   ];
 
   sms: Sms[] = [

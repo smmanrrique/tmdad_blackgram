@@ -3,7 +3,6 @@ import { User } from "../auth/user-register/user";
 
 export class Group extends BaseModel {
     name: string;
-    description: string;
-    user: string;
-    // users: User[];
+    owner: User;
+    users: User[] = [];
 }

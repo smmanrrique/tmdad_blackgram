@@ -4,10 +4,11 @@ import { Command } from './../../core/models/comman';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { UserService } from '../auth/user-register/user.service';
-import { User } from '../auth/user-register/user';
+import {AddUserGroup, User} from '../auth/user-register/user';
 import { Group } from '../group/group';
 import { Message } from './message';
 import {NotificationService} from "../../core/utils/notification/notification.service";
+import {HttpParams} from "@angular/common/http";
 
 @Component({
   // selector: 'app-message',
@@ -20,6 +21,7 @@ export class ApiComponent implements OnInit {
   userform: FormGroup;
   groupform: FormGroup;
   messageform: FormGroup;
+  addform: FormGroup;
 
   commands: Command[] = [
     { name: 'ADD_USER_TO_SYSTEM', command: 'ADD_USER_TO_SYSTEM', fields: ['username'] },
@@ -44,31 +46,44 @@ export class ApiComponent implements OnInit {
     this.userform = this.userService.getUser(new User());
     this.groupform = this.groupService.getGroup(new Group());
     this.messageform = this.messageService.getMessage(new Message());
+    this.addform = this.userService.AddUserGroup(new AddUserGroup());
   }
 
   // Function to create user
   add_user_to_system() {
-    console.log("add_user_to_system");
-    console.log(this.userform.value);
     this.userService.create(<User> this.userform.value)
       .subscribe(user => {
         this.notificationService.sucessInsert('User');
-        // this.location.back();
       }, err =>  {
         this.notificationService.error(err);
       });
   }
 
+  // Function to create Group
   create_chat_room() {
-    console.log("create_chat_room");
-    console.log(this.groupform)
+    // TODO Set userId
+    let httpParams = new HttpParams();
+    httpParams = httpParams.append('userId', String(1));
+
+    this.groupService.create(<Group> this.groupform.value, httpParams)
+      .subscribe(user => {
+        this.notificationService.sucessInsert('Group');
+      }, err =>  {
+        this.notificationService.error(err);
+      });
     this.notificationService.sucessInsert('Group');
   }
 
+
+  // Function to add User to group
   add_user_chat_room() {
-    console.log("create_chat_room");
-    console.log(this.groupform)
-    this.notificationService.sucessUpdate('added user to Group');
+
+    this.userService.addUserToGroup(<AddUserGroup> this.addform.value)
+      .subscribe(user => {
+        this.notificationService.sucessUpdate('added user to Group');
+      }, err =>  {
+        this.notificationService.error(err);
+      });
   }
 
   send_message() {

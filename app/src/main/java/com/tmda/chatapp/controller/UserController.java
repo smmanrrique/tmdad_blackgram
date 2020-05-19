@@ -18,7 +18,6 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-//    public final String CROSS_ORIGIN = "http://localhost:4200";
     public final String CROSS_ORIGIN = "*";
     private final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
@@ -63,6 +62,33 @@ public class UserController {
             group.getUsers().add(user);
 
 //            userRepository.save(user);
+            userService.create(user);
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
+        } catch (DataAccessException e) {
+            LOGGER.info(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    @PutMapping()
+    @CrossOrigin(origins =CROSS_ORIGIN)
+    public ResponseEntity<User> update(@RequestParam (value = "UserName") String userName, @RequestParam (value = "groupName") String groupName ) {
+        try {
+            LOGGER.info("Add user to GroupId: {} ", groupName);
+
+            // Create a User
+            User user = userService.findByUserName(userName);
+
+            // Create a Group
+            Group group = groupRepository.findByName(groupName);
+
+            // Add tag references in the post
+            user.getMyGroups().add(group);
+
+            // Add post reference in the tags
+            group.getUsers().add(user);
+
+            // userRepository.save(user);
             userService.create(user);
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         } catch (DataAccessException e) {

@@ -12,3 +12,10 @@ export class User extends BaseModel {
 
 
 }
+
+export class AddUserGroup  {
+  userName: string;
+  groupName: string;
+}
+
+

@@ -19,6 +19,7 @@ import java.util.List;
 @RequestMapping("/group")
 public class GroupController {
 
+    public final String CROSS_ORIGIN = "*";
     private final Logger LOGGER = LoggerFactory.getLogger(GroupController.class);
     private final GroupService groupService;
     private final UserRepository userRepositorio;
@@ -33,6 +34,7 @@ public class GroupController {
     }
 
     @PostMapping()
+    @CrossOrigin(origins =CROSS_ORIGIN)
     public ResponseEntity<Group> createComment(@RequestParam (value = "userId") int userId,
                                                  @RequestBody Group group) {
         try {
@@ -50,6 +52,7 @@ public class GroupController {
     }
 
     @RequestMapping
+    @CrossOrigin(origins =CROSS_ORIGIN)
     public ResponseEntity<List<Group>> loadAll() {
         LOGGER.info("start loadAll groups");
         try {
@@ -63,6 +66,7 @@ public class GroupController {
     }
 
     @RequestMapping("/{id}")
+    @CrossOrigin(origins =CROSS_ORIGIN)
     public ResponseEntity<Group> loadOne(@PathVariable int id) {
         LOGGER.info("start loadOne group by id: ", id);
         try {
@@ -78,6 +82,7 @@ public class GroupController {
 
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @CrossOrigin(origins =CROSS_ORIGIN)
     public ResponseEntity<Group> update(@PathVariable int id, @RequestBody Group group) {
         LOGGER.info("start update group: ", group);
         try {
@@ -90,6 +95,7 @@ public class GroupController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @CrossOrigin(origins =CROSS_ORIGIN)
     public ResponseEntity delete(@PathVariable int id) {
         if (groupService.delete(id))
             return new ResponseEntity(HttpStatus.OK);

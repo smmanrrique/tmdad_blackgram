@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { BaseService } from 'src/app/core/base.service';
 import { Observable } from 'rxjs';
 import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { CustomValidators } from 'src/app/core/utils/validator/custom-validator';
-import { User } from './user';
+import {Group} from "../../group/group";
+import {AddUserGroup, User} from './user';
 
 @Injectable({
 	providedIn: 'root'
@@ -13,7 +13,6 @@ import { User } from './user';
 export class UserService {
 
 	private static readonly BASE_URL: string = BaseService.HOST + '/user';
-	private headers: HttpHeaders;
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -34,8 +33,22 @@ export class UserService {
     return this.http.post<any>(UserService.BASE_URL, JSON.stringify(user), this.httpOptions);
 	}
 
+  addUserToGroup(addU: AddUserGroup): Observable<User> {
+    console.log(addU);
+    let httpParams = new HttpParams();
+    httpParams.append('userName', addU.userName);
+    httpParams.append('groupName', addU.groupName);
+    console.log("create_chat_room");
 
-	update(user: User): Observable<User> {
+    BaseService.h.httpOptions.params = httpParams;
+
+    return this.http.post<any>(UserService.BASE_URL, this.httpOptions);
+  }
+
+
+
+
+  update(user: User): Observable<User> {
 		return this.http.put<any>(UserService.BASE_URL + '/' + user.id, User);
 	}
 
@@ -60,6 +73,13 @@ export class UserService {
 			email: new FormControl(user.email, [CustomValidators.emailRegex]),
       admin: new FormControl(user.admin ),
       myGroup: new FormControl(user.myGroups )
+		});
+	}
+
+  AddUserGroup(user: AddUserGroup): FormGroup {
+    return this.fb.group({
+			userName: new FormControl(user.userName, [Validators.required, Validators.maxLength(30)]),
+      groupName: new FormControl(user.groupName, [Validators.required, Validators.maxLength(30)])
 		});
 	}
 

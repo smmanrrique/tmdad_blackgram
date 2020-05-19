@@ -62,20 +62,20 @@
 
     <!-- ADD_USER_TO_CHAT_ROOM -->
     <div *ngIf="selected=='ADD_USER_TO_CHAT_ROOM'">
-      <form *ngIf="groupform" [formGroup]="groupform" (ngSubmit)="add_user_chat_room()">
+      <form *ngIf="addform" [formGroup]="addform" (ngSubmit)="add_user_chat_room()">
 
         <mat-form-field required>
-          <input matInput formControlName="name" placeholder="Group Name">
+          <input matInput formControlName="groupName" placeholder="Group Name">
         </mat-form-field>
-        <app-validator [control]="groupform.controls['name']"></app-validator>
+        <app-validator [control]="addform.controls['groupName']"></app-validator>
 
         <mat-form-field required>
-          <input matInput formControlName="user" placeholder="User Name">
+          <input matInput formControlName="userName" placeholder="User Name">
         </mat-form-field>
-        <app-validator [control]="groupform.controls['user']"></app-validator>
+        <app-validator [control]="addform.controls['userName']"></app-validator>
 
         <div class="field">
-          <button mat-raised-button class="btn-text" type="submit" [disabled]="!groupform.valid">Execute</button>
+          <button mat-raised-button class="btn-text" type="submit" [disabled]="!addform.valid">Execute</button>
         </div>
       </form>
     </div>
