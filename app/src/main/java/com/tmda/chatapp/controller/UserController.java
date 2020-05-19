@@ -20,17 +20,15 @@ public class UserController {
 
     public final String CROSS_ORIGIN = "*";
     private final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
-    private final UserService userService;
-    private final GroupRepository groupRepository;
 
     @Autowired
-    public UserController(UserService userService, GroupRepository groupRepository) {
-        this.userService = userService;
-        this.groupRepository = groupRepository;
-    }
+    private UserService userService;
+
+    @Autowired
+    private GroupRepository groupRepository;
 
 
-    @PostMapping()
+    @PostMapping( consumes={"application/json"})
     @CrossOrigin(origins =CROSS_ORIGIN)
     public ResponseEntity<User> create( @RequestBody User user) {
         try {

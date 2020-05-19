@@ -20,7 +20,6 @@ public class User extends AbstractEntity {
     @NotNull
     @Size(max = 30)
     @Column( unique = true)
-    @JsonManagedReference(value ="fromUser")
     private String userName;
 
     @NotNull

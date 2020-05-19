@@ -20,4 +20,8 @@ public class Multimedia extends AbstractEntity {
     public Multimedia() {
     }
 
+    public Multimedia(String url) {
+        this.url = url;
+    }
+
 }

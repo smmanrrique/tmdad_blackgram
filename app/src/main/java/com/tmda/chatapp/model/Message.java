@@ -49,6 +49,7 @@ public class Message extends AbstractEntity implements Serializable {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Set<Topic> topics = new HashSet<Topic>();
 
     public Message() {}
@@ -60,11 +61,26 @@ public class Message extends AbstractEntity implements Serializable {
         this.topics = topics;
     }
 
+    public Message(User from, User to, String message, Multimedia multimedia, Set<Topic> topics) {
+        this.fromUser = from;
+        this.toUser = to;
+        this.body = message;
+        this.topics = topics;
+        this.multimedia = multimedia;
+    }
+
     public Message(User from, Group to, String message, Set<Topic> topics) {
         this.fromUser = from;
         this.toGroup = to;
         this.body = message;
         this.topics = topics;
+    }
+    public Message(User from, Group to, String message, Multimedia multimedia, Set<Topic> topics) {
+        this.fromUser = from;
+        this.toGroup = to;
+        this.body = message;
+        this.topics = topics;
+        this.multimedia = multimedia;
     }
 
     @Override
