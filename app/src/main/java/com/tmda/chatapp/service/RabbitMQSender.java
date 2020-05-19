@@ -22,6 +22,12 @@ public class RabbitMQSender {
         return "Send message: " + message.getFromUser().getUserName();
     }
 
+    public String SendDirectMessage(ConnectionRabbitMQ connectionRabbitMQ, String queueName, Message message) {
+        connectionRabbitMQ.getAmqpTemplate().convertAndSend(DIRECT_EXCHANGE,queueName, message);
+//        connectionRabbitMQ.getAmqpTemplate().convertAndSend(DIRECT_EXCHANGE,queueName, smsRequest.toByteArray());
+        return "Send message: " + message.getFromUser().getUserName();
+    }
+
     public String SendGroupMessage(ConnectionRabbitMQ connectionRabbitMQ, String routingkey, Message message) {
         logger.info("Call connection factory into Send Function");
         connectionRabbitMQ.getAmqpTemplate().convertAndSend(GROUP_EXCHANGE,routingkey, message);

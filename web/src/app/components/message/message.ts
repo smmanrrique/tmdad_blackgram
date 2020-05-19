@@ -1,13 +1,20 @@
-import { Multimedia } from './../file-upload/multimedia';
 import { BaseModel } from "src/app/core/models/base-model";
-import { Topic } from "./topic";
+
 
 export class Message extends BaseModel {
-    id: number;
-    toUser: string;
     fromUser: string;
-    group_message: string;
+    toUser: string;
+    toGroup: string;
     body: string;
-    topics: Topic[];
-    multimedia: Multimedia;
-} 
+    multimedia: string;
+    topics: string[] = [];
+}
+
+// export class MessageFile extends BaseModel {
+//   fromUser: string;
+//   toUser: string;
+//   toGroup: string;
+//   body: string;
+//   multimedia: string;
+//   topics: Topic[] = [];
+// }

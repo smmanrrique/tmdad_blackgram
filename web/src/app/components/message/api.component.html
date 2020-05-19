@@ -83,6 +83,12 @@
     <!-- SEND_MESSAGE -->
     <div *ngIf="selected=='SEND_MESSAGE'">
       <form *ngIf="messageform" [formGroup]="messageform" (ngSubmit)="send_message()">
+
+        <mat-form-field required>
+          <input matInput formControlName="fromUser" placeholder="From">
+        </mat-form-field>
+        <app-validator [control]="messageform.controls['fromUser']"></app-validator>
+
         <mat-form-field required>
           <input matInput formControlName="toUser" placeholder="To">
         </mat-form-field>
@@ -94,19 +100,26 @@
         <app-validator [control]="messageform.controls['body']"></app-validator>
 
         <div class="field">
-          <button mat-raised-button class="btn-text" type="submit" [disabled]="!groupform.valid">Execute</button>
+          <button mat-raised-button class="btn-text" type="submit" [disabled]="!messageform.valid">Execute</button>
         </div>
       </form>
     </div>
 
     <!-- SEND_MESSAGE_TO_ROOM -->
     <div *ngIf="selected=='SEND_MESSAGE_TO_ROOM'">
-      <form *ngIf="messageform" [formGroup]="messageform" (ngSubmit)="send_message()">
+      <form *ngIf="messageform" [formGroup]="messageform" (ngSubmit)="send_message_group()">
+
 
         <mat-form-field required>
-          <input matInput formControlName="group_message" placeholder="Group">
+          <input matInput formControlName="fromUser" placeholder="From">
         </mat-form-field>
-        <app-validator [control]="messageform.controls['group_message']"></app-validator>
+        <app-validator [control]="messageform.controls['fromUser']"></app-validator>
+
+
+        <mat-form-field required>
+          <input matInput formControlName="toGroup" placeholder="To Group">
+        </mat-form-field>
+        <app-validator [control]="messageform.controls['toGroup']"></app-validator>
 
         <mat-form-field required>
           <input matInput formControlName="body" placeholder="body">
@@ -114,25 +127,13 @@
         <app-validator [control]="messageform.controls['body']"></app-validator>
 
         <div class="field">
-          <button mat-raised-button class="btn-text" type="submit" [disabled]="!groupform.valid">Execute</button>
+          <button mat-raised-button class="btn-text" type="submit" [disabled]="!messageform.valid">Execute</button>
         </div>
       </form>
     </div>
 
     <!-- SEND_FILE -->
     <div *ngIf="selected=='SEND_FILE'">
-
-      <mat-form-field required>
-        <input matInput formControlName="toUser" placeholder="To">
-      </mat-form-field>
-      <app-validator [control]="messageform.controls['toUser']"></app-validator>
-
-      <mat-form-field required>
-        <input matInput formControlName="body" placeholder="body">
-      </mat-form-field>
-      <app-validator [control]="messageform.controls['body']"></app-validator>
-
-
 
       <div>
         <div style="color: blue; margin-bottom: 20px">
@@ -145,11 +146,22 @@
         <list-upload></list-upload>
       </div>
 
-    </div>
-
-    <!-- SEND_MESSAGE_TO_ALL -->
-    <div *ngIf="selected=='SEND_MESSAGE_TO_ALL'">
       <form *ngIf="messageform" [formGroup]="messageform" (ngSubmit)="send_message()">
+
+        <mat-form-field required>
+          <input matInput formControlName="fromUser" placeholder="From">
+        </mat-form-field>
+        <app-validator [control]="messageform.controls['fromUser']"></app-validator>
+
+        <mat-form-field required>
+          <input matInput formControlName="toUser" placeholder="To">
+        </mat-form-field>
+        <app-validator [control]="messageform.controls['toUser']"></app-validator>
+
+        <mat-form-field required>
+          <input matInput formControlName="multimedia" placeholder="multimedia">
+        </mat-form-field>
+        <app-validator [control]="messageform.controls['multimedia']"></app-validator>
 
         <mat-form-field required>
           <input matInput formControlName="body" placeholder="body">
@@ -157,7 +169,32 @@
         <app-validator [control]="messageform.controls['body']"></app-validator>
 
         <div class="field">
-          <button mat-raised-button class="btn-text" type="submit" [disabled]="!groupform.valid">Execute</button>
+          <button mat-raised-button class="btn-text" type="submit" [disabled]="!messageform.valid">Execute</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- SEND_MESSAGE_TO_ALL -->
+    <div *ngIf="selected=='SEND_MESSAGE_TO_ALL'">
+      <form *ngIf="messageform" [formGroup]="messageform" (ngSubmit)="send_message_broadcast()">
+
+        <mat-form-field required>
+          <input matInput formControlName="fromUser" placeholder="From">
+        </mat-form-field>
+        <app-validator [control]="messageform.controls['fromUser']"></app-validator>
+
+        <mat-form-field required>
+          <input matInput formControlName="toUser" placeholder="To">
+        </mat-form-field>
+        <app-validator [control]="messageform.controls['toUser']"></app-validator>
+
+        <mat-form-field required>
+          <input matInput formControlName="body" placeholder="body">
+        </mat-form-field>
+        <app-validator [control]="messageform.controls['body']"></app-validator>
+
+        <div class="field">
+          <button mat-raised-button class="btn-text" type="submit" [disabled]="!messageform.valid">Execute</button>
         </div>
       </form>
     </div>

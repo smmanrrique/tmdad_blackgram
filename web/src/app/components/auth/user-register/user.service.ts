@@ -40,7 +40,9 @@ export class UserService {
     httpParams.append('groupName', addU.groupName);
     console.log("create_chat_room");
 
-    BaseService.h.httpOptions.params = httpParams;
+    let param = BaseService.httpOptions();
+
+    param.params = httpParams;
 
     return this.http.post<any>(UserService.BASE_URL, this.httpOptions);
   }

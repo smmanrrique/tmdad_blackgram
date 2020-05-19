@@ -9,13 +9,17 @@ reference httpClient: http://blog.enriqueoriol.com/2017/11/httpclient-vs-http-an
 export class BaseService {
 	public static readonly HOST: string = environment.backendUrl;
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      observe: 'response',
-    }),
-    params:{}
-  };
+  public static httpOptions(): any {
+    let  httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        observe: 'response',
+      }),
+      params:{}
+    };
+
+    return httpOptions;
+  }
 
 	public static authorizationHeader(): HttpHeaders {
 		const headers = new HttpHeaders();

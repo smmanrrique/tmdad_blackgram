@@ -23,13 +23,13 @@ public class Message extends AbstractEntity implements Serializable {
     private User fromUser;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "userName", nullable = false)
+    @JoinColumn(name = "userName", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
 //    @JsonIgnore
     private User toUser;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "groups_id", nullable = false)
+    @JoinColumn(name = "groups_id", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
 //    @JsonIgnore
     private Group toGroup;
@@ -37,16 +37,12 @@ public class Message extends AbstractEntity implements Serializable {
     @Column(columnDefinition = "text")
     private String body;
 
-//    @ManyToOne(fetch= FetchType.LAZY, cascade = {
-//            CascadeType.PERSIST,
-//            CascadeType.MERGE
-//    })
-
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "multimedias_id", nullable = false)
+    @JoinColumn(name = "multimedias_id", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
 //    @JsonIgnore
-    private Multimedia multimedia = new Multimedia();
+//    private Multimedia multimedia = new Multimedia();
+    private Multimedia multimedia;
 
 
     @ManyToMany(fetch= FetchType.LAZY, cascade = {

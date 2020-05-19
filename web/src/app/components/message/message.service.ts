@@ -1,9 +1,10 @@
 import { Topic } from './topic';
 import { Message } from './message';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import { BaseService } from 'src/app/core/base.service';
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -17,25 +18,38 @@ export class MessageService {
     private fb: FormBuilder
   ) { }
 
+  sendMessage(message: Message): Observable<any> {
+    // Todo procesar topics
+    return this.http.post<any>(MessageService.BASE_URL+'/send', JSON.stringify(message), BaseService.httpOptions());
+  }
+
+  sendMessageGroup(message: Message): Observable<any> {
+    // Todo procesar topics
+    return this.http.post<any>(MessageService.BASE_URL+'/sendGroup', JSON.stringify(message), BaseService.httpOptions());
+  }
+
+  sendMessageBroadcast(message: Message): Observable<any> {
+    // Todo procesar topics
+    return this.http.post<any>(MessageService.BASE_URL+'/sendBroadcast', JSON.stringify(message), BaseService.httpOptions());
+  }
+
   getMessage(message: Message): FormGroup {
     return this.fb.group({
-      id: new FormControl(message.id),
       toUser: new FormControl(message.toUser),
       fromUser: new FormControl(message.fromUser),
-      group_message: new FormControl(message.group_message),
-      body: new FormControl(message.group_message),
-      multimedia: new FormControl(message.multimedia ? message.multimedia.url : undefined),
-      topics: this.fb.array([
-        this.initTopic(new Topic())
-      ])
+      toGroup: new FormControl(message.toGroup),
+      body: new FormControl(message.body),
+      multimedia: new FormControl(message.multimedia),
+      // topics: this.fb.array([
+      //   this.initTopic(new Topic())
+      // ])
     });
   }
 
   initTopic(topic: Topic): FormGroup {
     return this.fb.group({
       id: new FormControl(topic.id, Validators.required),
-      name: new FormControl(topic.name, Validators.required),
-      description: new FormControl(topic.description),
+      name: new FormControl(topic.name, Validators.required)
     });
   }
 
