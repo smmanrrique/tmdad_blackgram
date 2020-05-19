@@ -6,9 +6,9 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface MessageRepository extends CrudRepository<Message, Long> {
-//    List<Message> findByFromUser(String user);
+    List<Message> findByFromUser_UserName(String user);
 
-//    List<Message> saveAll(List<Message> messages);
+    List<Message> findByToUserUserName(String user);
 
     List<Message> findAll();
 
@@ -17,10 +17,5 @@ public interface MessageRepository extends CrudRepository<Message, Long> {
 //    List<Message> findByGroup(List<Message> messages);
 
     boolean deleteById(int id);
-
-//    void deleteAll(List<Message> entities);
-
-
-
 
 }

@@ -23,15 +23,15 @@ public class MessageService implements  InterfaceMessageService {
         return (List<Message>) messageRepository.saveAll( messages);
     }
 
-//    @Override
-//    public Message update(int id, Message user) {
-//        return null;
-//    }
+    @Override
+    public List<Message> findByToUserName(String user) {
+        return messageRepository.findByToUserUserName(user);
+    }
 
-//    @Override
-//    public List<Message> findByFromUser(String username) {
-//        return messageRepository.findByFromUser(username);
-//    }
+    @Override
+    public List<Message> findByFromUserName(String user) {
+        return messageRepository.findByFromUser_UserName(user);
+    }
 
     @Override
     public List<Message> findAll() {

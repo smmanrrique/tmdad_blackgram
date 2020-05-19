@@ -19,11 +19,13 @@ export class MessageService {
   ) { }
 
   sendMessage(message: Message): Observable<any> {
+    console.log(message)
     // Todo procesar topics
     return this.http.post<any>(MessageService.BASE_URL+'/send', JSON.stringify(message), BaseService.httpOptions());
   }
 
   sendMessageGroup(message: Message): Observable<any> {
+    console.log(message)
     // Todo procesar topics
     return this.http.post<any>(MessageService.BASE_URL+'/sendGroup', JSON.stringify(message), BaseService.httpOptions());
   }
@@ -40,9 +42,7 @@ export class MessageService {
       toGroup: new FormControl(message.toGroup),
       body: new FormControl(message.body),
       multimedia: new FormControl(message.multimedia),
-      // topics: this.fb.array([
-      //   this.initTopic(new Topic())
-      // ])
+      topics: new FormControl(message.topics),
     });
   }
 
@@ -52,18 +52,5 @@ export class MessageService {
       name: new FormControl(topic.name, Validators.required)
     });
   }
-
-  // getMessage(message: Message): FormGroup {
-  //   return this.fb.group({
-  //     id: new FormControl(message.id),
-  //     toUser: new FormControl(message.toUser),
-  //     fromUser: new FormControl(message.fromUser),
-  //     group_message: new FormControl(message.group_message),
-  //     multimedia: new FormControl(message.multimedia ? message.multimedia.url : undefined),
-  //     topics: this.fb.array([
-  //       this.initTopic(new Topic())
-  //     ])
-  //   });
-  // }
 
 }

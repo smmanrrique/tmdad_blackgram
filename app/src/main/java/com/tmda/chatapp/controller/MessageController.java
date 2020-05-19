@@ -7,7 +7,6 @@ import com.tmda.chatapp.model.Message;
 import com.tmda.chatapp.model.Topic;
 import com.tmda.chatapp.model.User;
 import com.tmda.chatapp.service.*;
-import com.tmdad.app.message.MessageRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,10 +47,95 @@ public class MessageController {
     @Autowired
     RabbitMQReceiver rabbitMQReceiver;
 
+
+    @RequestMapping
+    public ResponseEntity<List<Message>> FindAll() {
+        try {
+            logger.info("start FindAll messages");
+            List<Message> messages = messageService.findAll();
+            logger.info("Found {} messages", messages.size());
+            return new ResponseEntity<>(messages, HttpStatus.OK);
+        } catch (DataAccessException e) {
+            logger.info(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+//    @RequestMapping()
+//    public ResponseEntity<List<Message>> FindByToUser(@RequestParam String userName) {
+//        logger.info("start loadOne message by id: ", userName);
+//        try {
+//            List<Message> messages = messageService.findByToUserName(userName);
+//            logger.info("Found: {}", messages.size());
+//            return new ResponseEntity<>(messages, HttpStatus.OK);
+//        } catch (DataAccessException e) {
+//            logger.info(e.getMessage());
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
+
     @PostMapping("/send")
     @ResponseBody
     @CrossOrigin(origins =CROSS_ORIGIN)
-    public ResponseEntity<String> sender(@RequestBody MessageDTO message){
+    public ResponseEntity<String> send(@RequestBody MessageDTO message){
+        try {
+            System.out.printf("======================");
+            logger.info("Call sendMessage and server received {}", message.toString());
+
+            String toUser =  message.getToUser();
+            String fromUser =  message.getToUser();
+
+
+            Set<Topic> topics= new HashSet<Topic>();
+            if(!message.getTopics().isEmpty()){
+                topics = extractTopic(message.getTopics().size(), message.getTopics());
+            }
+
+            // Create Message and User
+            User userFrom = userService.findByUserName(fromUser);
+            User userTo = userService.findByUserName(toUser);
+
+            Message sms = new Message(userFrom, userTo, message.getBody(), topics);
+
+            // Save message in DB
+            messageService.create(sms);
+
+            String result = rabbitMQSender.SendDirectMessage(connectionRabbitMQ, toUser, sms);
+
+            return new ResponseEntity<>(result, HttpStatus.CREATED);
+
+        } catch (DataAccessException e) {
+            logger.info(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    @PostMapping("/sendGroup")
+    @ResponseBody
+    @CrossOrigin(origins =CROSS_ORIGIN)
+    public ResponseEntity<String> sendGroup(@RequestBody MessageDTO message){
+        logger.info("Send Message: ", message);
+        try {
+            logger.info("Call sendMessageGroup and server received {}",message.toString());
+
+            Message sms = messagesUsers(message, true);
+
+            // Send message to broker
+            String result = rabbitMQSender.SendGroupMessage(connectionRabbitMQ, message.getToGroup(), sms);
+
+            return new ResponseEntity<>(result, HttpStatus.CREATED);
+
+        } catch (DataAccessException e) {
+            logger.info(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+
+    @PostMapping("/sendBroadcast")
+    @ResponseBody
+    @CrossOrigin(origins =CROSS_ORIGIN)
+    public ResponseEntity<String> sendBroadcast(@RequestBody MessageDTO message){
         logger.info("Send Message: ", message);
         try {
             System.out.printf("======================");
@@ -94,29 +178,26 @@ public class MessageController {
         return topics;
     }
 
-    public Message messagesUsers(MessageRequest request, boolean isGroup){
-        String groupName = request.getToUser();
-        Group group;
+    public Message messagesUsers(MessageDTO message, boolean isGroup){
 
         // If exist get all message topics
-        Integer n = request.getTopicsCount();
-        Set<Topic> topics = new HashSet<Topic>();
-        if ( n > 0 ){
-            topics = extractTopic(request.getTopicsCount(), request.getTopicsList());
+        Set<Topic> topics= new HashSet<Topic>();
+        if(!message.getTopics().isEmpty()){
+            topics = extractTopic(message.getTopics().size(), message.getTopics());
         }
 
         // Create Message and User
-        User userFrom = userService.findByUserName(request.getFromUser());
+        User fromUser = userService.findByUserName(message.getFromUser());
 
         if (isGroup){
-            group = groupService.findByName(groupName);
-            Message message = new Message(userFrom, group, request.getBody(), topics);
-            messageService.create(message);
-            return message;
+            Group group = groupService.findByName(message.getToGroup());
+            Message sms = new Message(fromUser, group, message.getBody(), topics);
+            messageService.create(sms);
+            return sms;
         }else{
             List<Message> messages = new ArrayList<>();
             for (User user: userService.findAll()) {
-                messages.add(new Message(userFrom, user, request.getBody(), topics));
+                messages.add(new Message(fromUser, user, message.getBody(), topics));
             }
 
             // Save message in DB TODO
@@ -127,90 +208,4 @@ public class MessageController {
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    @RequestMapping(method = RequestMethod.POST)
-//    public ResponseEntity<Message> create(@RequestBody User user) {
-//        LOGGER.info("start creating user: ", user);
-//        try {
-//            // User user = userService.create(user);
-//            return new ResponseEntity<>(user, HttpStatus.CREATED);
-//        } catch (DataAccessException e) {
-//            LOGGER.info(e.getMessage());
-//            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-//        }
-//    }
-//
-//
-//    @RequestMapping(method = RequestMethod.POST)
-//    public ResponseEntity<Message> create(@RequestBody Message message) {
-//        try {
-//            LOGGER.info("start creating message: ", message);
-//            messageService.create(message);
-//            return new ResponseEntity<>(message, HttpStatus.CREATED);
-//        } catch (DataAccessException e) {
-//            LOGGER.info(e.getMessage());
-//            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-//        }
-//    }
-//
-//    @RequestMapping
-//    public ResponseEntity<List<Message>> loadAll() {
-//        try {
-//            LOGGER.info("start loadAll messages");
-//            List<Message> messages = messageService.findAll();
-//            LOGGER.info("Found {} messages", messages.size());
-//            return new ResponseEntity<>(messages, HttpStatus.OK);
-//        } catch (DataAccessException e) {
-//            LOGGER.info(e.getMessage());
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
-//
-//    @RequestMapping("/{userName}")
-//    public ResponseEntity<Message> FindByUser(@PathVariable String userName) {
-//        LOGGER.info("start loadOne message by id: ", userName);
-//        try {
-//            List<Message> message = messageService.findByFromUser(userName);
-//            LOGGER.info("Found: {}", message);
-//            return new ResponseEntity<>(message, HttpStatus.OK);
-//        } catch (DataAccessException e) {
-//            LOGGER.info(e.getMessage());
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
-//
-//
-//
-//    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-//    public ResponseEntity<Message> update(@PathVariable int id, @RequestBody Message message) {
-//        LOGGER.info("start update message: ", message);
-//        try {
-//            // Message message = messageService.update(id, message);
-//            return new ResponseEntity<>(message, HttpStatus.OK);
-//        } catch (DataAccessException e) {
-//            LOGGER.info(e.getMessage());
-//            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-//        }
-//    }
-//
-//    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-//    public ResponseEntity deleteById(@PathVariable int id) {
-////        if (messageService.delete(id))
-////            return new ResponseEntity(HttpStatus.OK);
-//        messageService.deleteById(id);
-//        return new ResponseEntity(HttpStatus.BAD_REQUEST);
-//    }
 }

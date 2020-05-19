@@ -109,12 +109,10 @@
     <div *ngIf="selected=='SEND_MESSAGE_TO_ROOM'">
       <form *ngIf="messageform" [formGroup]="messageform" (ngSubmit)="send_message_group()">
 
-
         <mat-form-field required>
           <input matInput formControlName="fromUser" placeholder="From">
         </mat-form-field>
         <app-validator [control]="messageform.controls['fromUser']"></app-validator>
-
 
         <mat-form-field required>
           <input matInput formControlName="toGroup" placeholder="To Group">

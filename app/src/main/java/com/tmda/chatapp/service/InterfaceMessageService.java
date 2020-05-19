@@ -10,7 +10,9 @@ public interface InterfaceMessageService {
 
     List<Message> saveAll(List<Message> messages);
 
-//    List<Message> findByFromUser(String username);
+    List<Message> findByToUserName(String user);
+
+    List<Message> findByFromUserName(String user);
 
     List<Message> findAll();
 
