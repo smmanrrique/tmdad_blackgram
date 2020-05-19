@@ -6,6 +6,7 @@ import com.tmda.chatapp.model.Group;
 import com.tmda.chatapp.model.Message;
 import com.tmda.chatapp.model.Topic;
 import com.tmda.chatapp.model.User;
+import com.tmda.chatapp.repositories.MessageRepository;
 import com.tmda.chatapp.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +34,9 @@ public class MessageController {
     private ConnectionRabbitMQ connectionRabbitMQ;
 
     @Autowired
+    MessageRepository messageRepository;
+
+    @Autowired
     UserService userService;
 
     @Autowired
@@ -52,7 +56,8 @@ public class MessageController {
     public ResponseEntity<List<Message>> FindAll() {
         try {
             logger.info("start FindAll messages");
-            List<Message> messages = messageService.findAll();
+//            List<Message> messages = messageService.findAll();
+            List<Message> messages = messageRepository.findAll();
             logger.info("Found {} messages", messages.size());
             return new ResponseEntity<>(messages, HttpStatus.OK);
         } catch (DataAccessException e) {

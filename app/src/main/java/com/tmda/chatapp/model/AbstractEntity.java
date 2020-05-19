@@ -19,8 +19,6 @@ public abstract class AbstractEntity implements Serializable {
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", updatable = false, insertable = false)
     private Timestamp created;
 
-    //  TODO  ON UPDATE CURRENT_TIMESTAMP
-//    @LastModifiedDate
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false)
     private Timestamp updated;

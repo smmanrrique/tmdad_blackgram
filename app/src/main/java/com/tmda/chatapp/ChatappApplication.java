@@ -1,8 +1,11 @@
 package com.tmda.chatapp;
 
 import com.tmda.chatapp.model.Group;
+import com.tmda.chatapp.model.Message;
+import com.tmda.chatapp.model.Topic;
 import com.tmda.chatapp.model.User;
 import com.tmda.chatapp.repositories.GroupRepository;
+import com.tmda.chatapp.repositories.MessageRepository;
 import com.tmda.chatapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -10,6 +13,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.scheduling.annotation.EnableScheduling;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @SpringBootApplication
 @EnableScheduling
@@ -21,6 +27,9 @@ public class ChatappApplication implements CommandLineRunner {
 
     @Autowired
     GroupRepository groupRepository;
+
+    @Autowired
+    MessageRepository messageRepository;
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(ChatappApplication.class, args);
@@ -47,7 +56,10 @@ public class ChatappApplication implements CommandLineRunner {
         userRepository.save(user);
 
         // =======================================
+        Set<Topic> topics= new HashSet<Topic>();
+        Message messsage = new Message(user, user,"hola msm1", topics );
 
+        messageRepository.save(messsage);
 
 
     }
