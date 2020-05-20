@@ -17,6 +17,7 @@ import java.util.List;
 @Entity
 @Data
 @Table(name="groups")
+@JsonIgnoreProperties(ignoreUnknown = true)
 @EqualsAndHashCode(callSuper = false)
 public class Group extends AbstractEntity {
 

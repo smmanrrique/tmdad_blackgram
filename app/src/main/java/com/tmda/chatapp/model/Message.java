@@ -14,6 +14,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "messages")
+@JsonIgnoreProperties(ignoreUnknown = true)
 @EqualsAndHashCode(callSuper=false)
 public class Message extends AbstractEntity implements Serializable {
 
