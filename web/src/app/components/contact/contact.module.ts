@@ -5,11 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule, MatCheckboxModule, MatPaginatorModule, MatSelectModule, MatFormFieldModule, MatInputModule,
   MatSortModule, MatGridListModule, MatCardModule } from '@angular/material';
 import { UtilsModule } from 'src/app/core/utils/utils.module';
-import {GroupRoutingModule} from "./group.routing";
-import {GroupComponent} from "./group.component";
-import {GroupService} from "./group.service";
-import {UtilService} from "mydatepicker/dist";
 import {ContactService} from "../contact/contact.service";
+import {ContactComponent} from "./contact.component";
 
 
 @NgModule({
@@ -28,18 +25,15 @@ import {ContactService} from "../contact/contact.service";
     MatSortModule,
     ModalModule.forRoot(),
 
-    UtilsModule,
-    GroupRoutingModule
+    UtilsModule
   ],
   declarations: [
-    GroupComponent
+    ContactComponent
   ],
   exports: [
-    GroupComponent
+    ContactComponent
   ],
   providers: [
-    GroupService,
-    UtilService,
     ContactService,
   ]
 })

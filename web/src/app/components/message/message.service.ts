@@ -1,6 +1,6 @@
 import { Topic } from './topic';
 import { Message } from './message';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import { BaseService } from 'src/app/core/base.service';
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -33,6 +33,12 @@ export class MessageService {
   sendMessageBroadcast(message: Message): Observable<any> {
     // Todo procesar topics
     return this.http.post<any>(MessageService.BASE_URL+'/sendBroadcast', JSON.stringify(message), BaseService.httpOptions());
+  }
+
+  getAll(params: HttpParams = new HttpParams()): Observable<any> {
+    let parameters = BaseService.httpOptions();
+    parameters.params = params;
+    return this.http.get<any>(MessageService.BASE_URL, parameters);
   }
 
   getMessage(message: Message): FormGroup {

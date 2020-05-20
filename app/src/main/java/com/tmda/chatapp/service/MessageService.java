@@ -25,12 +25,17 @@ public class MessageService implements  InterfaceMessageService {
 
     @Override
     public List<Message> findByToUserName(String user) {
-        return messageRepository.findByToUserUserName(user);
+        return messageRepository.findByToUser_UserName(user);
     }
 
     @Override
     public List<Message> findByFromUserName(String user) {
         return messageRepository.findByFromUser_UserName(user);
+    }
+
+    @Override
+    public List<Message> findByToGroup_GroupName(String group) {
+        return messageRepository.findByToGroupName(group);
     }
 
     @Override

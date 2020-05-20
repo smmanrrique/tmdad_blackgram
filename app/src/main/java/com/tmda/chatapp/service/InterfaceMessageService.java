@@ -14,9 +14,9 @@ public interface InterfaceMessageService {
 
     List<Message> findByFromUserName(String user);
 
-    List<Message> findAll();
+    List<Message> findByToGroup_GroupName(String group);
 
-//    Message update(int id, Message user);
+    List<Message> findAll();
 
     boolean deleteById(int id);
 

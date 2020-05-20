@@ -8,13 +8,11 @@ import java.util.List;
 public interface MessageRepository extends CrudRepository<Message, Long> {
     List<Message> findByFromUser_UserName(String user);
 
-    List<Message> findByToUserUserName(String user);
+    List<Message> findByToUser_UserName(String user);
 
     List<Message> findAll();
 
-//    List<Message> findByToUser(List<Message> messages);
-
-//    List<Message> findByGroup(List<Message> messages);
+    List<Message> findByToGroupName(String group);
 
     boolean deleteById(int id);
 

@@ -6,8 +6,6 @@
   </div>
 </div>
 
-
-
 <div class="wrap">
   <div class="floatleft">
 
@@ -55,7 +53,7 @@
 
       <div>
         <ul class="sms">
-          <li *ngFor="let message of sms"
+          <li *ngFor="let message of messages"
               [class.selected]="message === selectedGroup"
               (click)="onSelect(g1)">
             <span class="badge">{{message.fromUser}}</span>

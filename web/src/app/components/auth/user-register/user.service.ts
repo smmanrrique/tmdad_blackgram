@@ -59,7 +59,8 @@ export class UserService {
 	}
 
 	getById(id: number): Observable<User> {
-		return this.http.get<any>(UserService.BASE_URL + '/' + id);
+	  console.log(UserService.BASE_URL + '/' + id)
+		return this.http.get<User>(UserService.BASE_URL + '/' + id);
 	}
 
 	getAll(params: HttpParams = new HttpParams()): Observable<any> {

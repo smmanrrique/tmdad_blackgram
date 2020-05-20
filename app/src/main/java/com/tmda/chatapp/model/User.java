@@ -1,6 +1,7 @@
 package com.tmda.chatapp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,6 +21,7 @@ public class User extends AbstractEntity {
     @NotNull
     @Size(max = 30)
     @Column( unique = true)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private String userName;
 
     @NotNull
@@ -41,6 +43,7 @@ public class User extends AbstractEntity {
     @ManyToMany(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference(value ="group")
     @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Group> myGroups = new ArrayList<Group>();
 
     public User() {}

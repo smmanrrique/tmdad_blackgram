@@ -2,6 +2,7 @@ package com.tmda.chatapp.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.OnDelete;
@@ -28,10 +29,12 @@ public class Group extends AbstractEntity {
     @JoinColumn(name = "userName", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private User owner;
 
     @ManyToMany( fetch = FetchType.LAZY, mappedBy = "myGroups")
     @JsonBackReference(value = "group")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<User> users = new ArrayList<User>();
 
     public Group() {

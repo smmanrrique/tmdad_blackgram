@@ -1,5 +1,5 @@
 import { MessageService } from './message.service';
-import { GroupService } from './../group/group.service';
+import { GroupService } from '../group/group.service';
 import { Command } from './../../core/models/comman';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
@@ -29,8 +29,8 @@ export class ApiComponent implements OnInit {
     { name: 'ADD_USER_TO_CHAT_ROOM', command: 'ADD_USER_TO_CHAT_ROOM', fields: ['username', 'room_name'] },
     { name: 'SEND_MESSAGE', command: 'SEND_MESSAGE', fields: ['from_user', 'to_user', 'msg_content'] },
     { name: 'SEND_MESSAGE_TO_ROOM', command: 'SEND_MESSAGE_TO_ROOM', fields: ['from_user', 'room_name', 'msg_content'] },
-    { name: 'SEND_FILE', command: 'SEND_FILE', fields: ['from_user', 'to_user', 'content'] },
-    { name: 'SEND_MESSAGE_TO_ALL', command: 'SEND_MESSAGE_TO_ALL', fields: ['msg_content'] }
+    { name: 'SEND_MESSAGE_TO_ALL', command: 'SEND_MESSAGE_TO_ALL', fields: ['msg_content'] },
+    { name: 'SEND_FILE', command: 'SEND_FILE', fields: ['from_user', 'to_user', 'content'] }
   ];
 
 
@@ -117,7 +117,7 @@ export class ApiComponent implements OnInit {
     console.log(this.messageform)
     this.notificationService.showInfo('Send Message');
 
-    this.messageService.sendMessageGroup(<Message> this.messageform.value)
+    this.messageService.sendMessageBroadcast(<Message> this.messageform.value)
       .subscribe(user => {
         this.notificationService.sucessUpdate('added User to Group');
       }, err =>  {

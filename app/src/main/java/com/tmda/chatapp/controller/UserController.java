@@ -98,7 +98,7 @@ public class UserController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @CrossOrigin(origins =CROSS_ORIGIN)
-    public ResponseEntity<User> loadOne(@PathVariable int id) {
+    public ResponseEntity<User> FindById(@PathVariable int id) {
         LOGGER.info("start loadOne user by id: ", id);
         try {
             User user = userService.findById(id);

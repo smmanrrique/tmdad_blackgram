@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../auth/user-register/user';
+import {AddUserGroup, User} from '../auth/user-register/user';
 import { Group } from '../group/group';
-import {Sms} from "../group/group.component";
+import {UserService} from "../auth/user-register/user.service";
+import {GroupService} from "../group/group.service";
+import {MessageService} from "./message.service";
+import {NotificationService} from "../../core/utils/notification/notification.service";
+import {Message, MessageList} from "./message";
+import {HttpParams} from "@angular/common/http";
+import {ContactService} from "../contact/contact.service";
 
 @Component({
   // selector: 'app-chat',
@@ -12,40 +18,47 @@ import {Sms} from "../group/group.component";
 
 export class ChatComponent implements OnInit {
 
-  // dataSource = new MatTableDataSource<Message>();
-  // dataSource = new MatTableDataSource<Sms>();
+  user: User;
+  messages: MessageList[];
   selectedGroup: Group;
 
-  User = new User();
+  constructor(
+    private userService: UserService,
+    private groupService: GroupService,
+    private messageService: MessageService,
+    private contactService: ContactService,
+    private notificationService: NotificationService
+  ) { }
 
-  // @ts-ignore
-  groups_test: Group[] = [
-    { name: "g1", owner: null , users: null }
-  ];
-
-  sms: Sms[] = [
-    {fromUser: 'U1 SHAMUEL AMS', body: 'Pfdgsdfgdfsgese a los datos oficiales, desde el inicio de la emergencia sanitaria el líder del Partido Popular, Pablo Casado, ha considerado que la gestión de la pandemia y las políticas puestas en marcha por Díaz Ayuso son un "ejemplo a seguir". "Es lo que haríamos a nivel nacional", apuntó el líder del PP el pasado sábado, tras participar en el acto oficial de la comunidad con motivo de la festividad del 2 de mayo.', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
-    {fromUser: 'U1 SHAMUEL AMS', body: 'Pfdgsdfgdfsgese a los datos oficiales, desde el inicio de la emergencia sanitaria el líder del Partido Popular, Pablo Casado, ha considerado que la gestión de la pandemia y las políticas puestas en marcha por Díaz Ayuso son un "ejemplo a seguir". "Es lo que haríamos a nivel nacional", apuntó el líder del PP el pasado sábado, tras participar en el acto oficial de la comunidad con motivo de la festividad del 2 de mayo.', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
-    {fromUser: 'U1 SHAMUEL AMS', body: 'Pfdgsdfgdfsgese a los datos oficiales, desde el inicio de la emergencia sanitaria el líder del Partido Popular, Pablo Casado, ha considerado que la gestión de la pandemia y las políticas puestas en marcha por Díaz Ayuso son un "ejemplo a seguir". "Es lo que haríamos a nivel nacional", apuntó el líder del PP el pasado sábado, tras participar en el acto oficial de la comunidad con motivo de la festividad del 2 de mayo.', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
-    {fromUser: 'U1 SHAMUEL AMS', body: 'Pfdgsdfgdfsgese a los datos oficiales, desde el inicio de la emergencia sanitaria el líder del Partido Popular, Pablo Casado, ha considerado que la gestión de la pandemia y las políticas puestas en marcha por Díaz Ayuso son un "ejemplo a seguir". "Es lo que haríamos a nivel nacional", apuntó el líder del PP el pasado sábado, tras participar en el acto oficial de la comunidad con motivo de la festividad del 2 de mayo.', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
-    {fromUser: 'U1 SHAMUEL AMS', body: 'Pfdgsdfgdfsgese a los datos oficiales, desde el inicio de la emergencia sanitaria el líder del Partido Popular, Pablo Casado, ha considerado que la gestión de la pandemia y las políticas puestas en marcha por Díaz Ayuso son un "ejemplo a seguir". "Es lo que haríamos a nivel nacional", apuntó el líder del PP el pasado sábado, tras participar en el acto oficial de la comunidad con motivo de la festividad del 2 de mayo.', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
-    {fromUser: 'U1 SHAMUEL AMS', body: 'Pfdgsdfgdfsgese a los datos oficiales, desde el inicio de la emergencia sanitaria el líder del Partido Popular, Pablo Casado, ha considerado que la gestión de la pandemia y las políticas puestas en marcha por Díaz Ayuso son un "ejemplo a seguir". "Es lo que haríamos a nivel nacional", apuntó el líder del PP el pasado sábado, tras participar en el acto oficial de la comunidad con motivo de la festividad del 2 de mayo.', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
-    {fromUser: 'U1 SHAMUEL AMS', body: 'Pfdgsdfgdfsgese a los datos oficiales, desde el inicio de la emergencia sanitaria el líder del Partido Popular, Pablo Casado, ha considerado que la gestión de la pandemia y las políticas puestas en marcha por Díaz Ayuso son un "ejemplo a seguir". "Es lo que haríamos a nivel nacional", apuntó el líder del PP el pasado sábado, tras participar en el acto oficial de la comunidad con motivo de la festividad del 2 de mayo.', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
-    {fromUser: 'U1 SHAMUEL AMS', body: 'Pfdgsdfgdfsgese a los datos oficiales, desde el inicio de la emergencia sanitaria el líder del Partido Popular, Pablo Casado, ha considerado que la gestión de la pandemia y las políticas puestas en marcha por Díaz Ayuso son un "ejemplo a seguir". "Es lo que haríamos a nivel nacional", apuntó el líder del PP el pasado sábado, tras participar en el acto oficial de la comunidad con motivo de la festividad del 2 de mayo.', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
-    {fromUser: 'U2', body: 'rgsdfgs', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
-    {fromUser: 'U3', body: 'gsdfg', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
-      {fromUser: 'U1', body: 'asssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss', topics: '1.0079', multimedia: 'https://th.bing.com/th/id/OIP.8AjxN0zjW0u8Y2t-hgdSXQHaEK?w=300&h=168&c=7&o=5&pid=1.7'},
-  ];
-
-  displayedColumns: string[] = ['message.fromUser', 'message'];
-
-  g1 = new Group();
-  dataSource = this.sms;
   ngOnInit() {
-    // this.dataSource.data = this.sms;
+
+    // let paramsMessage = new HttpParams();
+    // // httpParams = httpParams.append('userId', String(1));
+    //
+    // this.messageService.getAll(paramsMessage).subscribe(
+    //   data => {
+    //     this.messages = data['result'];
+    //     console.log(this.messages)
+    //   });
+
+    // // TODO Get ID USER FROM URL
+    // let paramsUser = new HttpParams();
+    // this.userService.getById(1).subscribe(
+    //   data => {
+    //     this.user = data['result'];
+    //     console.log(this.messages)});
+    //
+    // // TODO Get ID USER FROM URL
+    // let paramsContact = new HttpParams();
+    // paramsContact.set("userId", String(this.user.id))
+    //
+    // this.contactService.getAll(paramsContact).subscribe(
+    //   data => {
+    //     this.user = data['result'];
+    //     console.log(this.messages)});
+
   }
 
-  constructor() { }
 
   onSelect(group: Group): void {
     this.selectedGroup = group;

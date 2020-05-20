@@ -32,9 +32,11 @@ export class GroupService {
     return this.http.post<any>(GroupService.BASE_URL, JSON.stringify(group), this.httpOptions);
   }
 
-  // getAll(params: HttpParams = new HttpParams()): Observable<any> {
-  //   return this.http.get<any>(ProviderService.BASE_URL, {params: params});
-  // }
+  getAll(params: HttpParams = new HttpParams()): Observable<any> {
+    this.httpOptions.params = params;
+    console.log(this.httpOptions)
+    return this.http.get<any>(GroupService.BASE_URL, {params: params});
+  }
 
 
   getGroup(group: Group): FormGroup {

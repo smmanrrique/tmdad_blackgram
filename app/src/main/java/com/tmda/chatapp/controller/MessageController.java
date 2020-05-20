@@ -53,11 +53,26 @@ public class MessageController {
     private MultimediaRepository multimediaRepository;
 
     @RequestMapping
-    public ResponseEntity<List<Message>> FindAll() {
+    @CrossOrigin(origins =CROSS_ORIGIN)
+    public ResponseEntity<List<Message>> FindAll(@RequestParam(required = false) String fromUser,
+                                                 @RequestParam(required = false) String toGroup,
+                                                 @RequestParam(required = false) String toUser) {
         try {
-            logger.info("start FindAll messages");
-//            List<Message> messages = messageService.findAll();
-            List<Message> messages = messageRepository.findAll();
+            logger.info("start FindAll with fromUser: {}", fromUser);
+            logger.info("start FindAll with toGroup: {}", toGroup);
+            logger.info("start FindAll with toUser: {}", toUser);
+
+            List<Message> messages;
+            if (fromUser != null ) {
+                messages = messageService.findByFromUserName(fromUser);
+            }else if (toUser != null){
+                messages = messageService.findByToUserName(toUser);
+            } else if (toGroup != null){
+                messages = messageService.findByToGroup_GroupName(toGroup);
+            }else {
+                messages = messageService.findAll();
+            }
+
             logger.info("Found {} messages", messages.size());
             return new ResponseEntity<>(messages, HttpStatus.OK);
         } catch (DataAccessException e) {
@@ -65,19 +80,6 @@ public class MessageController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
-//    @RequestMapping()
-//    public ResponseEntity<List<Message>> FindByToUser(@RequestParam String userName) {
-//        logger.info("start loadOne message by id: ", userName);
-//        try {
-//            List<Message> messages = messageService.findByToUserName(userName);
-//            logger.info("Found: {}", messages.size());
-//            return new ResponseEntity<>(messages, HttpStatus.OK);
-//        } catch (DataAccessException e) {
-//            logger.info(e.getMessage());
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
 
     @PostMapping("/send")
     @ResponseBody
