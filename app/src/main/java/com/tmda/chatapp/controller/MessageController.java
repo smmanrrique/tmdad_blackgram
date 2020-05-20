@@ -106,7 +106,7 @@ public class MessageController {
             Message sms;
             if(message.getMultimedia() != null){
                 Multimedia multimedia = new Multimedia(message.getMultimedia());
-                multimediaRepository.save(multimedia);
+//                multimediaRepository.save(multimedia);
                 sms = new Message(userFrom, userTo, message.getBody(), multimedia, topics);
             }else{
                 sms = new Message(userFrom, userTo, message.getBody(), topics);
@@ -134,10 +134,13 @@ public class MessageController {
         try {
             logger.info("Call sendMessageGroup and server received {}",message.toString());
 
+
             Message sms = messagesUsers(message, true);
+            logger.info("Save messages in database {}",message.toString());
 
             // Send message to broker
             String result = rabbitMQSender.SendGroupMessage(connectionRabbitMQ, message.getToGroup(), sms);
+            logger.info("Sent messages Rabbit {}",message.toString());
 
             return new ResponseEntity<>(result, HttpStatus.CREATED);
 
@@ -152,29 +155,15 @@ public class MessageController {
     @ResponseBody
     @CrossOrigin(origins =CROSS_ORIGIN)
     public ResponseEntity<String> sendBroadcast(@RequestBody MessageDTO message){
-        logger.info("Send Message: ", message);
         try {
             logger.info("Call sendBroadcast {}", message.toString());
 
-            String toUser =  message.getToUser();
-            String fromUser =  message.getToUser();
+            Message sms = messagesUsers(message, false);
+            logger.info("Save messages in database {}",message.toString());
 
+            sms.getToUser().setUserName("broadcast");
 
-            Set<Topic> topics= new HashSet<Topic>();
-            if(!message.getTopics().isEmpty()){
-                topics = getTopics(message.getTopics().size(), message.getTopics());
-            }
-
-            // Create Message and User
-            User userFrom = userService.findByUserName(toUser);
-            User userTo = userService.findByUserName(fromUser);
-
-            Message sms = new Message(userFrom, userTo, message.getBody(), topics);
-
-            // Save message in DB
-            messageService.create(sms);
-
-            String result = rabbitMQSender.SendDirectMessage(connectionRabbitMQ, toUser, sms);
+            String result = rabbitMQSender.SendAllMessage(connectionRabbitMQ, connectionRabbitMQ.getALL_EXCHANGE(), sms);
 
             // User user = userService.create(user);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
@@ -203,6 +192,7 @@ public class MessageController {
         }
 
         // Create Message and User
+        logger.info("Search from user {}",message.getFromUser());
         User fromUser = userService.findByUserName(message.getFromUser());
 
         if (isGroup){
@@ -210,7 +200,7 @@ public class MessageController {
 
             Message sms;
             if(message.getMultimedia() != null){
-                Multimedia multimedia = new Multimedia();
+                Multimedia multimedia = new Multimedia(message.getMultimedia());
                 sms = new Message(fromUser, group, message.getBody(), multimedia, topics);
             }else{
                 sms = new Message(fromUser, group, message.getBody(), topics);
@@ -223,7 +213,7 @@ public class MessageController {
             List<Message> messages = new ArrayList<>();
             if(message.getMultimedia() != null){
                 Multimedia multimedia = new Multimedia(message.getMultimedia());
-                multimediaRepository.save(multimedia);
+//                multimediaRepository.save(multimedia);
                 for (User user: userService.findAll()) {
                     messages.add(new Message(fromUser, user, message.getBody(), multimedia, topics));
                 }
