@@ -2,8 +2,6 @@ plugins {
     id 'org.springframework.boot' version '2.2.7.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
-    id "com.google.protobuf" version "0.8.12"
-    id 'idea'
 }
 
 group = 'com.tmdad'
@@ -21,11 +19,6 @@ repositories {
 }
 
 dependencies {
-    compile group: 'com.google.protobuf', name: 'protobuf-java', version: '3.11.4'
-    compile group: 'io.grpc', name: 'grpc-all', version: '1.28.0'
-
-    compile 'io.github.lognet:grpc-spring-boot-starter:3.5.2'
-
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     compileOnly 'org.projectlombok:lombok'
@@ -40,29 +33,6 @@ sourceSets {
         java {
             srcDirs 'build/generated/main'
             srcDirs 'build/generated/sources'
-        }
-    }
-}
-
-protobuf {
-    protoc {
-        artifact = 'com.google.protobuf:protoc:3.11.4'
-    }
-
-    generatedFilesBaseDir = "$projectDir/build/generated"
-    clean {
-        delete generatedFilesBaseDir
-    }
-
-    plugins {
-        grpc {
-            artifact = 'io.grpc:protoc-gen-grpc-java:1.28.0'
-        }
-    }
-
-    generateProtoTasks {
-        all()*.plugins {
-            grpc {}
         }
     }
 }

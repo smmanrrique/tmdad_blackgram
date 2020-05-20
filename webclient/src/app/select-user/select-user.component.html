@@ -1,0 +1,12 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>Select your user!</h1>
+
+  <select [(ngModel)]="selectedValue">
+    <option *ngFor="let option of options" [value]="option.name">
+      {{option.name}}
+    </option>
+  </select>
+  <p><span>You selected:</span><b>{{selectedValue}}</b></p>
+  <button [routerLink]="['/home']" (click)="saveUser()">Start</button>
+</div>

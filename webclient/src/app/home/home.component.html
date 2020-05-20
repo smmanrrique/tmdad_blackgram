@@ -1,0 +1,63 @@
+<head>
+    <meta charset="utf-8">
+    <title>Blackgram</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div style="text-align: center">
+                    <h1>Hi {{ouser}}!</h1>
+                    <p><a [routerLink]="['/login']" (click)="logout()">Logout</a></p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                One of three columns
+            </div>
+            <div class="col-md-4">
+                One of three columns
+            </div>
+            <div class="col-md-4">
+                One of three columns
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="width: 400px; margin-top: 20px;">  
+        <!-- <form class="form-inline" style="margin-top: 20px;">
+            <div class="form-group">
+                <label for="text">Message:</label>
+                <input type="text" id="text" name="text" class="form-control" [(ngModel)]="text" />
+            </div>
+            <button id="send" class="btn btn-default" type="button" (click)="sendToChat()">Send All</button>
+        </form> -->
+
+        <form class="form-inline" style="margin-top: 20px;">
+            <div class="form-group">
+                <label for="text">Message:</label>
+                <input type="text" id="ouser" name="ouser" class="form-control" [(ngModel)]="dest" />
+                <input type="text" id="duser" name="duser" class="form-control" [(ngModel)]="dest" />
+                <input type="text" id="msg"   name="msg"   class="form-control" [(ngModel)]="dest" />
+            </div>
+            <button id="send" class="btn btn-default" type="button" (click)="sendAction('get-contacts')">Send All</button>
+        </form>
+
+        <table id="conversation" class="table table-striped" style="margin-top: 20px;">
+            <thead>
+                <tr>
+                    <th>Messages</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let message of messages">
+                <tr>
+                <td>{{message["time"]}}</td>
+                <td>{{message["from"]}}</td>
+                <td>{{message["text"]}}</td>
+                </tr>
+            </tbody>
+        </table>  
+    </div>
+</body>
