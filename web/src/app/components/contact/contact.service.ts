@@ -18,12 +18,8 @@ export class ContactService {
     private fb: FormBuilder) {}
 
 
-  getAll(httpParams: HttpParams = new HttpParams()): Observable<any> {
-    let param = BaseService.httpOptions();
-
-    param.params = httpParams;
-
-    return this.http.get<any>(ContactService.BASE_URL, );
+  getAll(data: {}): Observable<any> {
+    return this.http.get<any>(ContactService.BASE_URL, BaseService.httpAll(data));
   }
 
 

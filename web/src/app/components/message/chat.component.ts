@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {AddUserGroup, User} from '../auth/user-register/user';
+import { User} from '../auth/user-register/user';
 import { Group } from '../group/group';
 import {UserService} from "../auth/user-register/user.service";
 import {GroupService} from "../group/group.service";
 import {MessageService} from "./message.service";
 import {NotificationService} from "../../core/utils/notification/notification.service";
-import {Message, MessageList} from "./message";
-import {HttpParams} from "@angular/common/http";
+import {MessageList} from "./message";
 import {ContactService} from "../contact/contact.service";
+import { Contact } from 'src/app/components/contact/contact';
 
 @Component({
   // selector: 'app-chat',
@@ -19,8 +19,11 @@ import {ContactService} from "../contact/contact.service";
 export class ChatComponent implements OnInit {
 
   user: User;
+  myGroups: Group[];
+  myContacts: Contact[];
   messages: MessageList[];
   selectedGroup: Group;
+  selectedContact: Contact;
 
   constructor(
     private userService: UserService,
@@ -31,27 +34,25 @@ export class ChatComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // TODO Get ID USER FROM URL
+    this.userService.getById(1).subscribe(
+      data => {
+        console.log(data)
+        this.user = data;
+        this.myGroups = this.user.myGroups
+        console.log(this.myGroups)}
+        );
 
-    // let paramsMessage = new HttpParams();
-    // // httpParams = httpParams.append('userId', String(1));
-    //
-    // this.messageService.getAll(paramsMessage).subscribe(
-    //   data => {
-    //     this.messages = data['result'];
-    //     console.log(this.messages)
-    //   });
+    // SET ID USER FROM URL
+    this.contactService.getAll({"userId": 1}).subscribe(
+      data => {
+        console.log(data)
+        this.myContacts = data;
+        // this.myGroups = this.user.myGroups
+        console.log(this.myContacts)}
+    );
 
-    // // TODO Get ID USER FROM URL
-    // let paramsUser = new HttpParams();
-    // this.userService.getById(1).subscribe(
-    //   data => {
-    //     this.user = data['result'];
-    //     console.log(this.messages)});
-    //
-    // // TODO Get ID USER FROM URL
-    // let paramsContact = new HttpParams();
-    // paramsContact.set("userId", String(this.user.id))
-    //
+    // TODO Get ID USER FROM URL
     // this.contactService.getAll(paramsContact).subscribe(
     //   data => {
     //     this.user = data['result'];
@@ -62,6 +63,10 @@ export class ChatComponent implements OnInit {
 
   onSelect(group: Group): void {
     this.selectedGroup = group;
+  }
+
+  onSelectContact(contac: Contact): void {
+    console.log(contac)
   }
 
 }

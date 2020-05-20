@@ -21,6 +21,18 @@ export class BaseService {
     return httpOptions;
   }
 
+  public static httpAll(data: {}): any {
+    let  httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        observe: 'response',
+      }),
+      params: BaseService.jsonToHttpParams(data)
+    };
+
+    return httpOptions;
+  }
+
 	public static authorizationHeader(): HttpHeaders {
 		const headers = new HttpHeaders();
 		headers.append('Authorization', 'bearer ' + sessionStorage.getItem('token'));

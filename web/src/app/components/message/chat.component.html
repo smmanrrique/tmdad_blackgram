@@ -11,19 +11,19 @@
 
     <h2  style="text-align:center; color: black" >Contacts</h2>
     <ul class="groups">
-      <li *ngFor="let group of groups_test"
-          [class.selected]="group === selectedGroup"
-          (click)="onSelect(group)">
-        <span class="badge">{{group.name}}</span> {{group.description}}
+      <li *ngFor="let contact of myContacts"
+          [class.selected]="contact === selectedContact"
+          (click)="onSelectContact(contact)">
+        <span class="badge">{{contact.id}}</span> {{contact.name}}
       </li>
     </ul>
 
     <h2  style="text-align:center; color: black" >Groups</h2>
     <ul class="groups">
-      <li *ngFor="let group of groups_test"
+      <li *ngFor="let group of myGroups"
           [class.selected]="group === selectedGroup"
           (click)="onSelect(group)">
-        <span class="badge">{{group.name}}</span> {{group.description}}
+        <span class="badge">{{group.id}}</span> {{group.name}}
       </li>
     </ul>
 
