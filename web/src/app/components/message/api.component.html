@@ -88,7 +88,7 @@
 
     <!-- SEND_MESSAGE -->
     <div *ngIf="selected=='SEND_MESSAGE'">
-      <form *ngIf="userMessage" [formGroup]="userMessage" (ngSubmit)="send_message()">
+      <form *ngIf="userMessage" [formGroup]="userMessage" (ngSubmit)="send_message(userMessage)">
 
         <mat-form-field required>
           <input matInput formControlName="fromUser" placeholder="From">
@@ -113,7 +113,7 @@
 
     <!-- SEND_MESSAGE_TO_ROOM -->
     <div *ngIf="selected=='SEND_MESSAGE_TO_ROOM'">
-      <form *ngIf="groupMessage" [formGroup]="groupMessage" (ngSubmit)="send_message_group()">
+      <form *ngIf="groupMessage" [formGroup]="groupMessage" (ngSubmit)="send_message_group(groupMessage)">
 
         <mat-form-field required>
           <input matInput formControlName="fromUser" placeholder="From">
@@ -138,7 +138,7 @@
 
     <!-- SEND_MESSAGE_TO_ALL -->
     <div *ngIf="selected=='SEND_MESSAGE_TO_ALL'">
-      <form *ngIf="messageform" [formGroup]="messageform" (ngSubmit)="send_message_broadcast()">
+      <form *ngIf="messageform" [formGroup]="messageform" (ngSubmit)="send_message_broadcast(messageform)">
 
         <mat-form-field required>
           <input matInput formControlName="fromUser" placeholder="From">
@@ -171,7 +171,7 @@
       </div>
 
 
-      <form *ngIf="fileMessage" [formGroup]="fileMessage" (ngSubmit)="send_message()">
+      <form *ngIf="fileMessage" [formGroup]="fileMessage" (ngSubmit)="send_message(fileMessage)">
 
         <mat-form-field required>
           <input matInput formControlName="fromUser" placeholder="From">

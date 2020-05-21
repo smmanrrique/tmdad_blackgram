@@ -19,20 +19,26 @@ export class MessageService {
   ) { }
 
   sendMessage(message: Message): Observable<any> {
+    // Getting hashtags
+    let topics = BaseService.topicBody(message.body);
+    console.log(topics)
+    message.topics = topics
     console.log(message)
-    // Todo procesar topics
     return this.http.post<any>(MessageService.BASE_URL+'/send', JSON.stringify(message), BaseService.httpOptions());
   }
 
   sendMessageGroup(message: Message): Observable<any> {
+    // Getting hashtags
+    message.topics = BaseService.topicBody(message.body);
     console.log(message)
-    // Todo procesar topics
     return this.http.post<any>(MessageService.BASE_URL+'/sendGroup', JSON.stringify(message), BaseService.httpOptions());
   }
 
   sendMessageBroadcast(message: Message): Observable<any> {
-    // Todo procesar topics
+    // Getting hashtags
+    message.topics = BaseService.topicBody(message.body);
     message.toUser = "BROADCAST";
+    console.log(message)
     return this.http.post<any>(MessageService.BASE_URL+'/sendBroadcast', JSON.stringify(message), BaseService.httpOptions());
   }
 

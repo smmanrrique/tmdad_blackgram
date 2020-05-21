@@ -94,12 +94,11 @@ export class ApiComponent implements OnInit {
       });
   }
 
-  send_message() {
+  send_message(form: FormGroup) {
+    console.log(this.messageform);
     console.log("send_message");
-    console.log(this.messageform)
-    this.notificationService.showInfo('Send Message');
 
-    this.messageService.sendMessage(<Message> this.messageform.value)
+    this.messageService.sendMessage(<Message> form.value)
       .subscribe(user => {
         this.notificationService.sucessUpdate('added User to Group');
       }, err =>  {
@@ -107,12 +106,12 @@ export class ApiComponent implements OnInit {
       });
   }
 
-  send_message_group() {
+  send_message_group(form: FormGroup) {
     console.log("send_message");
-    console.log(this.messageform)
+    console.log(form)
     this.notificationService.showInfo('Send Message');
 
-    this.messageService.sendMessageGroup(<Message> this.messageform.value)
+    this.messageService.sendMessageGroup(<Message> form.value)
       .subscribe(user => {
         this.notificationService.sucessUpdate('added User to Group');
       }, err =>  {
@@ -120,12 +119,12 @@ export class ApiComponent implements OnInit {
       });
   }
 
-  send_message_broadcast() {
+  send_message_broadcast(form: FormGroup) {
     console.log("send_message");
-    console.log(this.messageform)
+    console.log(form)
     this.notificationService.showInfo('Send Message');
 
-    this.messageService.sendMessageBroadcast(<Message> this.messageform.value)
+    this.messageService.sendMessageBroadcast(<Message> form.value)
       .subscribe(user => {
         this.notificationService.sucessUpdate('added User to Group');
       }, err =>  {

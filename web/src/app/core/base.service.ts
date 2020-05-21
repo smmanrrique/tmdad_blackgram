@@ -63,4 +63,24 @@ export class BaseService {
 		return httpParams;
 	}
 
+  public static topicBody(data: string): string[] {
+    console.log(data)
+    // data = "kbasj #hu #ln #chaoh #dsl ttp://www.masrawy.com/Sports/Sports_News/details/2014/9/5/338281#HPOFEATURE\\n#ss\\nddd\\n#ddd jaaja ksks #sfsfsf\\n#ggdg#hdhhd"
+
+    // let hashtags = data.match(/#\w+/g).map(x => x.substr(1)) || [];
+    let hashtags = data.match(/\B\#\w*\w+\b/g).map(x => x.substr(1)) || [];
+    return hashtags;
+
+  }
+  // public static findHashtags(searchText) {
+  //   var regexp = /\B\#\w\w+\b/g
+  //   result = searchText.match(regexp);
+  //   if (result) {
+  //     console.log(result);
+  //   } else {
+  //     return false;
+  //   }
+  // }
+  //
+
 }
