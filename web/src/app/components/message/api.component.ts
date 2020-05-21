@@ -19,6 +19,9 @@ import {HttpParams} from "@angular/common/http";
 export class ApiComponent implements OnInit {
 
   userform: FormGroup;
+  userMessage: FormGroup;
+  groupMessage: FormGroup;
+  fileMessage: FormGroup;
   groupform: FormGroup;
   messageform: FormGroup;
   addform: FormGroup;
@@ -47,6 +50,11 @@ export class ApiComponent implements OnInit {
     this.groupform = this.groupService.getGroup(new Group());
     this.messageform = this.messageService.getMessage(new Message());
     this.addform = this.userService.AddUserGroup(new AddUserGroup());
+
+    this.userMessage = this.messageService.getUserMessage(new Message());
+    this.groupMessage = this.messageService.getGroupMessage(new Message());
+    this.fileMessage = this.messageService.getFileMessage(new Message());
+
   }
 
   // Function to create user

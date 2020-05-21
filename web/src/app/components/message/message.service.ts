@@ -32,6 +32,7 @@ export class MessageService {
 
   sendMessageBroadcast(message: Message): Observable<any> {
     // Todo procesar topics
+    message.toUser = "BROADCAST";
     return this.http.post<any>(MessageService.BASE_URL+'/sendBroadcast', JSON.stringify(message), BaseService.httpOptions());
   }
 
@@ -44,18 +45,44 @@ export class MessageService {
   getMessage(message: Message): FormGroup {
     return this.fb.group({
       toUser: new FormControl(message.toUser),
-      fromUser: new FormControl(message.fromUser),
+      fromUser: new FormControl(message.fromUser, [Validators.required, Validators.maxLength(30)]),
       toGroup: new FormControl(message.toGroup),
-      body: new FormControl(message.body),
+      body: new FormControl(message.body, [Validators.required, Validators.maxLength(30)]),
       multimedia: new FormControl(message.multimedia),
       topics: new FormControl(message.topics),
     });
   }
 
-  initTopic(topic: Topic): FormGroup {
+  getUserMessage(message: Message): FormGroup {
     return this.fb.group({
-      id: new FormControl(topic.id, Validators.required),
-      name: new FormControl(topic.name, Validators.required)
+      toUser: new FormControl(message.toUser, [Validators.required, Validators.maxLength(30)]),
+      fromUser: new FormControl(message.fromUser, [Validators.required, Validators.maxLength(30)]),
+      toGroup: new FormControl(message.toGroup),
+      body: new FormControl(message.body, [Validators.required, Validators.maxLength(30)]),
+      multimedia: new FormControl(message.multimedia),
+      topics: new FormControl(message.topics),
+    });
+  }
+
+  getGroupMessage(message: Message): FormGroup {
+    return this.fb.group({
+      toUser: new FormControl(message.toUser),
+      fromUser: new FormControl(message.fromUser, [Validators.required, Validators.maxLength(30)]),
+      toGroup: new FormControl(message.toGroup,[Validators.required, Validators.maxLength(30)]),
+      body: new FormControl(message.body, [Validators.required, Validators.maxLength(30)]),
+      multimedia: new FormControl(message.multimedia),
+      topics: new FormControl(message.topics),
+    });
+  }
+
+  getFileMessage(message: Message): FormGroup {
+    return this.fb.group({
+      toUser: new FormControl(message.toUser,[Validators.required, Validators.maxLength(30)]),
+      fromUser: new FormControl(message.fromUser, [Validators.required, Validators.maxLength(30)]),
+      toGroup: new FormControl(message.toGroup),
+      body: new FormControl(message.body, [Validators.required, Validators.maxLength(30)]),
+      multimedia: new FormControl(message.multimedia, [Validators.required, Validators.maxLength(30)]),
+      topics: new FormControl(message.topics),
     });
   }
 
