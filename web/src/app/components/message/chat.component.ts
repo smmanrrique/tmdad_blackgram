@@ -44,8 +44,8 @@ export class ChatComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.userMessage = this.messageService.getUserMessage(new Message());
-    this.groupMessage = this.messageService.getGroupMessage(new Message());
+    this.userMessage = this.messageService.getChatUserMessage(new Message());
+    this.groupMessage = this.messageService.getChatGroupMessage(new Message());
     this.fileMessage = this.messageService.getFileMessage(new Message());
 
     // TODO Get ID USER FROM URL
