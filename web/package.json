@@ -46,6 +46,8 @@
         "popper.js": "^1.14.4",
         "rxjs": "^6.0.0",
         "rxjs-compat": "^6.2.1",
+        "sockjs-client": "^1.1.5",
+        "@stomp/stompjs": "^4.0.7",
         "xlsx": "^0.14.0",
         "xlsx-style": "^0.8.13",
         "zone.js": "^0.8.26"

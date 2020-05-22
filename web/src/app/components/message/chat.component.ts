@@ -11,6 +11,9 @@ import { Contact } from 'src/app/components/contact/contact';
 import {FormGroup} from "@angular/forms";
 import {BaseService} from "../../core/base.service";
 
+import * as Stomp from '@stomp/stompjs';
+import * as SockJS from 'sockjs-client';
+
 @Component({
   // selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -19,6 +22,8 @@ import {BaseService} from "../../core/base.service";
 })
 
 export class ChatComponent implements OnInit {
+
+  private stompClient = null;
 
   user: User;
   myGroups: Group[];
@@ -73,6 +78,19 @@ export class ChatComponent implements OnInit {
         this.messages = data;
       });
 
+
+    this.connect();
+
+  }
+
+
+  connect() {
+    console.log("// tslint:disable-next-line:indent")
+
+    let socket = new SockJS('http://localhost:8090/connect');
+    this.stompClient = Stomp.over(socket);
+    this.stompClient.connect({}, function (frame) {});
+    console.log(this.stompClient )
   }
 
 
