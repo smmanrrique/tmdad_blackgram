@@ -26,6 +26,15 @@ public class WebSocketController {
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
+    @MessageMapping("/prueba")
+    public void requestUserPrueba(@Payload String message) {
+        System.out.println(" /chat/prueba *** "+ message);
+        String time = new SimpleDateFormat("HH:mm").format(new Date());
+        OutputMessage response = new OutputMessage("Hola1", "Hola", time);
+        this.simpMessagingTemplate.convertAndSend("/queue/reply/" + "char", response);
+    }
+
+
     @MessageMapping("/get-info")
     public void requestUserData(@Payload InputGetUserData message) {
         System.out.println(" /chat/get-info *** "+ message.toString() + USER_UPDATES);
