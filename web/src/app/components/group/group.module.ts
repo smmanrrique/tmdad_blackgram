@@ -9,6 +9,7 @@ import {GroupRoutingModule} from "./group.routing";
 import {GroupComponent} from "./group.component";
 import {GroupService} from "./group.service";
 import {UtilService} from "mydatepicker/dist";
+import {ContactService} from "../contact/contact.service";
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import {UtilService} from "mydatepicker/dist";
   providers: [
     GroupService,
     UtilService,
+    ContactService,
   ]
 })
 export class GroupModule { }

@@ -5,7 +5,7 @@ import com.tmda.chatapp.repositories.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class MessageService implements  InterfaceMessageService {
@@ -19,39 +19,33 @@ public class MessageService implements  InterfaceMessageService {
     }
 
     @Override
-    public Iterable<Message> saveAll(Iterable<Message> messages) {
-        return messageRepository.saveAll(messages);
-    }
-
-    // TODO INSERT MANY USERS SAME TIME
-    @Override
-    public Optional<Message> find(long id) {
-        return messageRepository.findById(id);
+    public List<Message> saveAll(List<Message> messages) {
+        return (List<Message>) messageRepository.saveAll( messages);
     }
 
     @Override
-    public Message update(int id, Message user) {
-        return null;
+    public List<Message> findByToUserName(String user) {
+        return messageRepository.findByToUser_UserName(user);
     }
 
     @Override
-    public Message findByFromUser(String username) {
-        return messageRepository.findByFromUser(username);
+    public List<Message> findByFromUserName(String user) {
+        return messageRepository.findByFromUser_UserName(user);
     }
 
     @Override
-    public Iterable<Message> findAll() {
+    public List<Message> findByToGroup_GroupName(String group) {
+        return messageRepository.findByToGroupName(group);
+    }
+
+    @Override
+    public List<Message> findAll() {
         return messageRepository.findAll();
     }
 
     @Override
-    public void delete(long id) {
-        messageRepository.deleteById(id);
+    public boolean deleteById(int id) {
+        return messageRepository.deleteById(id);
     }
 
-    @Override
-    public boolean deleteAll() {
-        messageRepository.deleteAll();
-        return true;
-    }
 }

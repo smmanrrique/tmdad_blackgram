@@ -44,10 +44,10 @@ public class GroupRPCController extends GroupServiceGrpc.GroupServiceImplBase {
 
         Group group = new Group();
         group.setName(groupName);
-        group.setDescription(request.getDescription());
+//        group.setDescription(request.getDescription());
 
         // Create group in DB
-        groupService.create(group);
+//        groupService.create(group, request.getUser());
 
         // Create binding
         Channel channel = connectionRabbitMQ.channel();
@@ -68,7 +68,8 @@ public class GroupRPCController extends GroupServiceGrpc.GroupServiceImplBase {
     public void addUser(AddUserGroup request, StreamObserver<GroupMessage> responseObserver) {
         logger.info("Call addUserGroup and server received {}", request);
         Group group = groupService.findByName(request.getGroupName());
-        User user = userService.findByUsername(request.getUserName());
+//        User user = userService.findByUsername(request.getUserName());
+        User user = new User();
 
         Channel channel = connectionRabbitMQ.channel();
 
@@ -76,7 +77,7 @@ public class GroupRPCController extends GroupServiceGrpc.GroupServiceImplBase {
         channel.queueBind(request.getUserName(), connectionRabbitMQ.getGROUP_EXCHANGE(), request.getGroupName());
 
         // Add user to group and group to user
-        user.getGroup().add(group);
+        user.getMyGroups().add(group);
 
         userService.create(user);
         GroupMessage reply = GroupMessage.newBuilder()

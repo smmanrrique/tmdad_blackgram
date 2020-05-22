@@ -15,6 +15,7 @@ import { ListUploadComponent } from '../file-upload/list-upload.component';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
 import {ChatComponent} from "./chat.component";
 import {ApiComponent} from "./api.component";
+import {ContactService} from "../contact/contact.service";
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import {ApiComponent} from "./api.component";
   providers: [
     UserService,
     FileUploadService,
+    ContactService,
   ]
 })
 export class MessageModule { }

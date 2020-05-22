@@ -2,12 +2,38 @@ import { HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 // tslint:disable-next-line:import-blacklist
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import {stream} from "xlsx";
 
 /*
 reference httpClient: http://blog.enriqueoriol.com/2017/11/httpclient-vs-http-angular.html
 */
 export class BaseService {
 	public static readonly HOST: string = environment.backendUrl;
+
+
+  public static httpOptions(): any {
+    let  httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        observe: 'response',
+      }),
+      params:{}
+    };
+
+    return httpOptions;
+  }
+
+  public static httpAll(data: {}): any {
+    let  httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        observe: 'response',
+      }),
+      params: BaseService.jsonToHttpParams(data)
+    };
+
+    return httpOptions;
+  }
 
 	public static authorizationHeader(): HttpHeaders {
 		const headers = new HttpHeaders();
@@ -38,4 +64,16 @@ export class BaseService {
 		});
 		return httpParams;
 	}
+
+  public static topicBody(data: string): string[] {
+    return data.match(/\B\#\w*\w+\b/g).map(x => x.substr(1)) || [];
+  }
+
+  public static urlBody(data: string): string[] {
+    let matches = data.match(/\bhttps?:\/\/\S+/gmi);
+    console.log(matches)
+
+    return data.match(/\bhttps?:\/\/\S+/gmi);
+  }
+
 }

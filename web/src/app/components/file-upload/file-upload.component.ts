@@ -30,6 +30,7 @@ export class FileUploadComponent {
     this.currentFileUpload = this.selectedFiles.item(0);
 
     const formfile: FormData = new FormData();
+
     formfile.append('file', this.currentFileUpload);
     // TODO Change by userName
     formfile.append('user', "UserName");

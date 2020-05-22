@@ -13,13 +13,13 @@ class UserServiceTest {
     @Test
     void create() {
         User user = new User();
-        user.setUserName("nombre1");
-        user.setPassword("password");
+        user.setUserName("user");
+        user.setPassword("user");
 
         userService.create(user);
 
         System.out.println("User created");
         System.out.println(user);
-        assertEquals( "Send message: "+user.getUserName() , "Send message: "+user.getUserName() );
+        assertEquals( " " , " ");
     }
 }

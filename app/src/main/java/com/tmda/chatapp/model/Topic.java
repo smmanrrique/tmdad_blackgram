@@ -1,12 +1,15 @@
 package com.tmda.chatapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,13 +20,13 @@ import java.util.List;
 @Table(name = "topics")
 public class Topic extends AbstractEntity {
 
-    @Column(length = 20, nullable = false)
+    @NotNull
+    @Size(max = 30)
     private String name;
 
-    @Column(length = 255)
-    private String description;
-
     @ManyToMany(mappedBy = "topics")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnore
     private List<Message> messages = new ArrayList<Message>();
 
     public Topic() {
@@ -33,8 +36,4 @@ public class Topic extends AbstractEntity {
         this.name = name;
     }
 
-    public Topic(String name, String description){
-        this.name = name;
-        this.description = description;
-    }
 }

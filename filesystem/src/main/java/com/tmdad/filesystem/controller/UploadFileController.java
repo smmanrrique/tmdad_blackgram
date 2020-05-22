@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @Controller
 public class UploadFileController {
     private static final Logger logger = LoggerFactory.getLogger(UploadFileController.class.getName());
-    public final String CROSS_ORIGIN = "http://localhost:4200";
+    public final String CROSS_ORIGIN = "*";
     List<String> files = new ArrayList<String>();
 //    private Map<String, List<String>> userFiles = new HashMap<String, List<String>>();
 

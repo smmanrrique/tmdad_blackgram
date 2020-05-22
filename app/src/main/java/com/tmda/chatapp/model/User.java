@@ -1,22 +1,36 @@
 package com.tmda.chatapp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "users")
 public class User extends AbstractEntity {
 
-    @Column(nullable = false, length = 30, unique = true)
+    @NotNull
+    @Size(max = 30)
+    @Column( unique = true)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private String userName;
+
+    @NotNull
+    @Size(max = 30)
+    private String password;
+
+    @Column()
+    private boolean admin = false;
 
     @Column(length = 50)
     private String firstName;
@@ -27,25 +41,17 @@ public class User extends AbstractEntity {
     @Column(length = 50)                                                                            
     private String email;
 
-    @Column(nullable = false, length = 30)
-    private String password;
-
-    @JsonManagedReference(value = "fromUser" )
-    @OneToMany(fetch= FetchType.LAZY, mappedBy = "fromUser")
-    private List<Message> sendMessage = new ArrayList<Message>();
-
-    @JsonManagedReference(value = "toUser" )
-    @OneToMany(fetch= FetchType.LAZY, mappedBy = "toUser")
-    private List<Message> receivedMessage = new ArrayList<Message>();
-
-    @JsonIgnore
-    @OneToMany(fetch= FetchType.LAZY,mappedBy = "id")
-    private  List<User> contacts = new ArrayList<User>();
-
     @ManyToMany(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Group> group = new ArrayList<Group>();
+    @JsonManagedReference(value ="group")
+    @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private List<Group> myGroups = new ArrayList<Group>();
 
-    public User() {
+    public User() {}
+
+    public User(String userName) {
+        this.userName = userName;
+        this.password = userName;
     }
 
     @Override
@@ -58,4 +64,5 @@ public class User extends AbstractEntity {
                 ", password='" + password + '\'' +
                 '}';
     }
+
 }

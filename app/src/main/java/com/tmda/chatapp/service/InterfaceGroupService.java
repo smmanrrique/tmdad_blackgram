@@ -2,17 +2,17 @@ package com.tmda.chatapp.service;
 
 import com.tmda.chatapp.model.Group;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface InterfaceGroupService {
 
-    Group create(Group group);
+    Group create(Group group, int userId);
 
-    Optional<Group> find(int id);
+    Group findById(int id);
 
     Group findByName(String username);
 
-    Iterable<Group> findAll();
+    List<Group> findAll();
 
     Group update(int id, Group group);
 
