@@ -9,6 +9,7 @@ import {Message, MessageList} from "./message";
 import {ContactService} from "../contact/contact.service";
 import { Contact } from 'src/app/components/contact/contact';
 import {FormGroup} from "@angular/forms";
+import {BaseService} from "../../core/base.service";
 
 @Component({
   // selector: 'app-chat',
@@ -23,9 +24,16 @@ export class ChatComponent implements OnInit {
   myGroups: Group[];
   myContacts: Contact[];
   messages: MessageList[];
+
   selectedGroup: Group;
   selectedContact: Contact;
+  selectedBroadcast: String;
+
   messageForm: FormGroup;
+  userMessage: FormGroup;
+  groupMessage: FormGroup;
+  fileMessage: FormGroup;
+
 
   constructor(
     private userService: UserService,
@@ -36,42 +44,54 @@ export class ChatComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.userMessage = this.messageService.getUserMessage(new Message());
+    this.groupMessage = this.messageService.getGroupMessage(new Message());
+    this.fileMessage = this.messageService.getFileMessage(new Message());
+
     // TODO Get ID USER FROM URL
     this.userService.getById(1).subscribe(
       data => {
-        console.log(data)
         this.user = data;
-        this.myGroups = this.user.myGroups
-        console.log(this.myGroups)}
-        );
+        this.myGroups = this.user.myGroups;
+      });
 
     // SET ID USER FROM URL
     this.contactService.getAll({"userId": 1}).subscribe(
       data => {
-        console.log(data)
         this.myContacts = data;
-        // this.myGroups = this.user.myGroups
-        console.log(this.myContacts)}
+      }
     );
 
-    // TODO Get ID USER FROM URL
-    // this.contactService.getAll(paramsContact).subscribe(
-    //   data => {
-    //     this.user = data['result'];
-    //     console.log(this.messages)});
+    // TODO USAR WEBSOCKET
+    let paramsMessage = BaseService.jsonToHttpParams({
+      toUser: "u1"
+    });
+
+    this.messageService.getAll(paramsMessage).subscribe(
+      data => {
+        console.log(data)
+        this.messages = data;
+      });
 
   }
 
 
-  onSelect(group: Group): void {
+  onSelectGroup(group: Group): void {
     this.selectedContact = null;
+    this.selectedBroadcast = null;
     this.selectedGroup = group;
   }
 
   onSelectContact(contac: Contact): void {
     console.log(contac)
     this.selectedGroup = null;
+    this.selectedBroadcast = null;
     this.selectedContact = contac;
+  }
+  onSelectedBroadcast(all: string): void {
+    this.selectedGroup = null;
+    this.selectedContact = null;
+    this.selectedBroadcast = all;
   }
 
 

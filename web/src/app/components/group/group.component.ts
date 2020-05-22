@@ -53,10 +53,7 @@ export class GroupComponent implements OnInit {
 
     let paramsMessage = BaseService.jsonToHttpParams({
       toGroup: group.name
-      // fromUser: "u1"
     });
-
-    // httpParams = httpParams.append('userId', String(1));
 
     this.messageService.getAll(paramsMessage).subscribe(
       data => {

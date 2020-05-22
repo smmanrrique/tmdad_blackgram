@@ -22,17 +22,21 @@
     <ul class="groups">
       <li *ngFor="let group of myGroups"
           [class.selected]="group === selectedGroup"
-          (click)="onSelect(group)">
+          (click)="onSelectGroup(group)">
         <span class="badge">{{group.id}}</span> {{group.name}}
       </li>
     </ul>
 
-    <h2  style="text-align:center; color: black" >Broadcast</h2>
-    <ul class="groups">
-      <li>
-        <span class="badge">1</span> Broadcast
-      </li>
-    </ul>
+<!--    TODO QUITAR "!" -->
+<!--    <div *ngIf="!user.admin" >-->
+<!--      <h2  style="text-align:center; color: black" >Broadcast</h2>-->
+<!--      <ul class="groups">-->
+<!--        <li (click)="onSelectedBroadcast("Broadcast")>-->
+<!--          <span class="badge">1</span> Broadcast-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </div>-->
+
 
   </div>
 
@@ -45,11 +49,11 @@
         <div class="input_msg_write">
            <h4 style="text-align:left; color: black">To Group:<span class="badge">{{selectedGroup.name | uppercase}}</span> </h4>
 
-          <form *ngIf="messageForm" [formGroup]="messageForm" (ngSubmit)="send_message()">
+          <form *ngIf="userMessage" [formGroup]="userMessage" (ngSubmit)="send_message()">
 
           <input type="text" formControlName="body" class="write_msg" placeholder="Type a message" />
 
-          <button class="msg_send_btn" type="button" type="submit" [disabled]="!messageForm.valid">
+          <button class="msg_send_btn" type="button" type="submit" [disabled]="!userMessage.valid">
             <i class="fa fa-paper-plane-o" class="material-icons" aria-hidden="true"> send</i>
           </button>
 
@@ -63,12 +67,30 @@
         <div class="input_msg_write">
           <h4 style="text-align:left; color: black">To Contact:<span class="badge">{{selectedContact.name | uppercase}}</span> </h4>
 
-          <form *ngIf="messageForm" [formGroup]="messageForm" (ngSubmit)="send_message()">
+          <form *ngIf="userMessage" [formGroup]="userMessage" (ngSubmit)="send_message()">
             <input type="text"  formControlName="body" class="write_msg" placeholder="Type a message" />
 
-            <button class="msg_send_btn" type="button" type="submit" [disabled]="!messageForm.valid">
+            <button class="msg_send_btn" type="button" type="submit" [disabled]="!userMessage.valid">
               <i class="fa fa-paper-plane-o" class="material-icons" aria-hidden="true"> send</i>
             </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="broadcast">
+      <div class="type_msg">
+        <div class="input_msg_write">
+          <h4 style="text-align:left; color: black">To Group:<span class="badge">{{selectedGroup.name | uppercase}}</span> </h4>
+
+          <form *ngIf="userMessage" [formGroup]="userMessage" (ngSubmit)="send_message()">
+
+            <input type="text" formControlName="body" class="write_msg" placeholder="Type a message" />
+
+            <button class="msg_send_btn" type="button" type="submit" [disabled]="!userMessage.valid">
+              <i class="fa fa-paper-plane-o" class="material-icons" aria-hidden="true"> send</i>
+            </button>
+
           </form>
         </div>
       </div>
@@ -77,16 +99,14 @@
 
       <div>
         <ul class="sms">
-          <li *ngFor="let message of messages"
-              [class.selected]="message === selectedGroup"
-              (click)="onSelect(g1)">
-            <span class="badge">{{message.fromUser}}</span>
+          <li *ngFor="let message of messages">
+            <span class="badge">{{message.fromUser.userName }}</span>
             <p>{{message.body}}</p>
-                        <img *ngIf="message.multimedia===''" src="" alt="Avatar" style="width:100%;">
-            <p>{{message.multimedia}}</p>
+            <img *ngIf="message.multimedia===''" src="" alt="Avatar" style="width:100%;">
+<!--            <p>{{message.multimedia.url || ""}}</p>-->
+<!--            <p>{{message.createdAt}}</p>-->
           </li>
         </ul>
-
       </div>
 
   </div>

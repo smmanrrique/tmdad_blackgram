@@ -2,12 +2,14 @@ import { HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 // tslint:disable-next-line:import-blacklist
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import {stream} from "xlsx";
 
 /*
 reference httpClient: http://blog.enriqueoriol.com/2017/11/httpclient-vs-http-angular.html
 */
 export class BaseService {
 	public static readonly HOST: string = environment.backendUrl;
+
 
   public static httpOptions(): any {
     let  httpOptions = {
@@ -64,23 +66,14 @@ export class BaseService {
 	}
 
   public static topicBody(data: string): string[] {
-    console.log(data)
-    // data = "kbasj #hu #ln #chaoh #dsl ttp://www.masrawy.com/Sports/Sports_News/details/2014/9/5/338281#HPOFEATURE\\n#ss\\nddd\\n#ddd jaaja ksks #sfsfsf\\n#ggdg#hdhhd"
-
-    // let hashtags = data.match(/#\w+/g).map(x => x.substr(1)) || [];
-    let hashtags = data.match(/\B\#\w*\w+\b/g).map(x => x.substr(1)) || [];
-    return hashtags;
-
+    return data.match(/\B\#\w*\w+\b/g).map(x => x.substr(1)) || [];
   }
-  // public static findHashtags(searchText) {
-  //   var regexp = /\B\#\w\w+\b/g
-  //   result = searchText.match(regexp);
-  //   if (result) {
-  //     console.log(result);
-  //   } else {
-  //     return false;
-  //   }
-  // }
-  //
+
+  public static urlBody(data: string): string[] {
+    let matches = data.match(/\bhttps?:\/\/\S+/gmi);
+    console.log(matches)
+
+    return data.match(/\bhttps?:\/\/\S+/gmi);
+  }
 
 }

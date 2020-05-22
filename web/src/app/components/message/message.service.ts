@@ -21,7 +21,10 @@ export class MessageService {
   sendMessage(message: Message): Observable<any> {
     // Getting hashtags
     let topics = BaseService.topicBody(message.body);
-    console.log(topics)
+
+    let url = BaseService.urlBody(message.body)
+    console.log("topics", topics)
+    console.log("url", url)
     message.topics = topics
     console.log(message)
     return this.http.post<any>(MessageService.BASE_URL+'/send', JSON.stringify(message), BaseService.httpOptions());
@@ -53,7 +56,7 @@ export class MessageService {
       toUser: new FormControl(message.toUser),
       fromUser: new FormControl(message.fromUser, [Validators.required, Validators.maxLength(30)]),
       toGroup: new FormControl(message.toGroup),
-      body: new FormControl(message.body, [Validators.required, Validators.maxLength(30)]),
+      body: new FormControl(message.body, [Validators.required]),
       multimedia: new FormControl(message.multimedia),
       topics: new FormControl(message.topics),
     });
@@ -64,7 +67,7 @@ export class MessageService {
       toUser: new FormControl(message.toUser, [Validators.required, Validators.maxLength(30)]),
       fromUser: new FormControl(message.fromUser, [Validators.required, Validators.maxLength(30)]),
       toGroup: new FormControl(message.toGroup),
-      body: new FormControl(message.body, [Validators.required, Validators.maxLength(30)]),
+      body: new FormControl(message.body, [Validators.required]),
       multimedia: new FormControl(message.multimedia),
       topics: new FormControl(message.topics),
     });
@@ -75,7 +78,7 @@ export class MessageService {
       toUser: new FormControl(message.toUser),
       fromUser: new FormControl(message.fromUser, [Validators.required, Validators.maxLength(30)]),
       toGroup: new FormControl(message.toGroup,[Validators.required, Validators.maxLength(30)]),
-      body: new FormControl(message.body, [Validators.required, Validators.maxLength(30)]),
+      body: new FormControl(message.body, [Validators.required]),
       multimedia: new FormControl(message.multimedia),
       topics: new FormControl(message.topics),
     });
@@ -86,7 +89,7 @@ export class MessageService {
       toUser: new FormControl(message.toUser,[Validators.required, Validators.maxLength(30)]),
       fromUser: new FormControl(message.fromUser, [Validators.required, Validators.maxLength(30)]),
       toGroup: new FormControl(message.toGroup),
-      body: new FormControl(message.body, [Validators.required, Validators.maxLength(30)]),
+      body: new FormControl(message.body, [Validators.required]),
       multimedia: new FormControl(message.multimedia, [Validators.required, Validators.maxLength(30)]),
       topics: new FormControl(message.topics),
     });

@@ -9,6 +9,7 @@ import { Group } from '../group/group';
 import { Message } from './message';
 import {NotificationService} from "../../core/utils/notification/notification.service";
 import {HttpParams} from "@angular/common/http";
+import {BaseService} from "../../core/base.service";
 
 @Component({
   // selector: 'app-message',
@@ -18,10 +19,10 @@ import {HttpParams} from "@angular/common/http";
 
 export class ApiComponent implements OnInit {
 
-  userform: FormGroup;
   userMessage: FormGroup;
   groupMessage: FormGroup;
   fileMessage: FormGroup;
+  userform: FormGroup;
   groupform: FormGroup;
   messageform: FormGroup;
   addform: FormGroup;
