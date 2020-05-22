@@ -4,10 +4,10 @@ import com.rabbitmq.client.Channel;
 import com.tmda.chatapp.config.ConnectionRabbitMQ;
 import com.tmda.chatapp.model.User;
 import com.tmda.chatapp.service.UserService;
-import com.tmda.chatapp.user.ContactAdd;
-import com.tmda.chatapp.user.UserRequest;
-import com.tmda.chatapp.user.UserResponse;
-import com.tmda.chatapp.user.UserServiceGrpc;
+import  com.tmdad.app.user.ContactAdd;
+import  com.tmdad.app.user.UserRequest;
+import  com.tmdad.app.user.UserResponse;
+import  com.tmdad.app.user.UserServiceGrpc;
 import io.grpc.stub.StreamObserver;
 import lombok.SneakyThrows;
 import org.lognet.springboot.grpc.GRpcService;
@@ -78,11 +78,11 @@ public class UserRPCController extends UserServiceGrpc.UserServiceImplBase {
     public void addContact(ContactAdd request, StreamObserver<UserResponse> responseObserver) {
         logger.info("Call addContact and server received {}", request);
 
-        User user = userService.findByUsername(request.getUsername());
-        User contact = userService.findByUsername(request.getContact());
+        User user = userService.findByUserName(request.getUsername());
+        User contact = userService.findByUserName(request.getContact());
 
         // Add contact
-        user.getContacts().add(contact);
+//        user.getContacts().add(contact);
 
         // Save in DB
         userService.create(user);

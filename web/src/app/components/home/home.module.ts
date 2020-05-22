@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { SidebarComponent } from '../../core/sidebar/sidebar.component';
 import { TopbarComponent } from '../../core/topbar/topbar.component';
+import {TrendingModule} from "../trending/trending.module";
+import {GroupModule} from "../group/group.module";
 
 @NgModule({
 	imports: [
@@ -17,6 +19,8 @@ import { TopbarComponent } from '../../core/topbar/topbar.component';
 		ReactiveFormsModule,
 		UtilsModule,
 		MessageModule,
+    GroupModule,
+    TrendingModule,
 
 		HomeRoutingModule,
 	],

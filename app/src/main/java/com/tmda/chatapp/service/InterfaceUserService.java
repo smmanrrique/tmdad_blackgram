@@ -5,13 +5,16 @@ import com.tmda.chatapp.model.User;
 import java.util.List;
 
 public interface InterfaceUserService {
+
     User create(User user);
 
-    User find(long id);
+    User findById(int id);
 
-    User findByUsername(String username);
+    User findByUserName(String username);
 
     List<User> findAll();
+
+    boolean isAdmin(String userName);
 
     boolean delete(long id);
 

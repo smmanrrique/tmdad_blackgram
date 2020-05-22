@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package com.tmdad.app.server;
+
+option java_package = "com.tmdad.app.message";
+option java_multiple_files = true;
+
+message MessageRequest {
+    string fromUser = 1;
+    string toUser = 2;
+    string body = 3;
+    string multimedia = 4;
+    repeated string topics = 5;
+}
+
+message MessageResponse {
+    string userMessage=1;
+}
+
+service MessageService {
+
+    rpc SendMessage(MessageRequest) returns (MessageResponse) { }
+
+    rpc SendMessageGroup(MessageRequest) returns (MessageResponse) { }
+
+    rpc SendMessageAll(MessageRequest) returns (MessageResponse) { }
+
+    rpc ReceiverMessage(MessageResponse) returns (MessageResponse) { }
+
+    rpc ReceiverMessage2(MessageResponse) returns (stream MessageRequest) { }
+
+    rpc ReceiverMessage3(MessageResponse) returns (stream MessageResponse) { }
+
+}

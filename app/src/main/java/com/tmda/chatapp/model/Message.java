@@ -1,8 +1,10 @@
 package com.tmda.chatapp.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,35 +14,46 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "messages")
+@JsonIgnoreProperties(ignoreUnknown = true)
 @EqualsAndHashCode(callSuper=false)
 public class Message extends AbstractEntity implements Serializable {
 
-    @JsonBackReference(value = "fromUser")
-    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "users_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private User fromUser;
 
-    @JsonBackReference(value = "toUser")
-    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "userName", nullable = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private User toUser;
 
-    @JsonBackReference(value = "group_message")
-    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
-    private Group group_message;
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "groups_id", nullable = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Group toGroup;
 
     @Column(columnDefinition = "text")
     private String body;
 
-    @ManyToOne(fetch= FetchType.LAZY, cascade = {
+    @ManyToOne(fetch = FetchType.LAZY, optional = true, cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
-    private Multimedia multimedia = new Multimedia();
+    @JoinColumn(name = "multimedias_id", nullable = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Multimedia multimedia;
 
 
     @ManyToMany(fetch= FetchType.LAZY, cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Set<Topic> topics = new HashSet<Topic>();
 
     public Message() {}
@@ -52,12 +65,35 @@ public class Message extends AbstractEntity implements Serializable {
         this.topics = topics;
     }
 
+    public Message(User from, User to, String message, Multimedia multimedia, Set<Topic> topics) {
+        this.fromUser = from;
+        this.toUser = to;
+        this.body = message;
+        this.topics = topics;
+        this.multimedia = multimedia;
+    }
+
     public Message(User from, Group to, String message, Set<Topic> topics) {
         this.fromUser = from;
-        this.group_message = to;
+        this.toGroup = to;
         this.body = message;
         this.topics = topics;
     }
+    public Message(User from, Group to, String message, Multimedia multimedia, Set<Topic> topics) {
+        this.fromUser = from;
+        this.toGroup = to;
+        this.body = message;
+        this.topics = topics;
+        this.multimedia = multimedia;
+    }
 
+    @Override
+    public String toString() {
+        return "Message{" +
+                "fromUser=" + fromUser.toString() +
+                ", toUser=" + toUser.toString() +
+                ", body='" + body + '\'' +
+                '}';
+    }
 
 }

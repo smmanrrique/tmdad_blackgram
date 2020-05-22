@@ -1,4 +1,3 @@
-import { MessageModule } from './components/message/message.module';
 import { MatNativeDateModule, MatDatepickerModule } from '@angular/material';
 import { HomeModule } from './components/home/home.module';
 import { AuthModule } from './components/auth/auth.module';
@@ -8,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TableColumnDirective } from './core/table/tableColumnDirective';
@@ -18,8 +16,6 @@ import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ng6-toastr-notifications';
 import { DatePickerModule } from './core/utils/custom-date-adapter.component';
 import { UserComponent } from './components/user/user.component';
-import { MessageComponent } from './components/message/message.component';
-import { MultimediaComponent } from './components/multimedia/multimedia.component';
 
 @NgModule({
 	declarations: [
@@ -28,7 +24,6 @@ import { MultimediaComponent } from './components/multimedia/multimedia.componen
 		TableColumnDirective,
 
 		UserComponent,
-		MultimediaComponent,
 	],
 	imports: [
 		CommonModule,
@@ -37,7 +32,6 @@ import { MultimediaComponent } from './components/multimedia/multimedia.componen
 		HttpClientModule,
 		FormsModule,
 		RouterModule,
-		Ng2SmartTableModule,
 		DatePickerModule,
 		ToastrModule.forRoot(),
 		DatePickerModule,

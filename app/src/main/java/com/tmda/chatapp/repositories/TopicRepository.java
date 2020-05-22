@@ -9,8 +9,6 @@ public interface TopicRepository extends CrudRepository<Topic, Long> {
 
     Topic findByName(String topicName);
 
-    Topic findByDescription(String topicName);
-
     List<Topic> findAll();
 
 //    @Query("SELECT a FROM Article a WHERE a.title=:title and a.category=:category")

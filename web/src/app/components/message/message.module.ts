@@ -7,23 +7,27 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // tslint:disable-next-line:max-line-length
-import { MatTableModule, MatCheckboxModule, MatPaginatorModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatSortModule } from '@angular/material';
+import { MatTableModule, MatCheckboxModule, MatPaginatorModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatSortModule, MatGridListModule, MatCardModule } from '@angular/material';
 import { UtilsModule } from 'src/app/core/utils/utils.module';
 import { MessageRoutingModule } from './message.routing';
 import { MessageComponent } from './message.component';
 import { ListUploadComponent } from '../file-upload/list-upload.component';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
+import {ChatComponent} from "./chat.component";
+import {ApiComponent} from "./api.component";
+import {ContactService} from "../contact/contact.service";
 
 
 @NgModule({
   imports: [
-    // FileUploadModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     MatTableModule,
     MatCheckboxModule,
     MatPaginatorModule,
+    MatGridListModule,
+    MatCardModule,
     MatSelectModule,
     MatFormFieldModule,
     MatInputModule,
@@ -34,12 +38,16 @@ import { FileUploadComponent } from '../file-upload/file-upload.component';
     MessageRoutingModule,
   ],
   declarations: [
+    ChatComponent,
+    ApiComponent,
     MessageComponent,
     FileUploadComponent,
     ListUploadComponent,
     DetailsUploadComponent,
   ],
   exports: [
+    ChatComponent,
+    ApiComponent,
     MessageComponent,
     FileUploadComponent,
     ListUploadComponent,
@@ -48,6 +56,7 @@ import { FileUploadComponent } from '../file-upload/file-upload.component';
   providers: [
     UserService,
     FileUploadService,
+    ContactService,
   ]
 })
 export class MessageModule { }

@@ -1,23 +1,39 @@
 import { MessageComponent } from "./message.component";
 import { RouterModule, Routes } from "@angular/router";
 import { NgModule } from '@angular/core';
+import {ChatComponent} from "./chat.component";
+import {ApiComponent} from "./api.component";
 
 export const messageRoutes: Routes = [
     {
         path: 'messages',
         component: MessageComponent,
         data: {
-            breadcrumb: 'messages'
+            breadcrumb: 'Messages'
         },
         children: [
             {
-                path: '',
-                pathMatch: 'full',
-                component: MessageComponent,
-                data: {
-                    breadcrumb: 'Messages'
-                }
+              path: '',
+              pathMatch: 'full',
+              component: ApiComponent,
+              data: {
+                breadcrumb: 'API'
+              }
+            },
+            {
+              path: 'api',
+              component: ApiComponent,
+              data: {
+                breadcrumb: 'API'
+              }
+            },
+          {
+            path: 'chats',
+            component: ChatComponent,
+            data: {
+              breadcrumb: 'Chats'
             }
+          }
         ]
     }
 ];

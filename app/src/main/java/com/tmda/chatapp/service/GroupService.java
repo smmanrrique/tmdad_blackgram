@@ -1,14 +1,16 @@
 package com.tmda.chatapp.service;
 
 import com.tmda.chatapp.model.Group;
+import com.tmda.chatapp.model.User;
 import com.tmda.chatapp.repositories.GroupRepository;
+import com.tmda.chatapp.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class GroupService implements  InterfaceGroupService {
@@ -17,16 +19,22 @@ public class GroupService implements  InterfaceGroupService {
 
     @Autowired
     private GroupRepository groupRepository;
+    private UserRepository userRepository;
 
     @Override
-    public Group create(Group group) {
+    public Group create(Group group, int userId) {
+        LOGGER.info("Find userById: {}", userId);
+
+        User user = userRepository.findById(userId);
+        LOGGER.info("User to add new contact: {}", user);
+        group.setOwner(user);
         return groupRepository.save(group);
     }
 
 
     @Override
-    public Optional<Group> find(int id) {
-        return groupRepository.findById(id);
+    public Group findById(int id) {
+        return groupRepository.findById(id).get();
     }
 
     @Override
@@ -35,8 +43,8 @@ public class GroupService implements  InterfaceGroupService {
     }
 
     @Override
-    public Iterable<Group> findAll() {
-        return groupRepository.findAll();
+    public List<Group> findAll() {
+        return (List<Group>) groupRepository.findAll();
     }
 
     @Override

@@ -21,22 +21,27 @@ public class UserService implements InterfaceUserService {
 
     @Override
     public User create(User user) {
-        return userRepository.save(user);
+        return userRepository.saveAndFlush(user);
     }
 
     @Override
-    public User find(long id) {
-        return userRepository.findById(id).get();
+    public User findById(int id) {
+        return userRepository.findById(id);
     }
 
     @Override
-    public User findByUsername(String username) {
+    public User findByUserName(String username) {
         return userRepository.findByUserName(username);
     }
 
     @Override
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public boolean isAdmin(String userName) {
+        return userRepository.isAdmin(userName);
     }
 
     @Override

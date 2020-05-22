@@ -1,14 +1,15 @@
 package com.tmda.chatapp.controller;
 
+import com.rabbitmq.client.*;
 import com.tmda.chatapp.config.ConnectionRabbitMQ;
-import com.tmda.chatapp.message.MessageRequest;
-import com.tmda.chatapp.message.MessageResponse;
-import com.tmda.chatapp.message.MessageServiceGrpc;
 import com.tmda.chatapp.model.Group;
 import com.tmda.chatapp.model.Message;
 import com.tmda.chatapp.model.Topic;
 import com.tmda.chatapp.model.User;
 import com.tmda.chatapp.service.*;
+import com.tmdad.app.message.MessageRequest;
+import com.tmdad.app.message.MessageResponse;
+import com.tmdad.app.message.MessageServiceGrpc;
 import io.grpc.stub.StreamObserver;
 import lombok.SneakyThrows;
 import org.lognet.springboot.grpc.GRpcService;
@@ -17,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -61,8 +63,8 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
         }
 
         // Create Message and User
-        User userFrom = userService.findByUsername(request.getFromUser());
-        User userTo = userService.findByUsername(request.getToUser());
+        User userFrom = userService.findByUserName(request.getFromUser());
+        User userTo = userService.findByUserName(request.getToUser());
 
         Message message = new Message(userFrom, userTo, request.getBody(), topics);
 
@@ -130,25 +132,6 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
 
         responseObserver.onNext(reply);
         responseObserver.onCompleted();
-
-    }
-
-    @SneakyThrows
-    @Override
-    public void receiverMessage3(MessageResponse request, StreamObserver<MessageResponse> responseObserver) {
-        logger.info("Call receiverMessage and server received {}", request.toByteString());
-
-        String userName = request.getUserMessage();
-
-        String result = rabbitMQReceiver.Receiver3(connectionRabbitMQ,request.getUserMessage());
-
-        MessageResponse reply = MessageResponse.newBuilder()
-                .setUserMessage("User "+ userName +" Received messages:  " + request.getUserMessage())
-                .build();
-
-        responseObserver.onNext(reply);
-        responseObserver.onCompleted();
-
     }
 
     @Override
@@ -156,6 +139,7 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
     public void receiverMessage2(MessageResponse request, StreamObserver<MessageRequest> responseObserver) {
         logger.info("Call receiverMessage and server received {}", request.toByteString());
 
+        System.out.println("11111111111111111111111111111111111");
         String userName = request.getUserMessage();
 
         List<String> result = rabbitMQReceiver.Receiver2(connectionRabbitMQ,request.getUserMessage());
@@ -168,10 +152,46 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
 //        responseObserver.onCompleted();
     }
 
-    public Set<Topic> extractTopic(int n , List<com.tmda.chatapp.message.Topic> topic){
+    @SneakyThrows
+    @Override
+    public void receiverMessage3(MessageResponse request, StreamObserver<MessageResponse> responseObserver) {
+        logger.info("Call receiverMessage and server received {}", request.toByteString());
+
+        System.out.println("11111111111111111111111111111111111");
+        String userName = request.getUserMessage();
+
+        Channel channel = connectionRabbitMQ.channel();
+
+        System.out.println("22222222222222222222222222222222222222222");
+        Consumer consumer = new DefaultConsumer(channel) {
+            @Override
+            public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
+
+//                return new StreamObserver<MessageResponse>
+                String message = new String(body, "UTF-8");
+
+                System.out.println("=======================================================");
+                System.out.println("ReceiveLogsDirect2 Received '" + envelope.getRoutingKey() + "':'" + message + "'");
+                MessageResponse reply = MessageResponse.newBuilder()
+                        .setUserMessage(message)
+                        .build();
+
+                responseObserver.onNext(reply);
+//                responseObserver.onCompleted();
+            }
+        };
+
+        channel.basicConsume(request.getUserMessage(), true, consumer);
+
+
+        responseObserver.onCompleted();
+    }
+
+
+    public Set<Topic> extractTopic(int n , List<String> topic){
         Set<Topic> topics = new HashSet<Topic>();
         for (int i = 0; i< n; i++) {
-            topics.add(new Topic(topic.get(i).getTopicName()));
+            topics.add(new Topic(topic.get(i)));
         }
         return topics;
     }
@@ -188,7 +208,7 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
         }
 
         // Create Message and User
-        User userFrom = userService.findByUsername(request.getFromUser());
+        User userFrom = userService.findByUserName(request.getFromUser());
 
         if (isGroup){
             group = groupService.findByName(groupName);
@@ -201,7 +221,7 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
                 messages.add(new Message(userFrom, user, request.getBody(), topics));
             }
 
-            // Save message in DB
+            // Save message in DB TODO
             messageService.saveAll(messages);
             return messages.get(0);
         }

@@ -1,11 +1,24 @@
-import { Multimedia } from '../multimedia/multimedia';
 import { BaseModel } from "src/app/core/models/base-model";
-import { Topic } from "./topic";
+import {Multimedia} from "../file-upload/multimedia";
+import {Topic} from "./topic";
+import {Group} from "../group/group";
+import { User } from "src/app/components/auth/user-register/user";
+
 
 export class Message extends BaseModel {
     fromUser: string;
     toUser: string;
+    toGroup: string;
     body: string;
-    topic: Topic[];
-    multimedia: Multimedia;
-} 
+    multimedia: string;
+    topics: string[] = [];
+}
+
+export class MessageList extends BaseModel {
+  fromUser: User;
+  toUser: User;
+  toGroup: Group;
+  body: string;
+  multimedia: Multimedia;
+  topics: Topic[] = [];
+}

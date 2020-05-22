@@ -17,7 +17,6 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeoutException;
 
 
 @Service
@@ -25,9 +24,8 @@ public class RabbitMQReceiver {
 
     private static final Logger logger = LoggerFactory.getLogger(RabbitMQReceiver.class.getName());
 
-
-
-    public String Receiver(String queueName) throws IOException, TimeoutException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
+    @SneakyThrows
+    public String Receiver(String queueName) throws IOException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
 
         logger.info("Call connection factory into Receiver Function");
 
@@ -51,6 +49,59 @@ public class RabbitMQReceiver {
         channel.basicConsume(queueName, true, consumer);
         return "Receive message: ";
 
+    }
+
+    @SneakyThrows
+    public List<String> Receiver2(ConnectionRabbitMQ connectionRabbitMQ, String queueName) throws IOException {
+        logger.info("Call RabbitMQReceiver_Receiver2 ");
+
+//        Promise[String] p = new Promise[String]()
+//         f = p.future
+//        String[] proof = new String[];
+
+        List<String> sms = new ArrayList<String>();
+        Channel channel = connectionRabbitMQ.channel();
+
+//        channel.queueDeclare(queueName, true, false, false, null);
+
+        Consumer consumer = new DefaultConsumer(channel) {
+            @Override
+            public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
+                String message = new String(body, "UTF-8");
+//                body.getClass();
+//                Message message = new Message(body, MessageProperties);
+//                sms.add(message);
+//                System.out.println(message);
+//                System.out.println("=======================================================");
+//                Message sms = new ObjectMapper().readValue ((String) message, Message.class);
+//                System.out.println("ReceiveLogsDirect2 Received:'" + sms+ "'");
+//                System.out.println("=======================================================");
+//                System.out.println("ReceiveLogsDirect2 Received '" + envelope.getRoutingKey() + "':'" + sms.toString() + "'");
+            }
+        };
+
+        channel.basicConsume(queueName, true, consumer);
+
+
+//        AMQP.BasicProperties props = response.getProps();
+//        byte[] body = response.getBody();
+//        long deliveryTag = response.getEnvelope().getDeliveryTag();
+//        this.template.convertAndSend("/chat/" + user.getUsername(),new ObjectMapper().readValue ((String) new String(body),AuxMessage.class));
+//    }
+//    response = channel.basicGet(user.getBindingName(), autoAck);
+
+
+
+//        other way
+        // Asumo que el array de bytes se llama body:
+//        ByteArrayInputStream in = new ByteArryInputStream(body);
+//        ObjectInputStream is = new ObjectInputStream(in);
+//        return is.readObject(); // esto devuelve una instancia de Object que luego podéis castear
+//
+//        Espero que una de esas dos cosas os de la pista que necesitáis.
+
+
+        return sms;
     }
 
     @SneakyThrows
@@ -105,32 +156,5 @@ public class RabbitMQReceiver {
         };
     }
 
-    @SneakyThrows
-    public List<String> Receiver2(ConnectionRabbitMQ connectionRabbitMQ, String queueName)  {
-        logger.info("Call RabbitMQReceiver_Receiver2 ");
 
-//        Promise[String] p = new Promise[String]()
-//         f = p.future
-//        String[] proof = new String[];
-
-        List<String> sms = new ArrayList<String>();
-        Channel channel = connectionRabbitMQ.channel();
-
-//        channel.queueDeclare(queueName, true, false, false, null);
-
-        Consumer consumer = new DefaultConsumer(channel) {
-            @Override
-            public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
-                String message = new String(body, "UTF-8");
-//                body.getClass();
-//                Message message = new Message(body, MessageProperties);
-                sms.add(message);
-                System.out.println("ReceiveLogsDirect2 Received '" + envelope.getRoutingKey() + "':'" + message + "'");
-            }
-        };
-
-        channel.basicConsume(queueName, true, consumer);
-
-        return sms;
-    }
 }

@@ -15,12 +15,8 @@ export class FileUploadService {
 
   constructor(private http: HttpClient) { }
 
-  pushFileToStorage(file: File): Observable<HttpEvent<{}>> {
-    const formdata: FormData = new FormData();
-
-    formdata.append('file', file);
-
-    const req = new HttpRequest('POST', FileUploadService.BASE_URL, formdata, {
+  pushFileToStorage(form: FormData): Observable<HttpEvent<{}>> {
+    const req = new HttpRequest('POST', FileUploadService.BASE_URL, form, {
       reportProgress: true,
       responseType: 'text'
     });
@@ -28,7 +24,7 @@ export class FileUploadService {
     return this.http.request(req);
   }
 
-  getFiles(): Observable<any> {
-    return this.http.get(FileUploadService.BASE_URL + '/getallfiles');
+  getAll(): Observable<any> {
+    return this.http.get(FileUploadService.BASE_URL);
   }
 }
