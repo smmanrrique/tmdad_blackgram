@@ -1,3 +1,68 @@
 <p>
   trending works!
 </p>
+
+<ul class="groups">
+  <li *ngFor="let topic of timeTopic">
+    <span class="badge">{{topic.timestamp}}</span> {{topic.name}}
+  </li>
+</ul>
+
+
+<ul class="groups">
+  <li *ngFor="let topic of userTopic">
+    <span class="badge">{{topic.userName}}</span> {{topic.count}}
+  </li>
+</ul>
+
+<ul class="groups">
+  <li *ngFor="let topic of topTopic">
+    <span class="badge">{{topic.name}}</span> {{topic.count}}
+  </li>
+</ul>
+
+
+<div class="container">
+  <div class="col-sm-4 text-center">
+    <h2 class="text-center">PIE chart using Chartjs and Angular 6</h2>
+    <canvas baseChart
+            [data]="pieChartData"
+            [labels]="pieChartLabels"
+            [chartType]="pieChartType"
+            [options]="pieChartOptions"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+  </div>
+</div>
+
+<div class="container1">
+  <div class="title">
+    <h2>Reportes</h2>
+  </div>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="count">
+      <th mat-header-cell *matHeaderCellDef> Count </th>
+      <td mat-cell *matCellDef="let element"> {{element.count}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
