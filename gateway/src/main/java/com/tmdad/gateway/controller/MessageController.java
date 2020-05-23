@@ -1,6 +1,6 @@
-package com.tmda.chatapp.controller;
+package com.tmdad.gateway.controller;
 
-import com.tmda.chatapp.config.ConnectionRabbitMQ;
+import com.tmdad.gateway.config.ConnectionRabbitMQ;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +47,8 @@ public class MessageController {
 //            }else {
 //                messages = messageService.findAll();
 //            }
+
+
 
             logger.info("Found {} messages");
             return new ResponseEntity<>("messages", HttpStatus.OK);

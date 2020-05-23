@@ -1,4 +1,4 @@
-package com.tmda.chatapp.config;
+package com.tmdad.gateway.config;
 
 import lombok.SneakyThrows;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
@@ -19,8 +19,8 @@ public class RabbitMQConfig {
     private Environment environment;
 
     @Bean("rabbitConnection")
-    public ConnectionRabbitMQ connection(){
-        return new ConnectionRabbitMQ(
+    public com.tmdad.gateway.config.ConnectionRabbitMQ connection(){
+        return new com.tmdad.gateway.config.ConnectionRabbitMQ(
                 environment.getProperty("spring.activemq.broker-url"),
                 environment.getProperty("spring.rabbitmq.host"),
                 environment.getProperty("spring.rabbitmq.username"),

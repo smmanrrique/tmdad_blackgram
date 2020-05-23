@@ -35,6 +35,7 @@ export class ChatComponent implements OnInit {
   selectedContact: Contact;
   selectedBroadcast: String;
 
+
   messageForm: FormGroup;
   userMessage: FormGroup;
   groupMessage: FormGroup;
@@ -102,7 +103,7 @@ export class ChatComponent implements OnInit {
     });
 
     socket.addEventListener('open', function (e) {
-      _this.stompClient.send("/chat/prueba", {}, JSON.stringify("soy yo menor "));
+      _this.stompClient.send("/chat/proof", {}, JSON.stringify(_this.userName));
     });
 
     console.log(this.stompClient )

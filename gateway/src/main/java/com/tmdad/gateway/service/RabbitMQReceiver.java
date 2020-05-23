@@ -2,7 +2,7 @@ package com.tmda.chatapp.service;
 
 
 import com.rabbitmq.client.*;
-import com.tmda.chatapp.config.ConnectionRabbitMQ;
+import com.tmdad.gateway.config.ConnectionRabbitMQ;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
