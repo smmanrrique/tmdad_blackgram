@@ -25,6 +25,7 @@ export class ChatComponent implements OnInit {
 
   private stompClient = null;
 
+  userName: String = sessionStorage.getItem('userSession');
   user: User;
   myGroups: Group[];
   myContacts: Contact[];
@@ -89,10 +90,29 @@ export class ChatComponent implements OnInit {
 
     let socket = new SockJS('http://localhost:8090/connect');
     this.stompClient = Stomp.over(socket);
-    this.stompClient.connect({}, function (frame) {});
+
+    const _this = this
+    this.stompClient.connect({}, function (frame) {
+      console.log("*******" + _this.userName);
+      _this.stompClient.subscribe("/queue/reply/" + _this.userName, function (messageOutput) {
+        console.log("*******/queue/reply/" + _this.userName + messageOutput.body);
+        _this.showMessageOutput(JSON.parse(messageOutput.body));
+
+      });
+    });
+
+    socket.addEventListener('open', function (e) {
+      _this.stompClient.send("/chat/prueba", {}, JSON.stringify("soy yo menor "));
+    });
+
     console.log(this.stompClient )
   }
 
+
+  showMessageOutput(messageOutput) {
+    this.messages.push(messageOutput);
+    console.log(messageOutput)
+  }
 
   onSelectGroup(group: Group): void {
     this.selectedContact = null;

@@ -55,7 +55,6 @@ export class ApiComponent implements OnInit {
     this.userMessage = this.messageService.getUserMessage(new Message());
     this.groupMessage = this.messageService.getGroupMessage(new Message());
     this.fileMessage = this.messageService.getFileMessage(new Message());
-
   }
 
   // Function to create user

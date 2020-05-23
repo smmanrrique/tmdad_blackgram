@@ -8,6 +8,7 @@ import { AuthorizationRequest } from '../../../core/models/authorizationRequest'
 import { UserService } from '../../user/user.service';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { NotificationService } from '../../../core/utils/notification/notification.service';
+import {User} from '../user-register/user';
 
 @Component({
 	selector: 'app-login',
@@ -36,12 +37,15 @@ export class LoginComponent implements OnInit {
 		this.authorizationRequest = new AuthorizationRequest();
 		this.authorizationRequest.grant_type = 'password';
 		this.authorizationRequest.client_id = 'web_site';
-		this.form = this.toFormGroup();
+		this.form = this.toFormGroup(new User());
 	}
 
 	login(): void {
 		if (this.form.valid) {
-			this.main()
+			this.main(<User> this.form.value);
+      console.log("")
+
+
 
 			// this.authorizationRequest.username = this.form.value['email'];
 			// this.authorizationRequest.password = this.form.value['password'];
@@ -65,15 +69,18 @@ export class LoginComponent implements OnInit {
 		}
 	}
 
-	toFormGroup(): FormGroup {
+	toFormGroup(user: User): FormGroup {
 		return this.fb.group({
-			userName: new FormControl('', [Validators.required, Validators.maxLength(30)]),
-			password: new FormControl('', Validators.required)
+			userName: new FormControl(user.userName, [Validators.required, Validators.maxLength(30)]),
+			password: new FormControl(user.password)
+			// password: new FormControl('', Validators.required)
 		});
 	}
 
-	main() {
+	main(user: User) {
 		console.log('estoy log');
+    sessionStorage.setItem('userSession',user.userName );
+    console.log(sessionStorage.getItem('userSession'))
 		this.router.navigate(['./admin'], { relativeTo: this.activatedRoute });
 	}
 
