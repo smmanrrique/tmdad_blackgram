@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TrendingService} from './trending.service';
 
 @Component({
   selector: 'app-trending',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TrendingComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private trendingService: TrendingService;
+  ) { }
 
-  ngOnInit() {
+  ngOnInit()
+
+
   }
 
 }
