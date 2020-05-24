@@ -7,6 +7,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -38,6 +39,7 @@ public class Message extends AbstractEntity implements Serializable {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Group toGroup;
 
+    @Size(max = 500)
     @Column(columnDefinition = "text")
     private String body;
 

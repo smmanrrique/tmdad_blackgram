@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -165,10 +166,16 @@ public class UserController {
 
     @RequestMapping
     @CrossOrigin(origins =CROSS_ORIGIN)
-    public ResponseEntity<List<User>> FindAll() {
+        public ResponseEntity<List<User>> FindAll(@RequestParam (value = "userName",required = false) String userName,
+                                              @RequestParam (value = "password",required = false) String password  ) {
         try {
-            LOGGER.info("start loadAll users");
-            List<User> users = userService.findAll();
+            LOGGER.info("start loadAll users {}", userName+password);
+            List<User> users;
+            if (userName != null & password != null ) {
+                users = userService.findAllByUserNameAndPassword(userName,password);
+            }else {
+                users = userService.findAll();
+            }
             LOGGER.info("Found {} users", users.size());
             return new ResponseEntity<>(users, HttpStatus.OK);
         } catch (DataAccessException e) {
@@ -176,6 +183,8 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+
 
 
 }
