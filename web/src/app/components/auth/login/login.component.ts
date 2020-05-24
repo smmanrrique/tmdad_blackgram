@@ -1,10 +1,9 @@
 import { ViewEncapsulation } from '@angular/core';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { AuthorizationRequest } from '../../../core/models/authorizationRequest';
-import { UserService } from '../../user/user.service';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { NotificationService } from '../../../core/utils/notification/notification.service';
 import {User} from '../user-register/user';
@@ -55,8 +54,10 @@ export class LoginComponent implements OnInit {
 					if(data.length !== 0){
             this.userSession = <User> users[0];
             this.main(<User> this.userSession);
+          }else{
+            this.notificationService.showInfo("Credentialess Incorrectas");
+
           }
-          this.notificationService.showInfo("Credentialess Incorrectas");
         }, err =>  {
           this.notificationService.error(err);
         });
@@ -64,9 +65,7 @@ export class LoginComponent implements OnInit {
 	}
 
 	main(user: User) {
-    sessionStorage.setItem('userSessionName', user.userName );
-    sessionStorage.setItem('userSessionAdmin', String(user.admin));
-    sessionStorage.setItem('userSessionId', String(user.id));
+    sessionStorage.setItem('user', JSON.stringify(user));
 		this.router.navigate(['./admin'], { relativeTo: this.activatedRoute });
 	}
 

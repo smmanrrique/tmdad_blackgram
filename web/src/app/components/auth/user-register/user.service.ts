@@ -34,16 +34,14 @@ export class UserService {
 
   addUserToGroup(addU: AddUserGroup): Observable<User> {
     console.log(addU);
-    let httpParams = new HttpParams();
-    httpParams.append('userName', addU.userName);
-    httpParams.append('groupName', addU.groupName);
-    console.log("create_chat_room");
 
-    let param = BaseService.httpOptions();
+    let parameters = BaseService.httpOptions();
+    parameters.params =  BaseService.jsonToHttpParams({
+      userName: addU.userName,
+      groupName: addU.groupName,
+    });
 
-    param.params = httpParams;
-
-    return this.http.post<any>(UserService.BASE_URL, this.httpOptions);
+    return this.http.post<any>(UserService.BASE_URL, parameters);
   }
 
 

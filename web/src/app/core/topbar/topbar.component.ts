@@ -1,8 +1,9 @@
-import { User } from '../models/user';
+
 import { Component, OnInit } from '@angular/core';
 import { AccessTokenRequest } from '../models/accessTokenResquest';
 import { Router } from '@angular/router';
 import { AuthService } from '../../components/auth/auth.service';
+import { User } from '../../components/auth/user-register/user';
 
 @Component({
 	selector: 'app-topbar',
@@ -20,8 +21,6 @@ export class TopbarComponent implements OnInit {
 
 	ngOnInit() {
 		this.user = JSON.parse(sessionStorage.getItem('user'));
-		// console.log(this.user.firstName);
-		// console.log(sessionStorage.getItem('user.firstName'));
 	}
 
 	public logout() {
@@ -33,7 +32,4 @@ export class TopbarComponent implements OnInit {
 		}); // , (err) => this.notificationService.error());
 	}
 
-	public password() {
-		this.router.navigate(['/changepassword']);
-	}
 }
