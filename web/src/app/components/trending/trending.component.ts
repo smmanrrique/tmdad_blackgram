@@ -11,7 +11,6 @@ import {forEach} from '@angular/router/src/utils/collection';
 })
 export class TrendingComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'count'];
-  dataSource = [{}];
 
   timeTopicForm: FormGroup;
   userTopicForm: FormGroup;
@@ -31,7 +30,13 @@ export class TrendingComponent implements OnInit {
       data => {
         console.log("top",data);
         this.topTopic = data;
-        this.dataSource = this.setPosition(this.topTopic);
+        // this.dataSource = this.setPosition(this.topTopic);
+      });
+
+    this.trendingService.FindUserTopics().subscribe(
+      data => {
+        console.log(data)
+        this.userTopic = data;
       });
 
     this.trendingService.FindTimeTopics().subscribe(
@@ -42,11 +47,7 @@ export class TrendingComponent implements OnInit {
 
 
 
-    this.trendingService.FindUserTopics().subscribe(
-      data => {
-        console.log(data)
-        this.userTopic = data;
-      });
+
 
   }
 

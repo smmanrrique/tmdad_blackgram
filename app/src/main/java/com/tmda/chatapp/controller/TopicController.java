@@ -48,15 +48,6 @@ public class TopicController {
         try {
             LOGGER.info("start FindTopTopics users");
             List<TopTopicDTO> topics = topicRepository.findTopTopic();
-
-//            List<TopTopicDTO> topics = new ArrayList<>();
-//            for (Object i : users) {
-//                System.out.println(i);
-//                topics.add((TopTopicDTO) i);
-//            }
-
-
-//            LOGGER.info("Found {} users", topics.get(0).toString());
             LOGGER.info("Found {} users", topics.size());
             return new ResponseEntity<>(topics, HttpStatus.OK);
         } catch (DataAccessException e) {

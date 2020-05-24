@@ -15,9 +15,11 @@ public interface TopicRepository extends CrudRepository<Topic, Long> {
 
     List<Topic> findAll();
 
-    @Query(value = "select " +
-            " new com.tmda.chatapp.DTO.TopTopicDTO(t.name, count(t),sum(t.id))" +
-            " from Topic t group by t.name order by t.name desc")
+    @Query(value = "select ROW_NUMBER() OVER(ORDER BY count(t) desc) AS position, " +
+            " t.name as name, count(t) as count" +
+            " from topics t group by t.name "+
+            "order by count desc\n" +
+            "limit 10", nativeQuery = true)
     List<TopTopicDTO> findTopTopic();
 
     @Query(value = "select name " +
@@ -30,7 +32,8 @@ public interface TopicRepository extends CrudRepository<Topic, Long> {
             "order by timestamp desc", nativeQuery = true)
     List<TimeTopicDTO> findTimeTopic();
 
-    @Query(value = "select users_id as id, u.user_name as userName, count(topics_id) as count\n" +
+    @Query(value = "select ROW_NUMBER() OVER(ORDER BY count(topics_id) desc) AS position," +
+            "users_id as id, u.user_name as userName, count(topics_id) as count\n" +
             "from messages_topics\n" +
             "left join messages m on messages_topics.messages_id = m.id\n" +
             "left join users u on m.users_id = u.id\n" +
