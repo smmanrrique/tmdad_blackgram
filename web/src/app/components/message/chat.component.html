@@ -9,34 +9,33 @@
 <div class="wrap">
   <div class="floatleft">
 
-    <h2  style="text-align:center; color: black" >Contacts</h2>
-    <ul class="groups">
-      <li *ngFor="let contact of myContacts"
-          [class.selected]="contact === selectedContact"
-          (click)="onSelectContact(contact)">
-        <span class="badge">{{contact.id}}</span> {{contact.name}}
-      </li>
-    </ul>
+      <h2  style="text-align:center; color: black" >Contacts</h2>
+      <ul class="groups">
+        <li *ngFor="let contact of myContacts"
+            [class.selected]="contact === selectedContact"
+            (click)="onSelectContact(contact)">
+          <span class="badge">{{contact.id}}</span> {{contact.name}}
+        </li>
+      </ul>
 
-    <h2  style="text-align:center; color: black" >Groups</h2>
-    <ul class="groups">
-      <li *ngFor="let group of myGroups"
-          [class.selected]="group === selectedGroup"
-          (click)="onSelectGroup(group)">
-        <span class="badge">{{group.id}}</span> {{group.name}}
-      </li>
-    </ul>
+      <h2  style="text-align:center; color: black" >Groups</h2>
+      <ul class="groups">
+        <li *ngFor="let group of myGroups"
+            [class.selected]="group === selectedGroup"
+            (click)="onSelectGroup(group)">
+          <span class="badge">{{group.id}}</span> {{group.name}}
+        </li>
+      </ul>
 
-<!--    TODO QUITAR "!" -->
-<!--    <div *ngIf="!user.admin" >-->
-<!--      <h2  style="text-align:center; color: black" >Broadcast</h2>-->
-<!--      <ul class="groups">-->
-<!--        <li (click)="onSelectedBroadcast("Broadcast")>-->
-<!--          <span class="badge">1</span> Broadcast-->
-<!--        </li>-->
-<!--      </ul>-->
-<!--    </div>-->
-
+      <!--    TODO QUITAR "!" -->
+      <div *ngIf="!user.admin" >
+        <h2  style="text-align:center; color: black" >Broadcast</h2>
+        <ul class="groups">
+          <li (click)="onSelectedBroadcast()">
+            <span class="badge">1</span> Broadcast
+          </li>
+        </ul>
+      </div>
 
   </div>
 
@@ -103,7 +102,7 @@
 
       <div>
         <ul class="sms">
-          <li *ngFor="let message of messages">
+          <li *ngFor="let message of globals.appMessages">
             <span class="badge">{{message.fromUser.userName }}</span>
             <p>{{message.body}}</p>
             <img *ngIf="message.multimedia===''" src="" alt="Avatar" style="width:100%;">

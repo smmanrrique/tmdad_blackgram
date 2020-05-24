@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/message")
@@ -93,7 +91,7 @@ public class MessageController {
             String fromUser =  message.getToUser();
 
 
-            Set<Topic> topics= new HashSet<Topic>();
+            List<Topic> topics= new ArrayList<>();
             if(!message.getTopics().isEmpty()){
                 topics = getTopics(message.getTopics().size(), message.getTopics());
             }
@@ -175,8 +173,8 @@ public class MessageController {
     }
 
 
-    public Set<Topic> getTopics(int n , List<String> topic){
-        Set<Topic> topics = new HashSet<Topic>();
+    public List<Topic> getTopics(int n , List<String> topic){
+        List<Topic> topics= new ArrayList<>();
         for (int i = 0; i< n; i++) {
             topics.add(new Topic(topic.get(i)));
         }
@@ -186,7 +184,7 @@ public class MessageController {
     public Message messagesUsers(MessageDTO message, boolean isGroup){
 
         // If exist get all message topics
-        Set<Topic> topics= new HashSet<Topic>();
+        List<Topic> topics= new ArrayList<>();
         if(!message.getTopics().isEmpty()){
             topics = getTopics(message.getTopics().size(), message.getTopics());
         }

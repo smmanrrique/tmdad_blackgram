@@ -16,13 +16,13 @@ import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ng6-toastr-notifications';
 import { DatePickerModule } from './core/utils/custom-date-adapter.component';
 import { UserComponent } from './components/user/user.component';
+import {Globals} from './globals';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		TableComponent,
 		TableColumnDirective,
-
 		UserComponent,
 	],
 	imports: [
@@ -37,14 +37,12 @@ import { UserComponent } from './components/user/user.component';
 		DatePickerModule,
 		MatDatepickerModule,
 		MatNativeDateModule,
-
-
 		UtilsModule,
 		AuthModule,
 		HomeModule,
 		AppRoutingModule,
 	],
-	providers: [],
+	providers: [Globals],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

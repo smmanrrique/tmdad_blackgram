@@ -10,7 +10,6 @@ export class User extends BaseModel {
   admin: boolean = false;
   myGroups: Group[] = [];
 
-
 }
 
 export class AddUserGroup  {

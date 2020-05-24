@@ -1,0 +1,22 @@
+package com.tmda.chatapp.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class ContactServiceTest {
+
+    @Autowired
+    ContactService contactService;
+
+//    @Test
+//    void create() {
+//        User user = new Contact();
+//        user.setUserName("nombre1");
+//        user.setPassword("password");
+//
+//        userService.create(user);
+//
+//        System.out.println("User created");
+//        System.out.println(user);
+//        assertEquals( "Send message: "+user.getUserName() , "Send message: "+user.getUserName() );
+//    }
+}
