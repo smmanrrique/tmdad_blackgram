@@ -1,7 +1,6 @@
 import { ViewEncapsulation } from '@angular/core';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { CustomValidators } from '../../../core/utils/validator/custom-validator';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { AuthorizationRequest } from '../../../core/models/authorizationRequest';
@@ -9,6 +8,8 @@ import { UserService } from '../../user/user.service';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { NotificationService } from '../../../core/utils/notification/notification.service';
 import {User} from '../user-register/user';
+import { BaseService } from 'src/app/core/base.service';
+import {LoginService} from './login.service';
 
 @Component({
 	selector: 'app-login',
@@ -18,76 +19,61 @@ import {User} from '../user-register/user';
 })
 
 export class LoginComponent implements OnInit {
+	userSession: User;
 	form: FormGroup;
 	authorizationRequest: AuthorizationRequest;
 
 	constructor(
 		private authService: AuthService,
-		private userService: UserService,
+		private loginService: LoginService,
 		private activatedRoute: ActivatedRoute,
 		private router: Router,
 		private fb: FormBuilder,
 		public toastr: ToastrManager,
 		private notificationService: NotificationService,
 	) {
-		this.form = this.getForm();
+		this.form = this.getForm(new User());
 	}
 
 	ngOnInit() {
 		this.authorizationRequest = new AuthorizationRequest();
 		this.authorizationRequest.grant_type = 'password';
 		this.authorizationRequest.client_id = 'web_site';
-		this.form = this.toFormGroup(new User());
+		this.form = this.getForm(new User());
 	}
 
-	login(): void {
-		if (this.form.valid) {
-			this.main(<User> this.form.value);
-      console.log("")
+	login(formUse: FormGroup): void {
 
+			let params = BaseService.jsonToHttpParams({
+        userName: this.form.value['userName'],
+				password: this.form.value['password']
+			});
 
+			this.loginService.getAll(params).subscribe(
+				data => {
+				  let users = data;
+					if(data.length !== 0){
+            this.userSession = <User> users[0];
+            this.main(<User> this.userSession);
+          }
+          this.notificationService.showInfo("Credentialess Incorrectas");
+        }, err =>  {
+          this.notificationService.error(err);
+        });
 
-			// this.authorizationRequest.username = this.form.value['email'];
-			// this.authorizationRequest.password = this.form.value['password'];
-
-			// this.authService.login(this.authorizationRequest).subscribe(authorizationResponse => {
-			// 	sessionStorage.setItem('token', authorizationResponse.access_token);
-			// 	sessionStorage.setItem('refresh_token', authorizationResponse.refresh_token);
-
-			// 	this.userService.getByAuthUserId(authorizationResponse.user_id).subscribe(user => {
-			// 		sessionStorage.setItem('user', JSON.stringify(user));
-			// 		window.location.href = window.location.href + 'admin';
-			// 	}, error => {
-			// 		let err = error.json();
-			// 		// console.log(error);
-			// 	});
-			// },
-			// 	err => {
-			// 		console.log(err);
-			// 		this.notificationService.error(err);
-			// 	});
-		}
-	}
-
-	toFormGroup(user: User): FormGroup {
-		return this.fb.group({
-			userName: new FormControl(user.userName, [Validators.required, Validators.maxLength(30)]),
-			password: new FormControl(user.password)
-			// password: new FormControl('', Validators.required)
-		});
 	}
 
 	main(user: User) {
-		console.log('estoy log');
-    sessionStorage.setItem('userSession',user.userName );
-    console.log(sessionStorage.getItem('userSession'))
+    sessionStorage.setItem('userSessionName', user.userName );
+    sessionStorage.setItem('userSessionAdmin', String(user.admin));
+    sessionStorage.setItem('userSessionId', String(user.id));
 		this.router.navigate(['./admin'], { relativeTo: this.activatedRoute });
 	}
 
-	getForm(): FormGroup {
+	getForm(user: User): FormGroup {
 		return this.fb.group({
-			userName: new FormControl('', [Validators.required, Validators.maxLength(30)]),
-			password: new FormControl('', Validators.required)
+			userName: new FormControl(user.userName, [Validators.required, Validators.maxLength(30)]),
+			password: new FormControl(user.password, Validators.required)
 		});
 	}
 
