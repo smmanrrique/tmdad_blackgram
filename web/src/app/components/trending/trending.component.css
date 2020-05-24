@@ -1,0 +1,76 @@
+p {
+  font-family: Lato;
+}
+
+.text-on-pannel {
+  background: #fff none repeat scroll 0 0;
+  height: auto;
+  margin-left: 20px;
+  padding: 3px 5px;
+  position: absolute;
+  margin-top: -47px;
+  border: 1px solid black;
+  border-radius: 8px;
+  color: black;
+}
+
+.panel-primary {
+  border-color: black;
+}
+
+.text-uppercase {
+  text-transform: uppercase!important;
+  color: black;
+}
+
+.panel {
+  /* for text on pannel */
+  margin-top: 27px !important;
+}
+
+.panel-body {
+  padding-top: 30px !important;
+}
+
+
+
+
+
+
+.h2, h2 {
+  font-size: 2rem;
+  position: initial;
+  padding: 5px;
+  color: black;
+  font-weight: bold;
+}
+
+.container {
+  width: 100%;
+  height: 50%;
+}
+
+.leftpane {
+  width: 50%;
+  height: 50%;
+  float: left;
+  /*background-color: rosybrown;*/
+  border-collapse: collapse;
+}
+
+.middlepane {
+  width: 50%;
+  height: 100%;
+  float: left;
+  background-color: royalblue;
+  border-collapse: collapse;
+}
+
+.rightpane {
+  width: 50%;
+  height: 50%;
+  position: relative;
+  float: right;
+  /*background-color: yellow;*/
+  border-collapse: collapse;
+}

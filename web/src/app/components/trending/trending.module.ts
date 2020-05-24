@@ -16,9 +16,11 @@ import {MatCardModule} from "@angular/material/card";
 import {TrendingComponent} from "./trending.component";
 import {TrendingService} from "./trending.service";
 import {TrendingRoutingModule} from "./trending.routing";
+import {ChartsModule} from 'ng2-charts';
 
 @NgModule({
   imports: [
+    ChartsModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

@@ -32,6 +32,10 @@ export class TrendingService {
     return this.http.get<any>(TrendingService.BASE_URL+"/time", BaseService.httpOptions());
   }
 
+  FindRealTimeTopics(): Observable<any> {
+    return this.http.get<any>(TrendingService.BASE_URL+"/realtime", BaseService.httpOptions());
+  }
+
 
 
 

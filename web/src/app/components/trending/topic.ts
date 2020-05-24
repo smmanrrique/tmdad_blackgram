@@ -13,10 +13,16 @@ export class TimeTopicDTO {
   hour: number;
   minute: number;
 }
+export class RealTimeTopicDTO {
+  x: number;
+  y: number;
+}
 
 export class TopTopicDTO {
   name: string;
   count: number;
+  position: number;
+
 }
 
 

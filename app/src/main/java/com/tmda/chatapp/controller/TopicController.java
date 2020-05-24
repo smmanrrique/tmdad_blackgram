@@ -1,6 +1,7 @@
 
 package com.tmda.chatapp.controller;
 
+import com.tmda.chatapp.DTO.RealTimeTopic;
 import com.tmda.chatapp.DTO.TimeTopicDTO;
 import com.tmda.chatapp.DTO.TopTopicDTO;
 import com.tmda.chatapp.DTO.UserTopicDTO;
@@ -15,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -49,15 +49,19 @@ public class TopicController {
         try {
             LOGGER.info("start FindTopTopics users");
             List<TopTopicDTO> topics = topicRepository.findTopTopic();
+            LOGGER.info("Found {} users", topics.size());
+            return new ResponseEntity<>(topics, HttpStatus.OK);
+        } catch (DataAccessException e) {
+            LOGGER.info(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
-//            List<TopTopicDTO> topics = new ArrayList<>();
-//            for (Object i : users) {
-//                System.out.println(i);
-//                topics.add((TopTopicDTO) i);
-//            }
-
-
-//            LOGGER.info("Found {} users", topics.get(0).toString());
+    @RequestMapping("/topfive")
+    public ResponseEntity<List<TopTopicDTO>> findTopFiveMinuteTopic() {
+        try {
+            LOGGER.info("start FindTopTopics users");
+            List<TopTopicDTO> topics = topicRepository.findTopFiveMinuteTopic();
             LOGGER.info("Found {} users", topics.size());
             return new ResponseEntity<>(topics, HttpStatus.OK);
         } catch (DataAccessException e) {
@@ -79,8 +83,35 @@ public class TopicController {
         }
     }
 
+    @RequestMapping("/realtime")
+    public ResponseEntity<List<RealTimeTopic>> findRealTimeTopic() {
+        try {
+            LOGGER.info("start TimeTopicDTO users");
+            List<RealTimeTopic> topics = topicRepository.findRealTimeTopic();
+            LOGGER.info("Found {} users", topics.size());
+            return new ResponseEntity<>(topics, HttpStatus.OK);
+        } catch (DataAccessException e) {
+            LOGGER.info(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @RequestMapping("/user")
     public ResponseEntity<List<UserTopicDTO>> FindUserTopics() {
+        try {
+            LOGGER.info("start TimeTopicDTO users");
+            List<UserTopicDTO> topics = topicRepository.findUserTopic();
+            LOGGER.info("Found {} users", topics.size());
+            return new ResponseEntity<>(topics, HttpStatus.OK);
+        } catch (DataAccessException e) {
+            LOGGER.info(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    @RequestMapping("/userto")
+    public ResponseEntity<List<UserTopicDTO>> FindUserToTopics() {
         try {
             LOGGER.info("start TimeTopicDTO users");
             List<UserTopicDTO> topics = topicRepository.findUserTopic();

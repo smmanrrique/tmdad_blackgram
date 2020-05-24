@@ -1,3 +1,105 @@
-<p>
-  trending works!
-</p>
+
+
+<!--<div class="container">-->
+<!--  <div class="col-sm-4 text-center">-->
+<!--    <h2 class="text-center">PIE chart using Chartjs and Angular 6</h2>-->
+<!--    <canvas baseChart-->
+<!--            [data]="pieChartData"-->
+<!--            [labels]="pieChartLabels"-->
+<!--            [chartType]="pieChartType"-->
+<!--            [options]="pieChartOptions"-->
+<!--            (chartHover)="chartHovered($event)"-->
+<!--            (chartClick)="chartClicked($event)"></canvas>-->
+<!--  </div>-->
+
+<div class="container">
+  <div class="toppane">
+<!--      <h2>Trending Information</h2>-->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <div class="container">
+      <div class="panel panel-primary">
+        <div class="panel-body">
+          <h3 class="text-on-pannel text-primary"><strong class="text-uppercase"> Trending Information </strong></h3>
+          <p>Overview </p>
+        </div>
+      </div>
+      <div>
+
+  </div>
+  <div class="leftpane">
+
+    <div class="title">
+      <h2>Trending Topics</h2>
+    </div>
+    <table mat-table [dataSource]="topTopic" class="mat-elevation-z8">
+
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Topic </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="count">
+        <th mat-header-cell *matHeaderCellDef> Count </th>
+        <td mat-cell *matCellDef="let element"> {{element.count}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+
+
+  </div>
+
+<!--  <div class="middlepane">Test Page</div>-->
+  <div class="rightpane">
+
+    <div class="title">
+      <h2>Ranking User by Topics</h2>
+    </div>
+
+    <table mat-table [dataSource]="userTopic" class="mat-elevation-z8">
+
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+      </ng-container>
+
+      <!-- User Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> User Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.userName}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="count">
+        <th mat-header-cell *matHeaderCellDef> Count </th>
+        <td mat-cell *matCellDef="let element"> {{element.count}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </div>
+</div>
+
+
+<div style="width:100%;">
+  <canvas id="myChart" width="700" height="250" #mychart></canvas>
+</div>
