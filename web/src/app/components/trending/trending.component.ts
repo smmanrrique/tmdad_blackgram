@@ -9,10 +9,10 @@ import {TrendingService} from './trending.service';
 export class TrendingComponent implements OnInit {
 
   constructor(
-    private trendingService: TrendingService;
+    // private trendingService: TrendingService;
   ) { }
 
-  ngOnInit()
+  ngOnInit() {
 
 
   }

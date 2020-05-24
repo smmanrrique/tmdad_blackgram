@@ -103,7 +103,7 @@
 
       <div>
         <ul class="sms">
-          <li *ngFor="let message of messages">
+          <li *ngFor="let message of globals.appMessages">
             <span class="badge">{{message.fromUser.userName }}</span>
             <p>{{message.body}}</p>
             <img *ngIf="message.multimedia===''" src="" alt="Avatar" style="width:100%;">

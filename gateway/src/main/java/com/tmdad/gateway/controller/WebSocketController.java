@@ -1,24 +1,22 @@
 package com.tmdad.gateway.controller;
 
-import com.rabbitmq.client.*;
 import com.tmdad.gateway.config.ConnectionRabbitMQ;
-import com.tmdad.gateway.models.*;
 
 import lombok.SneakyThrows;
-import org.springframework.amqp.rabbit.core.RabbitMessageOperations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.handler.annotation.*;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.DeliverCallback;
+
 import javax.annotation.Resource;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Controller
 public class WebSocketController {
+    Channel channel;
 
     @Autowired
     @Resource(name="rabbitConnection")
@@ -30,37 +28,26 @@ public class WebSocketController {
     @Autowired
     SimpMessagingTemplate simpMessagingTemplate;
 
-    @MessageMapping("/proof")
+    @MessageMapping("/listen")
     @SneakyThrows
-    public void requestUserProof(@Payload String message) {
-        System.out.println(" /chat/proof *** "+ message);
+    public void reply(@Payload String message) {
+        String username = message.replace("\"", "");
+        channel = connectionRabbitMQ.channel();
 
-
-
-        Channel channel = connectionRabbitMQ.channel();
-
-        String time = new SimpleDateFormat("HH:mm").format(new Date());
-        OutputMessage response = new OutputMessage("Hola1", "Hola", time);
-
-        String replaced = message.replace("\"", "");
-        System.out.println(" Check userName "+ replaced);
+        System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 
         WebSocketController _this = this;
-        System.out.println("22222222222222222222222222222222222222222");
-        Consumer consumer = new DefaultConsumer(channel) {
+        DeliverCallback deliverCallback = (consumerTag, delivery) -> {
+            String message1 = new String(delivery.getBody(), "UTF-8");
 
-            @Override
-            public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
-                String message = new String(body, "UTF-8");
-                System.out.println("=======================================================");
-                System.out.println("ReceiveLogsDirect2 Received '" + envelope.getRoutingKey() + "':'" + message + "'");
-                _this.simpMessagingTemplate.convertAndSend(USER_REPLY +  "/" + replaced, message);
+            System.out.println(" [x] Received '" + message1 + "'");
+            try {
+                _this.simpMessagingTemplate.convertAndSend(USER_REPLY +  "/" + username, message1);
+            } finally {
+                System.out.println(" [x] Done");
+                channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false);
             }
         };
-
-        channel.basicConsume(replaced, true, consumer);
-//        this.simpMessagingTemplate.convertAndSend(USER_REPLY +  "/" + "sham1", response);
+        channel.basicConsume(username, false, deliverCallback, consumerTag -> { });
     }
-
-
 }

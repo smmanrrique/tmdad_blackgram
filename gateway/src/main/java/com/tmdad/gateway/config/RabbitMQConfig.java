@@ -40,7 +40,6 @@ public class RabbitMQConfig {
         connection.createChannel(false).exchangeDeclare(environment.getProperty("DIRECT_EXCHANGE"),"direct", true);
         connection.createChannel(false).exchangeDeclare(environment.getProperty("GROUP_EXCHANGE"),"topic", true);
         connection.createChannel(false).exchangeDeclare(environment.getProperty("ALL_EXCHANGE"),"topic", true);
-
     }
 
 }
