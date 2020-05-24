@@ -7,8 +7,11 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -36,6 +39,7 @@ public class Message extends AbstractEntity implements Serializable {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Group toGroup;
 
+    @Size(max = 500)
     @Column(columnDefinition = "text")
     private String body;
 
@@ -54,18 +58,18 @@ public class Message extends AbstractEntity implements Serializable {
             CascadeType.MERGE
     })
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Set<Topic> topics = new HashSet<Topic>();
+    private List<Topic> topics = new ArrayList<>();
 
     public Message() {}
 
-    public Message(User from, User to, String message, Set<Topic> topics) {
+    public Message(User from, User to, String message, List<Topic> topics) {
         this.fromUser = from;
         this.toUser = to;
         this.body = message;
         this.topics = topics;
     }
 
-    public Message(User from, User to, String message, Multimedia multimedia, Set<Topic> topics) {
+    public Message(User from, User to, String message, Multimedia multimedia, List<Topic> topics) {
         this.fromUser = from;
         this.toUser = to;
         this.body = message;
@@ -73,13 +77,13 @@ public class Message extends AbstractEntity implements Serializable {
         this.multimedia = multimedia;
     }
 
-    public Message(User from, Group to, String message, Set<Topic> topics) {
+    public Message(User from, Group to, String message, List<Topic> topics) {
         this.fromUser = from;
         this.toGroup = to;
         this.body = message;
         this.topics = topics;
     }
-    public Message(User from, Group to, String message, Multimedia multimedia, Set<Topic> topics) {
+    public Message(User from, Group to, String message, Multimedia multimedia, List<Topic> topics) {
         this.fromUser = from;
         this.toGroup = to;
         this.body = message;

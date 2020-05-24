@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {MessageList} from '../message/message';
+import {Globals} from '../../globals';
+
+import * as Stomp from '@stomp/stompjs';
+import * as SockJS from 'sockjs-client';
 
 
 @Component({
@@ -8,12 +13,42 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+  globals: Globals;
 
-  constructor() { }
+  private stompClient = null;
+  private userName: String = sessionStorage.getItem('userSession');
+
+  constructor(globals: Globals) { this.globals = globals; }
 
     ngOnInit() {
+      console.log("7777777777777"+this.userName);
+      this.connect();
+    }
+
+  connect() {
+    let socket = new SockJS('http://localhost:8090/connect');
+    this.stompClient = Stomp.over(socket);
+
+    const _this = this;
+    this.stompClient.connect({}, function (frame) {
+      _this.stompClient.subscribe('/queue/reply/' + _this.userName, function (messageOutput) {
+        _this.saveMessageOutput(JSON.parse(messageOutput.body));
+      });
+    });
+
+    socket.addEventListener('open', function (e) {
+      _this.stompClient.send('/chat/listen', {}, JSON.stringify(_this.userName));
+    });
   }
 
+  saveMessageOutput(message) {
+    let msg = <MessageList> message;
+    this.globals.appMessages.push(msg);
+  }
 
-
+  disconnect() {
+    if (this.stompClient != null) {
+      this.stompClient.disconnect();
+    }
+  }
 }

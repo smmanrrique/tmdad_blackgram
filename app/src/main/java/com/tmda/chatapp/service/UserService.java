@@ -39,6 +39,10 @@ public class UserService implements InterfaceUserService {
         return userRepository.findAll();
     }
 
+    public List<User> findAllByUserNameAndPassword(String userName, String password) {
+        return userRepository.findAllByUserNameAndPassword(userName, password);
+    }
+
     @Override
     public boolean isAdmin(String userName) {
         return userRepository.isAdmin(userName);

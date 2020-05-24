@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { User} from '../auth/user-register/user';
 import { Group } from '../group/group';
-import {UserService} from "../auth/user-register/user.service";
-import {GroupService} from "../group/group.service";
-import {MessageService} from "./message.service";
-import {NotificationService} from "../../core/utils/notification/notification.service";
-import {Message, MessageList} from "./message";
-import {ContactService} from "../contact/contact.service";
+import {UserService} from '../auth/user-register/user.service';
+import {GroupService} from '../group/group.service';
+import {MessageService} from './message.service';
+import {NotificationService} from '../../core/utils/notification/notification.service';
+import {Message, MessageList} from './message';
+import {ContactService} from '../contact/contact.service';
 import { Contact } from 'src/app/components/contact/contact';
-import {FormGroup} from "@angular/forms";
-import {BaseService} from "../../core/base.service";
+import {FormGroup} from '@angular/forms';
+import {BaseService} from '../../core/base.service';
+import {Globals} from '../../globals';
 
-import * as Stomp from '@stomp/stompjs';
-import * as SockJS from 'sockjs-client';
 
 @Component({
   // selector: 'app-chat',
@@ -22,13 +21,12 @@ import * as SockJS from 'sockjs-client';
 })
 
 export class ChatComponent implements OnInit {
+  globals: Globals;
 
-  private stompClient = null;
-
+  userName: String = sessionStorage.getItem('userSession');
   user: User;
   myGroups: Group[];
   myContacts: Contact[];
-  messages: MessageList[];
 
   selectedGroup: Group;
   selectedContact: Contact;
@@ -39,14 +37,14 @@ export class ChatComponent implements OnInit {
   groupMessage: FormGroup;
   fileMessage: FormGroup;
 
-
   constructor(
     private userService: UserService,
     private groupService: GroupService,
     private messageService: MessageService,
     private contactService: ContactService,
-    private notificationService: NotificationService
-  ) { }
+    private notificationService: NotificationService,
+    globals: Globals
+  ) { this.globals = globals; }
 
   ngOnInit() {
     this.userMessage = this.messageService.getChatUserMessage(new Message());
@@ -61,7 +59,7 @@ export class ChatComponent implements OnInit {
       });
 
     // SET ID USER FROM URL
-    this.contactService.getAll({"userId": 1}).subscribe(
+    this.contactService.getAll({'userId': 1}).subscribe(
       data => {
         this.myContacts = data;
       }
@@ -69,53 +67,39 @@ export class ChatComponent implements OnInit {
 
     // TODO USAR WEBSOCKET
     let paramsMessage = BaseService.jsonToHttpParams({
-      toUser: "u1"
+      toUser: 'u1'
     });
 
     this.messageService.getAll(paramsMessage).subscribe(
       data => {
-        console.log(data)
-        this.messages = data;
+        this.globals.appMessages = this.globals.appMessages.concat(data);
       });
-
-
-    this.connect();
-
-  }
-
-
-  connect() {
-    console.log("// tslint:disable-next-line:indent")
-
-    let socket = new SockJS('http://localhost:8090/connect');
-    this.stompClient = Stomp.over(socket);
-    this.stompClient.connect({}, function (frame) {});
-    console.log(this.stompClient )
   }
 
 
   onSelectGroup(group: Group): void {
+    console.log("onSelectGroup ");
     this.selectedContact = null;
     this.selectedBroadcast = null;
     this.selectedGroup = group;
   }
 
   onSelectContact(contac: Contact): void {
-    console.log(contac)
+    console.log(contac);
     this.selectedGroup = null;
     this.selectedBroadcast = null;
     this.selectedContact = contac;
   }
-  onSelectedBroadcast(all: string): void {
+  
+  onSelectedBroadcast(): void {
     this.selectedGroup = null;
     this.selectedContact = null;
-    this.selectedBroadcast = all;
+    this.selectedBroadcast = "ADMIN BROADCAST";
   }
 
-
   send_message() {
-    console.log("send_message");
-    console.log(this.messageForm)
+    console.log('send_message');
+    console.log(this.messageForm);
     this.notificationService.showInfo('Send Message');
 
     this.messageService.sendMessage(<Message> this.messageForm.value)
@@ -127,8 +111,8 @@ export class ChatComponent implements OnInit {
   }
 
   send_message_group() {
-    console.log("send_message");
-    console.log(this.messageForm)
+    console.log('send_message');
+    console.log(this.messageForm);
     this.notificationService.showInfo('Send Message');
 
     this.messageService.sendMessageGroup(<Message> this.messageForm.value)
@@ -140,8 +124,8 @@ export class ChatComponent implements OnInit {
   }
 
   send_message_broadcast() {
-    console.log("send_message");
-    console.log(this.messageForm)
+    console.log('send_message');
+    console.log(this.messageForm);
     this.notificationService.showInfo('Send Message');
 
     this.messageService.sendMessageBroadcast(<Message> this.messageForm.value)
@@ -151,5 +135,4 @@ export class ChatComponent implements OnInit {
         this.notificationService.error(err);
       });
   }
-
 }
