@@ -57,6 +57,19 @@ public class TopicController {
         }
     }
 
+    @RequestMapping("/topfive")
+    public ResponseEntity<List<TopTopicDTO>> findTopFiveMinuteTopic() {
+        try {
+            LOGGER.info("start FindTopTopics users");
+            List<TopTopicDTO> topics = topicRepository.findTopFiveMinuteTopic();
+            LOGGER.info("Found {} users", topics.size());
+            return new ResponseEntity<>(topics, HttpStatus.OK);
+        } catch (DataAccessException e) {
+            LOGGER.info(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @RequestMapping("/time")
     public ResponseEntity<List<TimeTopicDTO>> FindTimeTopics() {
         try {
@@ -85,6 +98,20 @@ public class TopicController {
 
     @RequestMapping("/user")
     public ResponseEntity<List<UserTopicDTO>> FindUserTopics() {
+        try {
+            LOGGER.info("start TimeTopicDTO users");
+            List<UserTopicDTO> topics = topicRepository.findUserTopic();
+            LOGGER.info("Found {} users", topics.size());
+            return new ResponseEntity<>(topics, HttpStatus.OK);
+        } catch (DataAccessException e) {
+            LOGGER.info(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    @RequestMapping("/userto")
+    public ResponseEntity<List<UserTopicDTO>> FindUserToTopics() {
         try {
             LOGGER.info("start TimeTopicDTO users");
             List<UserTopicDTO> topics = topicRepository.findUserTopic();
