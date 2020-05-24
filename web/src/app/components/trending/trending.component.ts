@@ -2,8 +2,8 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {TrendingService} from './trending.service';
 import {FormGroup} from '@angular/forms';
 import {RealTimeTopicDTO, TimeTopicDTO, TopTopicDTO, UserTopicDTO} from './topic';
-import {forEach} from '@angular/router/src/utils/collection';
-import Chart = require('chart.js');
+import * as Chart from 'chart.js';
+import {tick} from '@angular/core/testing';
 
 @Component({
   selector: 'app-trending',
@@ -26,18 +26,6 @@ export class TrendingComponent implements OnInit {
   ctx: any;
   @ViewChild('mychart') mychart;
 
-
-  // data: [
-  //   { x: 1, y: 2 },
-  //   { x: 2500, y: 2.5 },
-  //   { x: 3000, y: 5 },
-  //   { x: 3400, y: 4.75 },
-  //   { x: 3600, y: 4.75 },
-  //   { x: 5200, y: 6 },
-  //   { x: 6000, y: 9 },
-  //   { x: 7100, y: 6 },
-  // ],
-
   constructor(
     private trendingService: TrendingService,
   ) { }
@@ -47,7 +35,6 @@ export class TrendingComponent implements OnInit {
       data => {
         console.log("top",data);
         this.topTopic = data;
-        // this.dataSource = this.setPosition(this.topTopic);
       });
 
     this.trendingService.FindUserTopics().subscribe(
@@ -60,6 +47,7 @@ export class TrendingComponent implements OnInit {
       data => {
         console.log(data)
         this.realTimeTopic = data;
+        this.drag(this.realTimeTopic);
         console.log("this.realTimeTopic", this.realTimeTopic)
       });
 
@@ -101,10 +89,19 @@ export class TrendingComponent implements OnInit {
     return data;
   }
 
-  ngAfterViewInit() {
+  public setMinute(tick: any): any{
+    return tick.toString() + 'm';
+  }
+
+  public setHour(tick: any): any{
+    return tick.toString() + 'm';
+  }
+
+  drag(dataTime: any) {
     this.canvas = this.mychart.nativeElement;
     this.ctx = this.canvas.getContext('2d');
 
+    // @ts-ignore
     let myChart = new Chart(this.ctx, {
       type: 'line',
 
@@ -114,55 +111,7 @@ export class TrendingComponent implements OnInit {
           backgroundColor: "rgba(194,180,180,0.4)",
           borderColor: "rgb(83,80,80)",
           fill: true,
-          data: [
-            {
-              "x": 8,
-              "y": 45
-            },
-            {
-              "x": 9,
-              "y": 25
-            },
-            {
-              "x": 9,
-              "y": 45
-            },
-            {
-              "x": 10,
-              "y": 50
-            },
-            {
-              "x": 11,
-              "y": 25
-            },
-            {
-              "x": 11,
-              "y": 45
-            },
-            {
-              "x": 11,
-              "y": 55
-            },
-            {
-              "x": 11,
-              "y": 60
-            },
-            {
-              "x": 12,
-              "y": 15
-            },
-            {
-              "x": 12,
-              "y": 25
-            },
-            {
-              "x": 12,
-              "y": 35
-            },
-            {
-              "x": 12,
-              "y": 55
-            }],
+          data: dataTime,
         }]
       },
       options: {
