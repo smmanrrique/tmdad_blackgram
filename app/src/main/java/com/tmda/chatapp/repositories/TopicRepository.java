@@ -1,5 +1,6 @@
 package com.tmda.chatapp.repositories;
 
+import com.tmda.chatapp.DTO.RealTimeTopic;
 import com.tmda.chatapp.DTO.TimeTopicDTO;
 import com.tmda.chatapp.DTO.TopTopicDTO;
 import com.tmda.chatapp.DTO.UserTopicDTO;
@@ -29,8 +30,15 @@ public interface TopicRepository extends CrudRepository<Topic, Long> {
             "     ,EXTRACT(HOUR FROM created) AS hour " +
             "     ,EXTRACT(MINUTE FROM created) AS minute " +
             "from topics " +
-            "order by timestamp desc", nativeQuery = true)
+            "order by timestamp asc", nativeQuery = true)
     List<TimeTopicDTO> findTimeTopic();
+
+    @Query(value = "select " +
+            "      EXTRACT(HOUR FROM created) AS y " +
+            "     , EXTRACT(MINUTE FROM created) AS x " +
+            "from topics " +
+            "order by created desc", nativeQuery = true)
+    List<RealTimeTopic> findRealTimeTopic();
 
     @Query(value = "select ROW_NUMBER() OVER(ORDER BY count(topics_id) desc) AS position," +
             "users_id as id, u.user_name as userName, count(topics_id) as count\n" +

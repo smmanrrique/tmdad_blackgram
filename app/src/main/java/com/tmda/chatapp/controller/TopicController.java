@@ -1,6 +1,7 @@
 
 package com.tmda.chatapp.controller;
 
+import com.tmda.chatapp.DTO.RealTimeTopic;
 import com.tmda.chatapp.DTO.TimeTopicDTO;
 import com.tmda.chatapp.DTO.TopTopicDTO;
 import com.tmda.chatapp.DTO.UserTopicDTO;
@@ -61,6 +62,19 @@ public class TopicController {
         try {
             LOGGER.info("start TimeTopicDTO users");
             List<TimeTopicDTO> topics = topicRepository.findTimeTopic();
+            LOGGER.info("Found {} users", topics.size());
+            return new ResponseEntity<>(topics, HttpStatus.OK);
+        } catch (DataAccessException e) {
+            LOGGER.info(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping("/realtime")
+    public ResponseEntity<List<RealTimeTopic>> findRealTimeTopic() {
+        try {
+            LOGGER.info("start TimeTopicDTO users");
+            List<RealTimeTopic> topics = topicRepository.findRealTimeTopic();
             LOGGER.info("Found {} users", topics.size());
             return new ResponseEntity<>(topics, HttpStatus.OK);
         } catch (DataAccessException e) {
