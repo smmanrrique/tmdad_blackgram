@@ -24,12 +24,13 @@ export class TopbarComponent implements OnInit {
 	}
 
 	public logout() {
-		let accessTokenRequest: AccessTokenRequest = new AccessTokenRequest();
-		accessTokenRequest.refresh_token = sessionStorage.getItem('refresh_token');
-		this.authService.logout(accessTokenRequest).subscribe(response => {
-			sessionStorage.clear();
-			this.router.navigate(['/']);
-		}); // , (err) => this.notificationService.error());
+		this.router.navigate(['/']);
+		// let accessTokenRequest: AccessTokenRequest = new AccessTokenRequest();
+		// accessTokenRequest.refresh_token = sessionStorage.getItem('refresh_token');
+		// this.authService.logout(accessTokenRequest).subscribe(response => {
+		// 	sessionStorage.clear();
+		// 	this.router.navigate(['/']);
+		// }); // , (err) => this.notificationService.error());
 	}
 
 }
