@@ -10,8 +10,8 @@ import { Location } from '@angular/common';
   templateUrl: './user-register.component.html',
   styleUrls: ['./user-register.component.css']
 })
-export class UserRegisterComponent implements OnInit {
 
+export class UserRegisterComponent implements OnInit {
   form: FormGroup;
 
   constructor(
@@ -25,9 +25,6 @@ export class UserRegisterComponent implements OnInit {
   }
 
   create() {
-    console.log('create');
-    console.log(this.form);
-
     this.userService.create(<User>this.form.value)
       .subscribe(provider => {
         this.notificationService.sucessInsert('User');

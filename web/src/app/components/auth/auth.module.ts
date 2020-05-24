@@ -7,26 +7,27 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MatInputModule, MatFormFieldModule } from '@angular/material';
+import {MatInputModule, MatFormFieldModule, MatSlideToggleModule} from '@angular/material';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ToastrModule } from 'ng6-toastr-notifications';
 import { UserRegisterComponent } from './user-register/user-register.component';
 import { UtilService } from 'mydatepicker/dist';
 
 @NgModule({
-	imports: [
-		HttpClientModule,
-		FormsModule,
-		RouterModule,
-		CommonModule,
-		ReactiveFormsModule,
-		MatFormFieldModule,
-		MatInputModule,
-		ToastrModule.forRoot(),
+  imports: [
+    HttpClientModule,
+    FormsModule,
+    RouterModule,
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ToastrModule.forRoot(),
 
-		UtilsModule,
-		AuthRoutingModule,
-	],
+    UtilsModule,
+    AuthRoutingModule,
+    MatSlideToggleModule,
+  ],
 	declarations: [
 		LoginComponent,
 		ChangePasswordComponent,
@@ -36,7 +37,7 @@ import { UtilService } from 'mydatepicker/dist';
 		LoginComponent,
 		ChangePasswordComponent,
 		UserRegisterComponent,
-	], 
+	],
 	providers: [
 		UtilService,
 		UserService,
