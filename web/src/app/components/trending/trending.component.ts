@@ -2,8 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {TrendingService} from './trending.service';
 import {FormGroup} from '@angular/forms';
 import {RealTimeTopicDTO, TimeTopicDTO, TopTopicDTO, UserTopicDTO} from './topic';
-import * as Chart from 'chart.js';
-import {tick} from '@angular/core/testing';
+import Chart = require('chart.js');
 
 @Component({
   selector: 'app-trending',
@@ -20,7 +19,9 @@ export class TrendingComponent implements OnInit {
   timeTopic: TimeTopicDTO[];
   userTopic: UserTopicDTO[];
   topTopic: TopTopicDTO[];
+  recentTopic: TopTopicDTO[];
   realTimeTopic: RealTimeTopicDTO[];
+  
 
   canvas: any;
   ctx: any;
@@ -36,6 +37,22 @@ export class TrendingComponent implements OnInit {
         console.log("top",data);
         this.topTopic = data;
       });
+      
+
+      this.trendingService.FindRecebtTopics().subscribe(
+        data => {
+          console.log("top recent",data);
+          this.recentTopic = data;
+          // this.dataSource = this.setPosition(this.topTopic);
+        });
+
+      this.trendingService.FindRealTimeTopics().subscribe(
+        data => {
+          console.log(data)
+          this.realTimeTopic = data;
+          console.log("this.realTimeTopic", this.realTimeTopic)
+          this.draw(this.realTimeTopic);
+        });
 
     this.trendingService.FindUserTopics().subscribe(
       data => {
@@ -59,45 +76,8 @@ export class TrendingComponent implements OnInit {
 
   }
 
-  title = 'app';
-  public pieChartLabels:string[] = ["Pending", "InProgress", "OnHold", "Complete", "Cancelled"];
-  public pieChartData:number[] = [21, 39, 10, 14, 16];
-  public pieChartType:string = 'pie';
-  public pieChartOptions:any = {'backgroundColor': [
-      "#FF6384",
-      "#4BC0C0",
-      "#FFCE56",
-      "#E7E9ED",
-      "#36A2EB"
-    ]}
-
-  // events on slice click
-  public chartClicked(e:any):void {
-    console.log(e);
-  }
-
-  // event on pie chart slice hover
-  public chartHovered(e:any):void {
-    console.log(e);
-  }
-
-  public setPosition(data: any): any{
-    let n = data.length;
-    for (let i = 0; i < n; i++) {
-      data[i].position = i+1
-    }
-    return data;
-  }
-
-  public setMinute(tick: any): any{
-    return tick.toString() + 'm';
-  }
-
-  public setHour(tick: any): any{
-    return tick.toString() + 'm';
-  }
-
-  drag(dataTime: any) {
+// ngAfterViewInit
+  draw(dataTime: any) {
     this.canvas = this.mychart.nativeElement;
     this.ctx = this.canvas.getContext('2d');
 

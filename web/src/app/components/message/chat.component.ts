@@ -126,10 +126,10 @@ export class ChatComponent implements OnInit {
     this.selectedBroadcast = null;
     this.selectedContact = contac;
   }
-  onSelectedBroadcast(all: string): void {
+  onSelectedBroadcast(): void {
     this.selectedGroup = null;
     this.selectedContact = null;
-    this.selectedBroadcast = all;
+    this.selectedBroadcast = "ADMIN BROADCAST";
   }
 
 
