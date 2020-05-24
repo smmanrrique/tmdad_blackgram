@@ -19,12 +19,13 @@ export class TrendingComponent implements OnInit {
   timeTopic: TimeTopicDTO[];
   userTopic: UserTopicDTO[];
   topTopic: TopTopicDTO[];
+  recentTopic: TopTopicDTO[];
   realTimeTopic: RealTimeTopicDTO[];
+  
 
   canvas: any;
   ctx: any;
   @ViewChild('mychart') mychart;
-
 
   // data: [
   //   { x: 1, y: 2 },
@@ -48,6 +49,22 @@ export class TrendingComponent implements OnInit {
         this.topTopic = data;
         // this.dataSource = this.setPosition(this.topTopic);
       });
+      
+
+      this.trendingService.FindRecebtTopics().subscribe(
+        data => {
+          console.log("top recent",data);
+          this.recentTopic = data;
+          // this.dataSource = this.setPosition(this.topTopic);
+        });
+
+      this.trendingService.FindRealTimeTopics().subscribe(
+        data => {
+          console.log(data)
+          this.realTimeTopic = data;
+          console.log("this.realTimeTopic", this.realTimeTopic)
+          this.drag(this.realTimeTopic);
+        });
 
     this.trendingService.FindUserTopics().subscribe(
       data => {
@@ -70,37 +87,8 @@ export class TrendingComponent implements OnInit {
 
   }
 
-  title = 'app';
-  public pieChartLabels:string[] = ["Pending", "InProgress", "OnHold", "Complete", "Cancelled"];
-  public pieChartData:number[] = [21, 39, 10, 14, 16];
-  public pieChartType:string = 'pie';
-  public pieChartOptions:any = {'backgroundColor': [
-      "#FF6384",
-      "#4BC0C0",
-      "#FFCE56",
-      "#E7E9ED",
-      "#36A2EB"
-    ]}
 
-  // events on slice click
-  public chartClicked(e:any):void {
-    console.log(e);
-  }
-
-  // event on pie chart slice hover
-  public chartHovered(e:any):void {
-    console.log(e);
-  }
-
-  public setPosition(data: any): any{
-    let n = data.length;
-    for (let i = 0; i < n; i++) {
-      data[i].position = i+1
-    }
-    return data;
-  }
-
-  ngAfterViewInit() {
+  ngAfterViewInit(dataTime: any) {
     this.canvas = this.mychart.nativeElement;
     this.ctx = this.canvas.getContext('2d');
 
@@ -113,55 +101,7 @@ export class TrendingComponent implements OnInit {
           backgroundColor: "rgba(194,180,180,0.4)",
           borderColor: "rgb(83,80,80)",
           fill: true,
-          data: [
-            {
-              "x": 8,
-              "y": 45
-            },
-            {
-              "x": 9,
-              "y": 25
-            },
-            {
-              "x": 9,
-              "y": 45
-            },
-            {
-              "x": 10,
-              "y": 50
-            },
-            {
-              "x": 11,
-              "y": 25
-            },
-            {
-              "x": 11,
-              "y": 45
-            },
-            {
-              "x": 11,
-              "y": 55
-            },
-            {
-              "x": 11,
-              "y": 60
-            },
-            {
-              "x": 12,
-              "y": 15
-            },
-            {
-              "x": 12,
-              "y": 25
-            },
-            {
-              "x": 12,
-              "y": 35
-            },
-            {
-              "x": 12,
-              "y": 55
-            }],
+          data: dataTime,
         }]
       },
       options: {

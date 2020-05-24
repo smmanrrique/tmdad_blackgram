@@ -32,11 +32,6 @@ p {
   padding-top: 30px !important;
 }
 
-
-
-
-
-
 .h2, h2 {
   font-size: 2rem;
   position: initial;
@@ -51,26 +46,26 @@ p {
 }
 
 .leftpane {
-  width: 50%;
+  width: 33%;
   height: 50%;
   float: left;
-  /*background-color: rosybrown;*/
+  /* background-color: rosybrown; */
   border-collapse: collapse;
 }
 
 .middlepane {
-  width: 50%;
-  height: 100%;
+  width: 34%;
+  height: 50%;
   float: left;
-  background-color: royalblue;
+  /* background-color: royalblue; */
   border-collapse: collapse;
 }
 
 .rightpane {
-  width: 50%;
+  width: 33%;
   height: 50%;
   position: relative;
   float: right;
-  /*background-color: yellow;*/
+  /* background-color: yellow; */
   border-collapse: collapse;
 }

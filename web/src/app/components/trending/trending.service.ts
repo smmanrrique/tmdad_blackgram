@@ -24,6 +24,14 @@ export class TrendingService {
     return this.http.get<any>(TrendingService.BASE_URL+"/top", BaseService.httpOptions());
   }
 
+  FindRecebtTopics(): Observable<any> {
+    return this.http.get<any>(TrendingService.BASE_URL+"/topfive", BaseService.httpOptions());
+  }
+
+  FindUserFromTopics(): Observable<any> {
+    return this.http.get<any>(TrendingService.BASE_URL+"/userfrom", BaseService.httpOptions());
+  }
+
   FindUserTopics(): Observable<any> {
     return this.http.get<any>(TrendingService.BASE_URL+"/user", BaseService.httpOptions());
   }
@@ -35,10 +43,5 @@ export class TrendingService {
   FindRealTimeTopics(): Observable<any> {
     return this.http.get<any>(TrendingService.BASE_URL+"/realtime", BaseService.httpOptions());
   }
-
-
-
-
-
 
 }
