@@ -17,6 +17,8 @@ export class TimeTopicDTO {
 export class TopTopicDTO {
   name: string;
   count: number;
+  position: number;
+
 }
 
 

@@ -15,8 +15,8 @@ public interface TopicRepository extends CrudRepository<Topic, Long> {
 
     List<Topic> findAll();
 
-    @Query("select "+
-            " new com.tmda.chatapp.DTO.TopTopicDTO(t.name, count(t))"+
+    @Query(value = "select " +
+            " new com.tmda.chatapp.DTO.TopTopicDTO(t.name, count(t),sum(t.id))" +
             " from Topic t group by t.name order by t.name desc")
     List<TopTopicDTO> findTopTopic();
 

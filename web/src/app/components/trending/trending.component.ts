@@ -2,23 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {TrendingService} from './trending.service';
 import {FormGroup} from '@angular/forms';
 import {TimeTopicDTO, TopTopicDTO, UserTopicDTO} from './topic';
-
-class PeriodicElement {
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', count: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', count: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', count: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', count: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', count: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', count: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', count: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', count: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', count: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', count: 20.1797, symbol: 'Ne'},
-];
-
+import {forEach} from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-trending',
@@ -27,7 +11,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class TrendingComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'count'];
-  dataSource = ELEMENT_DATA;
+  dataSource = [{}];
 
   timeTopicForm: FormGroup;
   userTopicForm: FormGroup;
@@ -43,6 +27,12 @@ export class TrendingComponent implements OnInit {
   ) { }
 
   ngOnInit(){
+    this.trendingService.FindTopTopics().subscribe(
+      data => {
+        console.log("top",data);
+        this.topTopic = data;
+        this.dataSource = this.setPosition(this.topTopic);
+      });
 
     this.trendingService.FindTimeTopics().subscribe(
       data => {
@@ -50,11 +40,7 @@ export class TrendingComponent implements OnInit {
         this.timeTopic = data;
       });
 
-    this.trendingService.FindTopTopics().subscribe(
-      data => {
-        console.log(data)
-        this.topTopic = data;
-      });
+
 
     this.trendingService.FindUserTopics().subscribe(
       data => {
@@ -84,6 +70,14 @@ export class TrendingComponent implements OnInit {
   // event on pie chart slice hover
   public chartHovered(e:any):void {
     console.log(e);
+  }
+
+  public setPosition(data: any): any{
+    let n = data.length;
+    for (let i = 0; i < n; i++) {
+      data[i].position = i+1
+    }
+    return data;
   }
 
 }
