@@ -4,7 +4,6 @@ import { BaseService } from 'src/app/core/base.service';
 import { Observable } from 'rxjs';
 import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { CustomValidators } from 'src/app/core/utils/validator/custom-validator';
-import {Group} from "../../group/group";
 import {AddUserGroup, User} from './user';
 
 @Injectable({
@@ -48,8 +47,6 @@ export class UserService {
   }
 
 
-
-
   update(user: User): Observable<User> {
 		return this.http.put<any>(UserService.BASE_URL + '/' + user.id, User);
 	}
@@ -63,8 +60,16 @@ export class UserService {
 		return this.http.get<User>(UserService.BASE_URL + '/' + id);
 	}
 
-	getAll(params: HttpParams = new HttpParams()): Observable<any> {
-		return this.http.get<any>(UserService.BASE_URL, { params: params });
+	getAll(httpparams: HttpParams = new HttpParams()): Observable<any> {
+		let parameters = BaseService.httpOptions();
+    	parameters.params = httpparams;
+		return this.http.get<any>(UserService.BASE_URL, parameters);
+	}
+
+	findAll(httpparams: HttpParams = new HttpParams()): Observable<any> {
+		let parameters = BaseService.httpOptions();
+    	parameters.params = httpparams;
+		return this.http.get<any>(UserService.BASE_URL, parameters);
 	}
 
 	getUser(user: User): FormGroup {

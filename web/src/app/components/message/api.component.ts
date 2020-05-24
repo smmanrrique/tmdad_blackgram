@@ -19,6 +19,8 @@ import {BaseService} from "../../core/base.service";
 
 export class ApiComponent implements OnInit {
 
+  userName: String = sessionStorage.getItem('userSession');
+  
   userMessage: FormGroup;
   groupMessage: FormGroup;
   fileMessage: FormGroup;
@@ -69,6 +71,9 @@ export class ApiComponent implements OnInit {
 
   // Function to create Group
   create_chat_room() {
+    var i : number;
+
+
     // TODO Set userId
     let httpParams = new HttpParams();
     httpParams = httpParams.append('userId', String(1));

@@ -1,8 +1,6 @@
 import { UserService } from './../user/user.service';
 import { AuthRoutingModule } from './auth.routing';
 import { UtilsModule } from '../../core/utils/utils.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -13,6 +11,7 @@ import { MatInputModule, MatFormFieldModule } from '@angular/material';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ToastrModule } from 'ng6-toastr-notifications';
 import { UserRegisterComponent } from './user-register/user-register.component';
+import { UtilService } from 'mydatepicker/dist';
 
 @NgModule({
 	imports: [
@@ -29,17 +28,19 @@ import { UserRegisterComponent } from './user-register/user-register.component';
 		AuthRoutingModule,
 	],
 	declarations: [
-		// UserRegisterComponent,
 		LoginComponent,
 		ChangePasswordComponent,
 		UserRegisterComponent,
 	],
 	exports: [
-		// UserService,
 		LoginComponent,
 		ChangePasswordComponent,
 		UserRegisterComponent,
-	],
+	], 
+	providers: [
+		UtilService,
+		UserService,
+	  ]
 })
 
 export class AuthModule { }

@@ -27,17 +27,6 @@ export class TrendingComponent implements OnInit {
   ctx: any;
   @ViewChild('mychart') mychart;
 
-  // data: [
-  //   { x: 1, y: 2 },
-  //   { x: 2500, y: 2.5 },
-  //   { x: 3000, y: 5 },
-  //   { x: 3400, y: 4.75 },
-  //   { x: 3600, y: 4.75 },
-  //   { x: 5200, y: 6 },
-  //   { x: 6000, y: 9 },
-  //   { x: 7100, y: 6 },
-  // ],
-
   constructor(
     private trendingService: TrendingService,
   ) { }
@@ -63,7 +52,7 @@ export class TrendingComponent implements OnInit {
           console.log(data)
           this.realTimeTopic = data;
           console.log("this.realTimeTopic", this.realTimeTopic)
-          this.drag(this.realTimeTopic);
+          this.draw(this.realTimeTopic);
         });
 
     this.trendingService.FindUserTopics().subscribe(
@@ -87,8 +76,8 @@ export class TrendingComponent implements OnInit {
 
   }
 
-
-  ngAfterViewInit(dataTime: any) {
+// ngAfterViewInit
+  draw(dataTime: any) {
     this.canvas = this.mychart.nativeElement;
     this.ctx = this.canvas.getContext('2d');
 
