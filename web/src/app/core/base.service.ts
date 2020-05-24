@@ -66,14 +66,29 @@ export class BaseService {
 	}
 
   public static topicBody(data: string): string[] {
-    return data.match(/\B\#\w*\w+\b/g).map(x => x.substr(1)) || [];
+    //return data.match(/\B\#\w*\w+\b/g).map(x => x.substr(1)) || [];
+    let matches = data.match(/\B\#\w*\w+\b/g);
+    console.log("topicBody",matches)
+    if(matches != null ){
+      //return data.match(/\B\#\w*\w+\b/g).map(x => x.substr(1))
+      return matches.map(x => x.substr(1))
+    }
+     return [];
   }
 
   public static urlBody(data: string): string[] {
+
     let matches = data.match(/\bhttps?:\/\/\S+/gmi);
     console.log(matches)
 
-    return data.match(/\bhttps?:\/\/\S+/gmi);
+    if(matches != null ){
+      //return data.match(/\B\#\w*\w+\b/g).map(x => x.substr(1))
+      //return matches.map(x => x.substr(1))
+      return data.match(/\bhttps?:\/\/\S+/gmi);
+    }
+     return [];
+
+    
   }
 
 }
