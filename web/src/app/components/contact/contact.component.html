@@ -30,13 +30,11 @@
 
           <mat-form-field required>
             <mat-select formControlName="name" placeholder="Add Contact">
-              <mat-option *ngFor="let c of allContacts" [value]="c.name">
-                {{c.name}}
+              <mat-option *ngFor="let c of allContacts" [value]="c.userName">
+                {{c.userName}}
               </mat-option>
             </mat-select>
           </mat-form-field>
-
-<!--        <app-validator [control]="contacForm.controls['name']"></app-validator>-->
 
         <div class="field">
           <button mat-raised-button color="primary" type="submit" [disabled]="!contacForm.valid">Execute</button>

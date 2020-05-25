@@ -5,6 +5,7 @@ import { messageRoutes } from '../message/message.routing';
 import {trendingRoutes} from "../trending/trending.routing";
 import {groupRoutes} from "../group/group.routing";
 import {contacRoutes} from '../contact/contact.routing';
+import {userInformationRoutes} from '../user-information/user-information.routing';
 
 const homeRoutes: Routes = [
 	{
@@ -25,6 +26,7 @@ const homeRoutes: Routes = [
       ...groupRoutes,
       ...trendingRoutes,
       ...contacRoutes,
+      ...userInformationRoutes,
 
 		],
 		data: {

@@ -6,6 +6,7 @@ import {ContactService} from './contact.service';
 import {FormGroup} from '@angular/forms';
 import {Group} from '../group/group';
 import {NotificationService} from '../../core/utils/notification/notification.service';
+import {UserService} from '../auth/user-register/user.service';
 
 @Component({
   selector: 'app-contact',
@@ -16,11 +17,12 @@ export class ContactComponent implements OnInit {
   user:User;
   globals: Globals;
   myContacts: Contact[];
-  allContacts:  Contact[];
+  allContacts:  User[];
   contacForm: FormGroup;
 
 
   constructor(
+    private userService: UserService,
     private contactService: ContactService,
     private notificationService: NotificationService,
     globals: Globals
@@ -37,7 +39,7 @@ export class ContactComponent implements OnInit {
       }
     );
 
-    this.contactService.getAll().subscribe(
+    this.userService.getAll().subscribe(
       data => {
         this.allContacts = data;
         console.log(this.allContacts);

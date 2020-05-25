@@ -4,10 +4,10 @@ import {ContactComponent} from './contact.component';
 
 export const contacRoutes: Routes = [
   {
-    path: 'contac',
+    path: 'contact',
     component: ContactComponent,
     data: {
-      breadcrumb: 'contacts'
+      breadcrumb: 'user/contacts'
     },
     children: [
       {
