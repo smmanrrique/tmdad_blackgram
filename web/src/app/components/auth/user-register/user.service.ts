@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { CustomValidators } from 'src/app/core/utils/validator/custom-validator';
 import {AddUserGroup, User} from './user';
+import {Group} from '../../group/group';
 
 @Injectable({
 	providedIn: 'root'
@@ -17,7 +18,8 @@ export class UserService {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
       observe: 'response',
-    })
+    }),
+    params:{}
   };
 
 	constructor(
@@ -32,16 +34,8 @@ export class UserService {
     return this.http.post<any>(UserService.BASE_URL, JSON.stringify(user), this.httpOptions);
 	}
 
-  addUserToGroup(addU: AddUserGroup): Observable<User> {
-    console.log(addU);
-
-    let parameters = BaseService.httpOptions();
-    parameters.params =  BaseService.jsonToHttpParams({
-      userName: addU.userName,
-      groupName: addU.groupName,
-    });
-
-    return this.http.post<any>(UserService.BASE_URL, parameters);
+  addUserToGroup(add: AddUserGroup): Observable<any> {
+    return this.http.post<any>(UserService.BASE_URL+'/add', JSON.stringify(add), this.httpOptions);
   }
 
 
