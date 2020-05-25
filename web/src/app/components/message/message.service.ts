@@ -1,4 +1,3 @@
-import { Topic } from './topic';
 import { Message } from './message';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import { BaseService } from 'src/app/core/base.service';

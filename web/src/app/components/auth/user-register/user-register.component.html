@@ -1,55 +1,68 @@
-<h2 class="title">Create a New Account</h2>
+<div class="back">
+  <div class="container">
 
-<legend><span>It’s quick and easy.</span></legend>
+    <h2 class="title">Create a New Account</h2>
 
-<form *ngIf="form" [formGroup]="form" (ngSubmit)="create()">
-  <fieldset>
-    <div class="wrap-fields">
-      <div class="field">
-        <mat-form-field required>
-          <input matInput formControlName="userName" placeholder="User Name">
-        </mat-form-field>
-        <app-validator [control]="form.controls['userName']"></app-validator>
-      </div>
-    </div>
-  </fieldset>
+    <legend><span>It’s quick and easy.</span></legend>
 
-  <fieldset>
-    <legend><span>Optional Data</span></legend>
-    <div class="wrap-fields">
-      <div class="field">
-        <mat-form-field>
-          <input matInput formControlName="firstName" placeholder="First Name">
-        </mat-form-field>
-        <!-- <app-validator [control]="form.controls['firstName']"></app-validator> -->
-      </div>
-    </div>
-    <div class="wrap-fields">
-      <div class="field">
-        <mat-form-field>
-          <input matInput formControlName="lastName" placeholder="Last Name">
-        </mat-form-field>
-        <!-- <app-validator [control]="form.controls['lastName']"></app-validator> -->
-      </div>
-    </div>
-    <div class="wrap-fields">
-      <div class="field">
-        <mat-form-field>
-          <input matInput formControlName="password" placeholder="Password">
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="wrap-fields">
-      <div class="field">
-        <mat-form-field>
-          <input matInput formControlName="email" placeholder="Email">
-        </mat-form-field>
-        <!-- <app-validator [control]="form.controls['email']"></app-validator> -->
-      </div>
-    </div>
-  </fieldset>
+    <form *ngIf="form" [formGroup]="form" (ngSubmit)="create()">
+      <fieldset>
+        <div class="wrap-fields">
+          <div class="field">
+            <mat-form-field required>
+              <input matInput formControlName="userName" placeholder="User Name">
+            </mat-form-field>
+            <app-validator [control]="form.controls['userName']"></app-validator>
+          </div>
+        </div>
+      </fieldset>
 
-  <div class="options row">
-    <button mat-raised-button class="btn-text" type="submit" [disabled]="!form.valid">Guardar</button>
+      <fieldset>
+        <legend><span>Optional Data</span></legend>
+
+        <div class="wrap-fields">
+          <div class="field">
+<!--            <mat-slide-toggle [(ngModel)]="isChecked">Is Admin: {{isChecked}}</mat-slide-toggle>-->
+            <mat-slide-toggle formControlName="admin">Admin</mat-slide-toggle>
+          </div>
+        </div>
+        <div class="wrap-fields">
+          <div class="field">
+            <mat-form-field>
+              <input matInput formControlName="firstName" placeholder="First Name">
+            </mat-form-field>
+            <!-- <app-validator [control]="form.controls['firstName']"></app-validator> -->
+          </div>
+        </div>
+        <div class="wrap-fields">
+          <div class="field">
+            <mat-form-field>
+              <input matInput formControlName="lastName" placeholder="Last Name">
+            </mat-form-field>
+            <!-- <app-validator [control]="form.controls['lastName']"></app-validator> -->
+          </div>
+        </div>
+        <div class="wrap-fields">
+          <div class="field">
+            <mat-form-field>
+              <input matInput formControlName="password" placeholder="Password">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="wrap-fields">
+          <div class="field">
+            <mat-form-field>
+              <input matInput formControlName="email" placeholder="Email">
+            </mat-form-field>
+            <!-- <app-validator [control]="form.controls['email']"></app-validator> -->
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="options row">
+        <button mat-raised-button class="btn-text" type="submit" [disabled]="!form.valid">Guardar</button>
+      </div>
+    </form>
+
   </div>
-</form>
+</div>

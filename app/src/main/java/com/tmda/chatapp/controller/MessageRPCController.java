@@ -20,9 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @GRpcService
 public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplBase {
@@ -55,7 +53,7 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
         String userToName =  request.getToUser();
 
         Integer n = request.getTopicsCount();
-        Set<Topic> topics = new HashSet<Topic>();
+        List<Topic> topics = new ArrayList<>();
 
         // If exist get all message topics
         if ( n > 0 ){
@@ -188,8 +186,8 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
     }
 
 
-    public Set<Topic> extractTopic(int n , List<String> topic){
-        Set<Topic> topics = new HashSet<Topic>();
+    public List<Topic> extractTopic(int n , List<String> topic){
+        List<Topic> topics = new ArrayList<>();
         for (int i = 0; i< n; i++) {
             topics.add(new Topic(topic.get(i)));
         }
@@ -202,7 +200,7 @@ public class MessageRPCController extends MessageServiceGrpc.MessageServiceImplB
 
         // If exist get all message topics
         Integer n = request.getTopicsCount();
-        Set<Topic> topics = new HashSet<Topic>();
+        List<Topic> topics = new ArrayList<>();
         if ( n > 0 ){
             topics = extractTopic(request.getTopicsCount(), request.getTopicsList());
         }

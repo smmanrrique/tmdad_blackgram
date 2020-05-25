@@ -19,6 +19,8 @@ repositories {
 }
 
 dependencies {
+    compile 'org.springframework.amqp:spring-rabbit:2.2.5.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     compileOnly 'org.projectlombok:lombok'

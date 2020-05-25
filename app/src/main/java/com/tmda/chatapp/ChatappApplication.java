@@ -13,9 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @SpringBootApplication
 @EnableScheduling
@@ -77,8 +75,23 @@ public class ChatappApplication implements CommandLineRunner {
         contactRepository.saveAll(cont);
 
         // =======================================
-        Set<Topic> topics= new HashSet<Topic>();
+        List<Topic> topics= new ArrayList<>();
         topics.add(new Topic("t1"));
+        topics.add(new Topic("t2"));
+        topics.add(new Topic("t3"));
+        topics.add(new Topic("t4"));
+        topics.add(new Topic("t5"));
+        topics.add(new Topic("t6"));
+        topics.add(new Topic("t2"));
+        topics.add(new Topic("t3"));
+        topics.add(new Topic("t4"));
+        topics.add(new Topic("t5"));
+        topics.add(new Topic("t6"));
+        topics.add(new Topic("t2"));
+        topics.add(new Topic("t3"));
+        topics.add(new Topic("t4"));
+        topics.add(new Topic("t5"));
+        topics.add(new Topic("t6"));
         topics.add(new Topic("t2"));
         topics.add(new Topic("t3"));
         topics.add(new Topic("t4"));

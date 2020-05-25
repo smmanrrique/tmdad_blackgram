@@ -18,6 +18,9 @@ import {BaseService} from "../../core/base.service";
 })
 
 export class ApiComponent implements OnInit {
+  user: User;
+  userName: String = sessionStorage.getItem('userSessionName');
+  userId: String = sessionStorage.getItem('userSessionId');
 
   userMessage: FormGroup;
   groupMessage: FormGroup;
@@ -47,6 +50,7 @@ export class ApiComponent implements OnInit {
 
 
   ngOnInit() {
+    this.user = JSON.parse(sessionStorage.getItem('user'));
     this.userform = this.userService.getUser(new User());
     this.groupform = this.groupService.getGroup(new Group());
     this.messageform = this.messageService.getMessage(new Message());
@@ -56,6 +60,7 @@ export class ApiComponent implements OnInit {
     this.groupMessage = this.messageService.getGroupMessage(new Message());
     this.fileMessage = this.messageService.getFileMessage(new Message());
 
+    console.log(this.userId, this.userName);
   }
 
   // Function to create user
@@ -70,9 +75,9 @@ export class ApiComponent implements OnInit {
 
   // Function to create Group
   create_chat_room() {
-    // TODO Set userId
+
     let httpParams = new HttpParams();
-    httpParams = httpParams.append('userId', String(1));
+    httpParams = httpParams.append('userId', String(this.user.id));
 
     this.groupService.create(<Group> this.groupform.value, httpParams)
       .subscribe(user => {
@@ -80,13 +85,11 @@ export class ApiComponent implements OnInit {
       }, err =>  {
         this.notificationService.error(err);
       });
-    this.notificationService.sucessInsert('Group');
   }
 
 
   // Function to add User to group
   add_user_chat_room() {
-
     this.userService.addUserToGroup(<AddUserGroup> this.addform.value)
       .subscribe(user => {
         this.notificationService.sucessUpdate('added User to Group');
@@ -109,7 +112,7 @@ export class ApiComponent implements OnInit {
 
   send_message_group(form: FormGroup) {
     console.log("send_message");
-    console.log(form)
+    console.log(form);
     this.notificationService.showInfo('Send Message');
 
     this.messageService.sendMessageGroup(<Message> form.value)

@@ -120,7 +120,7 @@ public class RabbitMQReceiver {
         SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer();
         simpleMessageListenerContainer.setConnectionFactory(connectionRabbitMQ.connectionFactory());
         simpleMessageListenerContainer.setQueues(connectionRabbitMQ.queueGeneric(queueName));
-        simpleMessageListenerContainer.setMessageListener(new RabbitMQListner());
+        simpleMessageListenerContainer.setMessageListener(new com.tmda.chatapp.service.RabbitMQListner());
 
 //        simpleMessageListenerContainer.ge
 
