@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
   }
 
   connect() {
-    let socket = new SockJS('http://localhost:8090/connect');
+    let socket = new SockJS('http://localhost:8080/connect');
     this.stompClient = Stomp.over(socket);
 
     const _this = this;

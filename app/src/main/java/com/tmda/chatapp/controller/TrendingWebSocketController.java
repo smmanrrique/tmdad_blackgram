@@ -1,12 +1,12 @@
-package com.tmdad.gateway.controller;
+package com.tmda.chatapp.controller;
 
-import com.tmdad.gateway.DTO.RealTimeTopic;
-import com.tmdad.gateway.DTO.TimeTopicDTO;
-import com.tmdad.gateway.DTO.TopTopicDTO;
-import com.tmdad.gateway.DTO.UserTopicDTO;
-import com.tmdad.gateway.model.Topic;
-import com.tmdad.gateway.repositories.TopicRepository;
-import com.tmdad.gateway.service.TopicService;
+import com.tmda.chatapp.DTO.RealTimeTopic;
+import com.tmda.chatapp.DTO.TimeTopicDTO;
+import com.tmda.chatapp.DTO.TopTopicDTO;
+import com.tmda.chatapp.DTO.UserTopicDTO;
+import com.tmda.chatapp.model.Topic;
+import com.tmda.chatapp.repositories.TopicRepository;
+import com.tmda.chatapp.service.TopicService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

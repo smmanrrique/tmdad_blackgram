@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {TrendingService} from './trending.service';
 import {FormGroup} from '@angular/forms';
 import {RealTimeTopicDTO, TimeTopicDTO, TopTopicDTO, UserTopicDTO} from './topic';
-import Chart = require('chart.js');
+// import Chart = require('chart.js');
 import {global} from '@angular/core/src/util';
 import {Globals} from '../../globals';
 
@@ -47,7 +47,7 @@ export class TrendingComponent implements OnInit {
         data => {
           console.log("top recent",data);
           this.recentTopic = data;
-          this.dataSource = this.setPosition(this.topTopic);
+          // this.dataSource = this.setPosition(this.topTopic);
         });
 
       this.trendingService.FindRealTimeTopics().subscribe(
