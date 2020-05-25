@@ -11,6 +11,9 @@ import { Contact } from 'src/app/components/contact/contact';
 import {FormGroup} from '@angular/forms';
 import {BaseService} from '../../core/base.service';
 import {Globals} from '../../globals';
+import {Multimedia} from '../file-upload/multimedia';
+import {forEach} from '@angular/router/src/utils/collection';
+import {Topic} from '../trending/topic';
 
 
 @Component({
@@ -33,7 +36,6 @@ export class ChatComponent implements OnInit {
   selectedContact: Contact;
   selectedBroadcast: boolean = false;
 
-  messageForm: FormGroup;
   userMessage: FormGroup;
   groupMessage: FormGroup;
   fileMessage: FormGroup;
@@ -109,6 +111,9 @@ export class ChatComponent implements OnInit {
       }, err =>  {
         this.notificationService.error(err);
       });
+
+    this.addMessage(<Message> form.value,true);
+
   }
 
   send_message_group(form:FormGroup,contact: String) {
@@ -122,6 +127,7 @@ export class ChatComponent implements OnInit {
       }, err =>  {
         this.notificationService.error(err);
       });
+    this.addMessage(<Message> form.value,false);
   }
 
   send_message_broadcast(form:FormGroup,contact: String) {
@@ -134,5 +140,44 @@ export class ChatComponent implements OnInit {
       }, err =>  {
         this.notificationService.error(err);
       });
+    this.addMessage(<Message> form.value,true);
   }
+
+  addMessage(message: Message, isUser: boolean){
+    // this.globals.appMessages
+    let messageTemp = new MessageList();
+    let userFrom = new User();
+    userFrom.userName = message.toUser;
+    messageTemp.fromUser = userFrom;
+    messageTemp.body = message.body;
+
+    if(isUser){
+      let userTo = new User();
+      userTo.userName = message.toUser;
+      messageTemp.toUser = userTo;
+    }else{
+      let groupTo = new Group();
+      groupTo.name = message.toGroup;
+      messageTemp.toGroup = groupTo;
+    }
+
+    let multimedia = new Multimedia();
+    multimedia.url = message.multimedia;
+    messageTemp.multimedia = multimedia;
+
+    let topics: Topic[] = [];
+    for( let t of message.topics) {
+      let topic = new Topic();
+      topic.name = t;
+      topics.push(topic);
+    }
+
+    messageTemp.topics = topics;
+
+    console.log("11111111111111111", messageTemp)
+
+    this.globals.appMessages = this.globals.appMessages.concat(messageTemp)
+
+  }
+
 }
