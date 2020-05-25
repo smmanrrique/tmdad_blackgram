@@ -66,12 +66,12 @@
         <div class="input_msg_write">
            <h4 style="text-align:left; color: black">To Group:<span class="badge">{{selectedGroup.name | uppercase}}</span> </h4>
 
-          <form *ngIf="userMessage" [formGroup]="groupMessage" (ngSubmit)="send_message_group(groupMessage,selectedContact.name)">
+          <form *ngIf="groupMessage" [formGroup]="groupMessage" (ngSubmit)="send_message_group(groupMessage,selectedGroup.name)">
 
           <input type="text" formControlName="body" class="write_msg" placeholder="Type a message" />
             <app-validator [control]="groupMessage.controls['body']"></app-validator>
 
-          <button class="msg_send_btn" type="button" type="submit" [disabled]="!userMessage.valid">
+          <button class="msg_send_btn" type="button" type="submit" [disabled]="!groupMessage.valid">
             <i class="fa fa-paper-plane-o" class="material-icons" aria-hidden="true"> send</i>
           </button>
 
@@ -85,7 +85,7 @@
         <div class="input_msg_write">
           <h4 style="text-align:left; color: black">To Group:<span class="badge"> Broadcast </span> </h4>
 
-          <form *ngIf="userMessage" [formGroup]="messageForm" (ngSubmit)="send_message_broadcast(messageForm,'BROADCAST')">
+          <form *ngIf="userMessage" [formGroup]="userMessage" (ngSubmit)="send_message_broadcast(userMessage,'BROADCAST')">
 
             <input type="text" formControlName="body" class="write_msg" placeholder="Type a message" />
             <app-validator [control]="userMessage.controls['body']"></app-validator>
