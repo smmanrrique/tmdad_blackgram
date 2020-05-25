@@ -5,6 +5,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Group} from "../group/group";
 import {Observable} from "rxjs";
 import {User} from "../auth/user-register/user";
+import {Createcontact} from './contact';
 
 @Injectable({
   providedIn: 'root'
@@ -23,13 +24,11 @@ export class ContactService {
   }
 
 
-  // getGroup(group: Group): FormGroup {
-  //   return this.fb.group({
-  //     id: new FormControl(group.id),
-  //     name: new FormControl(group.name, [Validators.required, Validators.maxLength(30)]),
-  //     owner: new FormControl(group.owner ? group.owner.userName: null),
-  //     users: new FormControl(group.users),
-  //   });
-  // }
+  getAddContac(contac: Createcontact): FormGroup {
+    return this.fb.group({
+      name: new FormControl(contac.name, [Validators.required, ]),
+      owner: new FormControl(contac.owner)
+    });
+  }
 
 }

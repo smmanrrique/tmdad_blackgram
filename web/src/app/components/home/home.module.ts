@@ -11,6 +11,7 @@ import { SidebarComponent } from '../../core/sidebar/sidebar.component';
 import { TopbarComponent } from '../../core/topbar/topbar.component';
 import {TrendingModule} from "../trending/trending.module";
 import {GroupModule} from "../group/group.module";
+import {ContactModule} from '../contact/contact.module';
 
 @NgModule({
 	imports: [
@@ -21,6 +22,7 @@ import {GroupModule} from "../group/group.module";
 		MessageModule,
     GroupModule,
     TrendingModule,
+    ContactModule,
 
 		HomeRoutingModule,
 	],

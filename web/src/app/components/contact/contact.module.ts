@@ -7,6 +7,7 @@ import { MatTableModule, MatCheckboxModule, MatPaginatorModule, MatSelectModule,
 import { UtilsModule } from 'src/app/core/utils/utils.module';
 import {ContactService} from "../contact/contact.service";
 import {ContactComponent} from "./contact.component";
+import {ContacRoutingModule} from './contact.routing';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {ContactComponent} from "./contact.component";
     MatSortModule,
     ModalModule.forRoot(),
 
-    UtilsModule
+    UtilsModule,
+    ContacRoutingModule,
   ],
   declarations: [
     ContactComponent
@@ -37,4 +39,5 @@ import {ContactComponent} from "./contact.component";
     ContactService,
   ]
 })
-export class GroupModule { }
+
+export class ContactModule { }

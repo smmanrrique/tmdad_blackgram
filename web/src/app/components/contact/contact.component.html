@@ -1,31 +1,41 @@
+<div class="container1">
+  <div class="title">
+    <h2>My Contacts</h2>
+  </div>
+
+  <div class="button1">
+    <div class="buttons">
+      <button (click)="add_contact()" title="New Group">
+        <i class="material-icons">person_add</i>
+      </button>
+    </div>
+  </div>
+</div>
+
+
 <div class="wrap">
   <div class="floatleft">
     <ul class="groups">
-      <li *ngFor="let group of myGroup"
-          [class.selected]="group === selectedGroup"
-          (click)="onSelect(group)">
+      <li *ngFor="let group of myContacts">
         <span class="badge">{{group.id}}</span>
         <span>{{group.name}}</span>
       </li>
     </ul>
   </div>
 
-  <div class="floatright" >
-    <h2 style="text-align:center; color: black"> Messages</h2>
-    <div *ngIf="selectedGroup">
-      <div>
-        <ul class="sms">
-          <li *ngFor="let message of groupMessages"
-              [class.selected]="message === selectedGroup"
-              (click)="onSelect(g1)">
-            <span class="badge">{{message.fromUser.userName}}</span>
-            <p>{{message.body}}</p>
-            <!--            <img *ngIf="message.multimedia===''" src="" alt="Avatar" style="width:100%;">-->
-            <p>{{message.multimedia}}</p>
-          </li>
-        </ul>
+    <div class="floatright" >
+      <h2 style="text-align:center; color: black"> Add user to contact</h2>
+
+      <mat-form-field required>
+        <mat-select [(value)]="selected">
+          <mat-option>----------</mat-option>
+          <mat-option *ngFor="let c of commands" [value]="c.name">
+            {{c.command}}
+          </mat-option>
+        </mat-select>
+        <mat-label><b>Command</b></mat-label>
+      </mat-form-field>
+
 
       </div>
     </div>
-
-  </div>
