@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {TrendingService} from './trending.service';
 import {FormGroup} from '@angular/forms';
 import {RealTimeTopicDTO, TimeTopicDTO, TopTopicDTO, UserTopicDTO} from './topic';
-import Chart = require('chart.js');
+// import Chart = require('chart.js');
 
 @Component({
   selector: 'app-trending',
@@ -21,7 +21,6 @@ export class TrendingComponent implements OnInit {
   topTopic: TopTopicDTO[];
   recentTopic: TopTopicDTO[];
   realTimeTopic: RealTimeTopicDTO[];
-  
 
   canvas: any;
   ctx: any;
@@ -37,7 +36,7 @@ export class TrendingComponent implements OnInit {
         console.log("top",data);
         this.topTopic = data;
       });
-      
+
 
       this.trendingService.FindRecebtTopics().subscribe(
         data => {
@@ -48,10 +47,9 @@ export class TrendingComponent implements OnInit {
 
       this.trendingService.FindRealTimeTopics().subscribe(
         data => {
-          console.log(data)
+          console.log(data);
           this.realTimeTopic = data;
-          console.log("this.realTimeTopic", this.realTimeTopic)
-          this.draw(this.realTimeTopic);
+          console.log("this.realTimeTopic", this.realTimeTopic);
         });
 
     this.trendingService.FindUserTopics().subscribe(
@@ -64,7 +62,6 @@ export class TrendingComponent implements OnInit {
       data => {
         console.log(data)
         this.realTimeTopic = data;
-        this.drag(this.realTimeTopic);
         console.log("this.realTimeTopic", this.realTimeTopic)
       });
 
