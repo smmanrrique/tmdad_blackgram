@@ -446,31 +446,31 @@ fieldsetDetail {
 }
 .sms .badge {
   display: inline-block;
-  font-size: small;
+  font-size: medium;
   color: white;
-  padding: 0.8em 0.7em 0 0.7em;
+  padding: 0.8em 0.7em 0.7em 0.7em;
   background-color:#405061;
   line-height: 1em;
   position: relative;
   left: -1px;
   top: -4px;
   height: 1.8em;
-  margin-right: .8em;
-  border-radius: 4px 0 0 4px;
+  margin-right: .20em;
+  border-radius: 4px 4px 4px 4px;
 }
 
-.badgeFrom{
-  display: inline-block;
-  font-size: small;
+.from{
+  /*display: inline-block;*/
+  /*font-size: small;*/
   color: white;
-  padding: 0.8em 0.7em 0 0.7em;
-  background-color:#405061;
-  line-height: 1em;
-  position: relative;
-  right: -1px;
+  padding: 0.8em 0.7em 0.7em 0.7em;
+  background-color:black;
+  line-height: 2em;
+  /*position: relative;*/
+  left: -1px;
   top: -4px;
   height: 1.8em;
-  margin-right: .8em;
+  margin-right: .15em;
   border-radius: 4px 0 0 4px;
 }
 
