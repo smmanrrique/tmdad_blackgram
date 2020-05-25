@@ -9,10 +9,8 @@ import { Group } from '../group/group';
 import { Message } from './message';
 import {NotificationService} from "../../core/utils/notification/notification.service";
 import {HttpParams} from "@angular/common/http";
-import {BaseService} from "../../core/base.service";
 
 @Component({
-  // selector: 'app-message',
   templateUrl: './api.component.html',
   styleUrls: ['./message.component.css']
 })
@@ -72,7 +70,6 @@ export class ApiComponent implements OnInit {
 
   // Function to create Group
   create_chat_room() {
-
     let httpParams = new HttpParams();
     httpParams = httpParams.append('userId', String(this.user.id));
 

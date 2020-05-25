@@ -459,7 +459,20 @@ fieldsetDetail {
   border-radius: 4px 0 0 4px;
 }
 
-
+.badgeFrom{
+  display: inline-block;
+  font-size: small;
+  color: white;
+  padding: 0.8em 0.7em 0 0.7em;
+  background-color:#405061;
+  line-height: 1em;
+  position: relative;
+  right: -1px;
+  top: -4px;
+  height: 1.8em;
+  margin-right: .8em;
+  border-radius: 4px 0 0 4px;
+}
 
 /*//////////////////////////////////////////////////////////*/
 .wrap {
@@ -472,6 +485,8 @@ fieldsetDetail {
   background-color: #525252;
   /*height: 700px;*/
   height: 100% ;
+  min-width: 200px;
+  min-height: 200px;
 }
 
 .floatright {
@@ -480,8 +495,9 @@ fieldsetDetail {
   /*height: 700px;*/
   height: 100% ;
   width: 75%;
+  min-width: 200px;
+  min-height: 200px;
 }
-
 
 /* GroupComponent's private CSS styles */
 .groups {
@@ -490,6 +506,7 @@ fieldsetDetail {
   padding: 1%;
   width: 100%;
 }
+
 .groups li {
   cursor: pointer;
   position: relative;
