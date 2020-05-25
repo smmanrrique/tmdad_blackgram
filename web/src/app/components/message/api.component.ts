@@ -90,7 +90,7 @@ export class ApiComponent implements OnInit {
 
   // Function to add User to group
   add_user_chat_room() {
-    this.userService.addUserToGroup(<AddUserGroup> this.addform.value)
+    this.userService.addUserToGroup(<AddUserGroup> this.addform.value )
       .subscribe(user => {
         this.notificationService.sucessUpdate('added User to Group');
       }, err =>  {
