@@ -53,7 +53,7 @@ export class MessageService {
   getMessage(message: Message): FormGroup {
     return this.fb.group({
       toUser: new FormControl(message.toUser),
-      fromUser: new FormControl(message.fromUser, [Validators.required, Validators.maxLength(30)]),
+      fromUser: new FormControl(message.fromUser),
       toGroup: new FormControl(message.toGroup),
       body: new FormControl(message.body, [Validators.required]),
       multimedia: new FormControl(message.multimedia),
@@ -63,7 +63,7 @@ export class MessageService {
 
   getChatUserMessage(message: Message): FormGroup {
     return this.fb.group({
-      toUser: new FormControl(message.toUser, [Validators.required, Validators.maxLength(30)]),
+      toUser: new FormControl(message.toUser),
       fromUser: new FormControl(message.fromUser),
       toGroup: new FormControl(message.toGroup),
       body: new FormControl(message.body, [Validators.required]),
@@ -86,7 +86,7 @@ export class MessageService {
   getUserMessage(message: Message): FormGroup {
     return this.fb.group({
       toUser: new FormControl(message.toUser, [Validators.required, Validators.maxLength(30)]),
-      fromUser: new FormControl(message.fromUser, [Validators.required, Validators.maxLength(30)]),
+      fromUser: new FormControl(message.fromUser),
       toGroup: new FormControl(message.toGroup),
       body: new FormControl(message.body, [Validators.required]),
       multimedia: new FormControl(message.multimedia),
@@ -97,7 +97,7 @@ export class MessageService {
   getGroupMessage(message: Message): FormGroup {
     return this.fb.group({
       toUser: new FormControl(message.toUser),
-      fromUser: new FormControl(message.fromUser, [Validators.required, Validators.maxLength(30)]),
+      fromUser: new FormControl(message.fromUser),
       toGroup: new FormControl(message.toGroup,[Validators.required, Validators.maxLength(30)]),
       body: new FormControl(message.body, [Validators.required]),
       multimedia: new FormControl(message.multimedia),
@@ -108,10 +108,10 @@ export class MessageService {
   getFileMessage(message: Message): FormGroup {
     return this.fb.group({
       toUser: new FormControl(message.toUser,[Validators.required, Validators.maxLength(30)]),
-      fromUser: new FormControl(message.fromUser, [Validators.required, Validators.maxLength(30)]),
+      fromUser: new FormControl(message.fromUser),
       toGroup: new FormControl(message.toGroup),
       body: new FormControl(message.body, [Validators.required]),
-      multimedia: new FormControl(message.multimedia, [Validators.required, Validators.maxLength(30)]),
+      multimedia: new FormControl(message.multimedia, [Validators.required]),
       topics: new FormControl(message.topics),
     });
   }

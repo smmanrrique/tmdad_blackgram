@@ -19,8 +19,6 @@ import {BaseService} from "../../core/base.service";
 
 export class ApiComponent implements OnInit {
   user: User;
-  userName: String = sessionStorage.getItem('userSessionName');
-  userId: String = sessionStorage.getItem('userSessionId');
 
   userMessage: FormGroup;
   groupMessage: FormGroup;
@@ -51,6 +49,7 @@ export class ApiComponent implements OnInit {
 
   ngOnInit() {
     this.user = JSON.parse(sessionStorage.getItem('user'));
+
     this.userform = this.userService.getUser(new User());
     this.groupform = this.groupService.getGroup(new Group());
     this.messageform = this.messageService.getMessage(new Message());
@@ -59,8 +58,6 @@ export class ApiComponent implements OnInit {
     this.userMessage = this.messageService.getUserMessage(new Message());
     this.groupMessage = this.messageService.getGroupMessage(new Message());
     this.fileMessage = this.messageService.getFileMessage(new Message());
-
-    console.log(this.userId, this.userName);
   }
 
   // Function to create user
@@ -90,7 +87,7 @@ export class ApiComponent implements OnInit {
 
   // Function to add User to group
   add_user_chat_room() {
-    this.userService.addUserToGroup(<AddUserGroup> this.addform.value)
+    this.userService.addUserToGroup(<AddUserGroup> this.addform.value )
       .subscribe(user => {
         this.notificationService.sucessUpdate('added User to Group');
       }, err =>  {
@@ -99,35 +96,28 @@ export class ApiComponent implements OnInit {
   }
 
   send_message(form: FormGroup) {
-    console.log(this.messageform);
-    console.log("send_message");
-
+    form.value.fromUser = this.user.userName;
+    console.log(form.value)
     this.messageService.sendMessage(<Message> form.value)
       .subscribe(user => {
-        this.notificationService.sucessUpdate('added User to Group');
+        this.notificationService.sucessUpdate('Message sent to user');
       }, err =>  {
         this.notificationService.error(err);
       });
   }
 
   send_message_group(form: FormGroup) {
-    console.log("send_message");
-    console.log(form);
-    this.notificationService.showInfo('Send Message');
-
+    form.value.fromUser = this.user.userName;
     this.messageService.sendMessageGroup(<Message> form.value)
       .subscribe(user => {
-        this.notificationService.sucessUpdate('added User to Group');
+        this.notificationService.sucessUpdate('Message sent to group');
       }, err =>  {
         this.notificationService.error(err);
       });
   }
 
   send_message_broadcast(form: FormGroup) {
-    console.log("send_message");
-    console.log(form)
-    this.notificationService.showInfo('Send Message');
-
+    form.value.fromUser = this.user.userName;
     this.messageService.sendMessageBroadcast(<Message> form.value)
       .subscribe(user => {
         this.notificationService.sucessUpdate('added User to Group');

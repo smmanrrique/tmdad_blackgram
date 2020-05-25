@@ -1,6 +1,7 @@
 package com.tmda.chatapp.controller;
 
 import com.rabbitmq.client.Channel;
+import com.tmda.chatapp.DTO.AddUserDTO;
 import com.tmda.chatapp.config.ConnectionRabbitMQ;
 import com.tmda.chatapp.model.Group;
 import com.tmda.chatapp.model.User;
@@ -106,18 +107,17 @@ public class UserController {
     }
 
     @SneakyThrows
-    @PutMapping()
+    @PostMapping("/add")
     @CrossOrigin(origins =CROSS_ORIGIN)
-    public ResponseEntity<User> AddUsertoGroup(@RequestParam (value = "userName") String userName,
-                                       @RequestParam (value = "groupName") String groupName ) {
+    public ResponseEntity<User> AddUserToGroup( @RequestBody AddUserDTO add) {
         try {
-            LOGGER.info("Add user to GroupId: {} ", groupName);
+            LOGGER.info("Add user to GroupId: {} ", add);
 
             // Create a User
-            User user = userService.findByUserName(userName);
+            User user = userService.findByUserName(add.getUserName());
 
             // Create a Group
-            Group group = groupRepository.findByName(groupName);
+            Group group = groupRepository.findByName(add.getGroupName());
 
             // Add tag references in the post
             user.getMyGroups().add(group);
@@ -166,7 +166,7 @@ public class UserController {
 
     @RequestMapping
     @CrossOrigin(origins =CROSS_ORIGIN)
-        public ResponseEntity<List<User>> FindAll(@RequestParam (value = "userName",required = false) String userName,
+    public ResponseEntity<List<User>> FindAll(@RequestParam (value = "userName",required = false) String userName,
                                               @RequestParam (value = "password",required = false) String password  ) {
         try {
             LOGGER.info("start loadAll users {}", userName+password);
