@@ -1,0 +1,24 @@
+/*//////////////////////////////////////////////////////////*/
+.wrap {
+  width: 100%;
+}
+
+.floatleft {
+  float:left;
+  width: 30%;
+  background-color: #525252;
+  /*height: 700px;*/
+  height: 100% ;
+  min-width: 200px;
+  min-height: 200px;
+}
+
+.floatright {
+  float: right;
+  background-color: #b1b1ac;
+  /*height: 700px;*/
+  height: 100% ;
+  width: 70%;
+  min-width: 200px;
+  min-height: 200px;
+}

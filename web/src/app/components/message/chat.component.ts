@@ -28,6 +28,7 @@ export class ChatComponent implements OnInit {
 
   userName: String = sessionStorage.getItem('userSession');
   user: User;
+  userReq: User;
   message: Message;
   myGroups: Group[];
   myContacts: Contact[];
@@ -50,27 +51,26 @@ export class ChatComponent implements OnInit {
   ) { this.globals = globals; }
 
   ngOnInit() {
+    this.user = JSON.parse(sessionStorage.getItem('user'));
     this.userMessage = this.messageService.getChatUserMessage(new Message());
     this.groupMessage = this.messageService.getChatGroupMessage(new Message());
     this.fileMessage = this.messageService.getFileMessage(new Message());
 
-    // TODO Get ID USER FROM URL
-    this.userService.getById(1).subscribe(
+    this.userService.getById(this.user.id).subscribe(
       data => {
-        this.user = data;
+        this.userReq = data;
+        sessionStorage.setItem('user', JSON.stringify(this.userReq));
         this.myGroups = this.user.myGroups;
       });
 
-    // SET ID USER FROM URL
-    this.contactService.getAll({'userId': 1}).subscribe(
+    this.contactService.getAll({'userId': this.user.id}).subscribe(
       data => {
         this.myContacts = data;
       }
     );
 
-    // TODO USAR WEBSOCKET
     let paramsMessage = BaseService.jsonToHttpParams({
-      toUser: 'u1'
+      toUser: this.user.userName
     });
 
     this.messageService.getAll(paramsMessage).subscribe(

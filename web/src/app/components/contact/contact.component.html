@@ -1,3 +1,31 @@
-<p>
-  contact works!
-</p>
+<div class="wrap">
+  <div class="floatleft">
+    <ul class="groups">
+      <li *ngFor="let group of myGroup"
+          [class.selected]="group === selectedGroup"
+          (click)="onSelect(group)">
+        <span class="badge">{{group.id}}</span>
+        <span>{{group.name}}</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="floatright" >
+    <h2 style="text-align:center; color: black"> Messages</h2>
+    <div *ngIf="selectedGroup">
+      <div>
+        <ul class="sms">
+          <li *ngFor="let message of groupMessages"
+              [class.selected]="message === selectedGroup"
+              (click)="onSelect(g1)">
+            <span class="badge">{{message.fromUser.userName}}</span>
+            <p>{{message.body}}</p>
+            <!--            <img *ngIf="message.multimedia===''" src="" alt="Avatar" style="width:100%;">-->
+            <p>{{message.multimedia}}</p>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+
+  </div>
