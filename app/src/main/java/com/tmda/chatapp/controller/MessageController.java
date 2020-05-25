@@ -88,7 +88,7 @@ public class MessageController {
             logger.info("Call sendMessage and server received {}", message.toString());
 
             String toUser =  message.getToUser();
-            String fromUser =  message.getToUser();
+            String fromUser =  message.getFromUser();
 
 
             List<Topic> topics= new ArrayList<>();

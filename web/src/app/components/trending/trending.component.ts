@@ -47,27 +47,28 @@ export class TrendingComponent implements OnInit {
 
       this.trendingService.FindRealTimeTopics().subscribe(
         data => {
-          console.log(data);
+          console.log(data);;
           this.realTimeTopic = data;
+          this.draw(this.realTimeTopic);
           console.log("this.realTimeTopic", this.realTimeTopic);
         });
 
     this.trendingService.FindUserTopics().subscribe(
       data => {
-        console.log(data)
+        console.log(data);
         this.userTopic = data;
       });
 
     this.trendingService.FindRealTimeTopics().subscribe(
       data => {
-        console.log(data)
+        console.log(data);
         this.realTimeTopic = data;
         console.log("this.realTimeTopic", this.realTimeTopic)
       });
 
     this.trendingService.FindTimeTopics().subscribe(
       data => {
-        console.log(data)
+        console.log(data);
         this.timeTopic = data;
       });
 
