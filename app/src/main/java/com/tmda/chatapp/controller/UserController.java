@@ -110,10 +110,6 @@ public class UserController {
     @PostMapping("/add")
     @CrossOrigin(origins =CROSS_ORIGIN)
     public ResponseEntity<User> AddUserToGroup( @RequestBody AddUserDTO add) {
-//        public ResponseEntity<User> AddUserToGroup
-//    }(@RequestParam (value = "userName") String userName,
-//                                       @RequestParam (value = "groupName") String groupName ) {
-//                                       @RequestParam (value = "groupName") String groupName ) {
         try {
             LOGGER.info("Add user to GroupId: {} ", add);
 
