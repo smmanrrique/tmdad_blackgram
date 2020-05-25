@@ -3,13 +3,13 @@
     <h2>My Contacts</h2>
   </div>
 
-  <div class="button1">
-    <div class="buttons">
-      <button (click)="add_contact()" title="New Group">
-        <i class="material-icons">person_add</i>
-      </button>
-    </div>
-  </div>
+<!--  <div class="button1">-->
+<!--    <div class="buttons">-->
+<!--      <button (click)="add_contact()" title="New Group">-->
+<!--        <i class="material-icons">person_add</i>-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </div>-->
 </div>
 
 
@@ -26,16 +26,22 @@
     <div class="floatright" >
       <h2 style="text-align:center; color: black"> Add user to contact</h2>
 
-      <mat-form-field required>
-        <mat-select [(value)]="selected">
-          <mat-option>----------</mat-option>
-          <mat-option *ngFor="let c of commands" [value]="c.name">
-            {{c.command}}
-          </mat-option>
-        </mat-select>
-        <mat-label><b>Command</b></mat-label>
-      </mat-form-field>
+      <form *ngIf="contacForm" [formGroup]="contacForm" (ngSubmit)="add_contact(contacForm)">
 
+          <mat-form-field required>
+            <mat-select formControlName="name" placeholder="Add Contact">
+              <mat-option *ngFor="let c of allContacts" [value]="c.name">
+                {{c.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+<!--        <app-validator [control]="contacForm.controls['name']"></app-validator>-->
+
+        <div class="field">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!contacForm.valid">Execute</button>
+        </div>
+      </form>
 
       </div>
     </div>

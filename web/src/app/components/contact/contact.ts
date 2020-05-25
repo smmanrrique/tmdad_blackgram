@@ -5,7 +5,7 @@ export class Contact extends BaseModel {
   name: string;
 }
 
-export class Createcontact extends BaseModel {
+export class CreateContact extends BaseModel {
   name: string;
   owner: User;
 }

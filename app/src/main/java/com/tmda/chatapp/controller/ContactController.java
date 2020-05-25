@@ -33,9 +33,8 @@ public class ContactController {
         this.userRepositorio = userRepositorio;
     }
 
-
     @PostMapping()
-    public ResponseEntity<Contact> create(@RequestParam (value = "userId") int userId,
+    public ResponseEntity<Contact> create(@RequestParam (value = "userId", required = false) int userId,
                                  @Valid @RequestBody Contact contact) {
         try {
             LOGGER.info("start creating Contact: {}", contact);
@@ -48,10 +47,9 @@ public class ContactController {
             LOGGER.info(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
-
     }
 
-    @RequestMapping
+    @GetMapping("/all")
     @ResponseBody
     public ResponseEntity<List<Contact>> FindAll() {
         try {

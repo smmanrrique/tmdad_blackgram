@@ -63,7 +63,7 @@ export class ChatComponent implements OnInit {
         this.myGroups = this.user.myGroups;
       });
 
-    this.contactService.getAll({'userId': this.user.id}).subscribe(
+    this.contactService.getAllByUser({'userId': this.user.id}).subscribe(
       data => {
         this.myContacts = data;
       }
