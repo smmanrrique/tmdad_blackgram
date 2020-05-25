@@ -16,7 +16,6 @@ import javax.annotation.Resource;
 
 @Controller
 public class WebSocketController {
-    Channel channel;
 
     @Autowired
     @Resource(name="rabbitConnection")
@@ -32,7 +31,7 @@ public class WebSocketController {
     @SneakyThrows
     public void reply(@Payload String message) {
         String username = message.replace("\"", "");
-        channel = connectionRabbitMQ.channel();
+        Channel channel = connectionRabbitMQ.channel();
 
         System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 

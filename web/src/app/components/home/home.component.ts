@@ -4,6 +4,7 @@ import {Globals} from '../../globals';
 
 import * as Stomp from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
+import {User} from '../auth/user-register/user';
 
 
 @Component({
@@ -12,16 +13,14 @@ import * as SockJS from 'sockjs-client';
 		styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+  user: User;
   globals: Globals;
 
   private stompClient = null;
-  private userName: String = sessionStorage.getItem('userSession');
-
   constructor(globals: Globals) { this.globals = globals; }
 
     ngOnInit() {
-      console.log("7777777777777"+this.userName);
+      this.user = JSON.parse(sessionStorage.getItem('user'));
       this.connect();
     }
 
@@ -31,13 +30,13 @@ export class HomeComponent implements OnInit {
 
     const _this = this;
     this.stompClient.connect({}, function (frame) {
-      _this.stompClient.subscribe('/queue/reply/' + _this.userName, function (messageOutput) {
+      _this.stompClient.subscribe('/queue/reply/' + _this.user.userName, function (messageOutput) {
         _this.saveMessageOutput(JSON.parse(messageOutput.body));
       });
     });
 
     socket.addEventListener('open', function (e) {
-      _this.stompClient.send('/chat/listen', {}, JSON.stringify(_this.userName));
+      _this.stompClient.send('/chat/listen', {}, JSON.stringify(_this.user.userName));
     });
   }
 

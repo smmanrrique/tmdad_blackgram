@@ -72,60 +72,60 @@ export class TrendingComponent implements OnInit {
       });
 
   }
-
-// ngAfterViewInit
-  draw(dataTime: any) {
-    this.canvas = this.mychart.nativeElement;
-    this.ctx = this.canvas.getContext('2d');
-
-    // @ts-ignore
-    let myChart = new Chart(this.ctx, {
-      type: 'line',
-
-      data: {
-        datasets: [{
-          label: 'RealTime',
-          backgroundColor: "rgba(194,180,180,0.4)",
-          borderColor: "rgb(83,80,80)",
-          fill: true,
-          data: dataTime,
-        }]
-      },
-      options: {
-        responsive: true,
-        title: {
-          display: true,
-          text: 'Trendings'
-        },
-        scales: {
-          xAxes: [{
-            type: 'linear',
-            position: 'bottom',
-            ticks: {
-              userCallback: function (tick):string {
-                return tick.toString() + 'm';
-              }
-            },
-            scaleLabel: {
-              labelString: 'Minute',
-              display: true,
-            }
-          }],
-          yAxes: [{
-            type: 'linear',
-            ticks: {
-              userCallback: function (tick) {
-                return tick.toString() + 'h';
-              }
-            },
-            scaleLabel: {
-              labelString: 'Hour',
-              display: true
-            }
-          }]
-        }
-      }
-    });
-  }
+//
+// // ngAfterViewInit
+//   draw(dataTime: any) {
+//     this.canvas = this.mychart.nativeElement;
+//     this.ctx = this.canvas.getContext('2d');
+//
+//     // @ts-ignore
+//     let myChart = new Chart(this.ctx, {
+//       type: 'line',
+//
+//       data: {
+//         datasets: [{
+//           label: 'RealTime',
+//           backgroundColor: "rgba(194,180,180,0.4)",
+//           borderColor: "rgb(83,80,80)",
+//           fill: true,
+//           data: dataTime,
+//         }]
+//       },
+//       options: {
+//         responsive: true,
+//         title: {
+//           display: true,
+//           text: 'Trendings'
+//         },
+//         scales: {
+//           xAxes: [{
+//             type: 'linear',
+//             position: 'bottom',
+//             ticks: {
+//               userCallback: function (tick):string {
+//                 return tick.toString() + 'm';
+//               }
+//             },
+//             scaleLabel: {
+//               labelString: 'Minute',
+//               display: true,
+//             }
+//           }],
+//           yAxes: [{
+//             type: 'linear',
+//             ticks: {
+//               userCallback: function (tick) {
+//                 return tick.toString() + 'h';
+//               }
+//             },
+//             scaleLabel: {
+//               labelString: 'Hour',
+//               display: true
+//             }
+//           }]
+//         }
+//       }
+//     });
+//   }
 
 }
