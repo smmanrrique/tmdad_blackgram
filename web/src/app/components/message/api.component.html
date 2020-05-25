@@ -173,10 +173,10 @@
 
       <form *ngIf="fileMessage" [formGroup]="fileMessage" (ngSubmit)="send_message(fileMessage)">
 
-        <mat-form-field required>
-          <input matInput formControlName="fromUser" placeholder="From">
-        </mat-form-field>
-        <app-validator [control]="fileMessage.controls['fromUser']"></app-validator>
+<!--        <mat-form-field required>-->
+<!--          <input matInput formControlName="fromUser" placeholder="From">-->
+<!--        </mat-form-field>-->
+<!--        <app-validator [control]="fileMessage.controls['fromUser']"></app-validator>-->
 
         <mat-form-field required>
           <input matInput formControlName="toUser" placeholder="To">

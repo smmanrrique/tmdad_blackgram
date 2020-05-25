@@ -111,7 +111,7 @@ export class MessageService {
       fromUser: new FormControl(message.fromUser),
       toGroup: new FormControl(message.toGroup),
       body: new FormControl(message.body, [Validators.required]),
-      multimedia: new FormControl(message.multimedia, [Validators.required, Validators.maxLength(30)]),
+      multimedia: new FormControl(message.multimedia, [Validators.required]),
       topics: new FormControl(message.topics),
     });
   }
