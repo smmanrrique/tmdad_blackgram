@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {MessageList} from '../message/message';
 import {Globals} from '../../globals';
 
@@ -19,10 +19,15 @@ export class HomeComponent implements OnInit {
   private stompClient = null;
   constructor(globals: Globals) { this.globals = globals; }
 
-    ngOnInit() {
-      this.user = JSON.parse(sessionStorage.getItem('user'));
-      this.connect();
-    }
+  ngOnInit() {
+    this.user = JSON.parse(sessionStorage.getItem('user'));
+    this.connect();
+  }
+
+  @HostListener('window:beforeunload')
+  doSomething() {
+    this.stompClient.send('/chat/close', {}, JSON.stringify(this.user.userName));
+  }
 
   connect() {
     let socket = new SockJS('http://localhost:8090/connect');
@@ -35,9 +40,33 @@ export class HomeComponent implements OnInit {
       });
     });
 
-    socket.addEventListener('open', function (e) {
+    socket.addEventListener('message', function (e) {
       _this.stompClient.send('/chat/listen', {}, JSON.stringify(_this.user.userName));
     });
+    //
+    //   socket.addEventListener('message', function (e) {
+    //     _this.stompClient.send('/chat/top', {}, JSON.stringify(_this.user.userName));
+    //   });
+    //
+    //   socket.addEventListener('message', function (e) {
+    //     _this.stompClient.send('/chat/topfive', {}, JSON.stringify(_this.user.userName));
+    //   });
+    //
+    //   socket.addEventListener('message', function (e) {
+    //     _this.stompClient.send('/chat/time', {}, JSON.stringify(_this.user.userName));
+    //   });
+    //
+    //   socket.addEventListener('message', function (e) {
+    //     _this.stompClient.send('/chat/realtime', {}, JSON.stringify(_this.user.userName));
+    //   });
+    //
+    //   socket.addEventListener('message', function (e) {
+    //     _this.stompClient.send('/chat/user', {}, JSON.stringify(_this.user.userName));
+    //   });
+    //
+    //   socket.addEventListener('message', function (e) {
+    //     _this.stompClient.send('/chat/userto', {}, JSON.stringify(_this.user.userName));
+    //   });
   }
 
   saveMessageOutput(message) {
@@ -47,6 +76,8 @@ export class HomeComponent implements OnInit {
 
   disconnect() {
     if (this.stompClient != null) {
+      this.stompClient.send('/chat/close', {}, JSON.stringify(this.user.userName));
+      sessionStorage.setItem('user', '');
       this.stompClient.disconnect();
     }
   }

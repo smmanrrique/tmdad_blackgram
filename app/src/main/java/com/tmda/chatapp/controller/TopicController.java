@@ -45,7 +45,7 @@ public class TopicController {
     }
 
     @RequestMapping("/top")
-    public ResponseEntity<List<TopTopicDTO>> FindTopTopics() {
+    public ResponseEntity<List<TopTopicDTO>> FindTopTopics() {   // Sustituir
         try {
             LOGGER.info("start FindTopTopics users");
             List<TopTopicDTO> topics = topicRepository.findTopTopic();
@@ -84,7 +84,7 @@ public class TopicController {
     }
 
     @RequestMapping("/realtime")
-    public ResponseEntity<List<RealTimeTopic>> findRealTimeTopic() {
+    public ResponseEntity<List<RealTimeTopic>> findRealTimeTopic() {   // Push
         try {
             LOGGER.info("start TimeTopicDTO users");
             List<RealTimeTopic> topics = topicRepository.findRealTimeTopic();
@@ -123,18 +123,18 @@ public class TopicController {
         }
     }
 
-    @RequestMapping("/{name}")
-    public ResponseEntity<Topic> loadOne(@PathVariable String name) {
-        LOGGER.info("start loadOne user by id: ", name);
-        try {
-            Topic user = topicService.findByName(name);
-            LOGGER.info("Found: {}", user);
-            return new ResponseEntity<>(user, HttpStatus.OK);
-        } catch (DataAccessException e) {
-            LOGGER.info(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+//    @RequestMapping("/{name}")
+//    public ResponseEntity<Topic> loadOne(@PathVariable String name) {
+//        LOGGER.info("start loadOne user by id: ", name);
+//        try {
+//            Topic user = topicService.findByName(name);
+//            LOGGER.info("Found: {}", user);
+//            return new ResponseEntity<>(user, HttpStatus.OK);
+//        } catch (DataAccessException e) {
+//            LOGGER.info(e.getMessage());
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
 
 }

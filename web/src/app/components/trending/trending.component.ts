@@ -2,7 +2,9 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {TrendingService} from './trending.service';
 import {FormGroup} from '@angular/forms';
 import {RealTimeTopicDTO, TimeTopicDTO, TopTopicDTO, UserTopicDTO} from './topic';
-// import Chart = require('chart.js');
+import Chart = require('chart.js');
+import {global} from '@angular/core/src/util';
+import {Globals} from '../../globals';
 
 @Component({
   selector: 'app-trending',
@@ -11,6 +13,8 @@ import {RealTimeTopicDTO, TimeTopicDTO, TopTopicDTO, UserTopicDTO} from './topic
 })
 export class TrendingComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'count'];
+
+  globals: Globals;
 
   timeTopicForm: FormGroup;
   userTopicForm: FormGroup;
@@ -28,7 +32,8 @@ export class TrendingComponent implements OnInit {
 
   constructor(
     private trendingService: TrendingService,
-  ) { }
+    globals: Globals
+  ) { this.globals = globals;}
 
   ngOnInit(){
     this.trendingService.FindTopTopics().subscribe(
@@ -42,14 +47,14 @@ export class TrendingComponent implements OnInit {
         data => {
           console.log("top recent",data);
           this.recentTopic = data;
-          // this.dataSource = this.setPosition(this.topTopic);
+          this.dataSource = this.setPosition(this.topTopic);
         });
 
       this.trendingService.FindRealTimeTopics().subscribe(
         data => {
-          console.log(data);;
+          console.log(data);
           this.realTimeTopic = data;
-          this.draw(this.realTimeTopic);
+          // this.draw(this.realTimeTopic);
           console.log("this.realTimeTopic", this.realTimeTopic);
         });
 
@@ -63,7 +68,9 @@ export class TrendingComponent implements OnInit {
       data => {
         console.log(data);
         this.realTimeTopic = data;
+        this.realTimeTopic = data;
         console.log("this.realTimeTopic", this.realTimeTopic)
+        // tslint:disable-next-line:indent
       });
 
     this.trendingService.FindTimeTopics().subscribe(
@@ -73,7 +80,7 @@ export class TrendingComponent implements OnInit {
       });
 
   }
-//
+
 // // ngAfterViewInit
 //   draw(dataTime: any) {
 //     this.canvas = this.mychart.nativeElement;
