@@ -25,12 +25,13 @@ export class ChatComponent implements OnInit {
 
   userName: String = sessionStorage.getItem('userSession');
   user: User;
+  message: Message;
   myGroups: Group[];
   myContacts: Contact[];
 
   selectedGroup: Group;
   selectedContact: Contact;
-  selectedBroadcast: String;
+  selectedBroadcast: boolean = false;
 
   messageForm: FormGroup;
   userMessage: FormGroup;
@@ -80,55 +81,54 @@ export class ChatComponent implements OnInit {
   onSelectGroup(group: Group): void {
     console.log("onSelectGroup ");
     this.selectedContact = null;
-    this.selectedBroadcast = null;
+    this.selectedBroadcast = false;
     this.selectedGroup = group;
   }
 
   onSelectContact(contac: Contact): void {
     console.log(contac);
     this.selectedGroup = null;
-    this.selectedBroadcast = null;
+    this.selectedBroadcast = false;
     this.selectedContact = contac;
   }
-  
+
   onSelectedBroadcast(): void {
     this.selectedGroup = null;
     this.selectedContact = null;
-    this.selectedBroadcast = "ADMIN BROADCAST";
+    this.selectedBroadcast = true;
   }
 
-  send_message() {
-    console.log('send_message');
-    console.log(this.messageForm);
-    this.notificationService.showInfo('Send Message');
+  send_message(form:FormGroup,contact: String) {
 
-    this.messageService.sendMessage(<Message> this.messageForm.value)
+    form.value.fromUser = this.user.userName;
+    form.value.toUser = contact;
+
+    this.messageService.sendMessage(<Message> form.value)
       .subscribe(user => {
-        this.notificationService.sucessUpdate('added User to Group');
+        this.notificationService.sucessUpdate('Message sent to user');
       }, err =>  {
         this.notificationService.error(err);
       });
   }
 
-  send_message_group() {
-    console.log('send_message');
-    console.log(this.messageForm);
-    this.notificationService.showInfo('Send Message');
+  send_message_group(form:FormGroup,contact: String) {
 
-    this.messageService.sendMessageGroup(<Message> this.messageForm.value)
+    form.value.fromUser = this.user.userName;
+    form.value.toGroup = contact;
+
+    this.messageService.sendMessageGroup(<Message> form.value)
       .subscribe(user => {
-        this.notificationService.sucessUpdate('added User to Group');
+        this.notificationService.sucessUpdate('Message sent to group');
       }, err =>  {
         this.notificationService.error(err);
       });
   }
 
-  send_message_broadcast() {
-    console.log('send_message');
-    console.log(this.messageForm);
-    this.notificationService.showInfo('Send Message');
+  send_message_broadcast(form:FormGroup,contact: String) {
+    form.value.fromUser = this.user.userName;
+    form.value.toGroup = contact;
 
-    this.messageService.sendMessageBroadcast(<Message> this.messageForm.value)
+    this.messageService.sendMessageBroadcast(<Message> form.value)
       .subscribe(user => {
         this.notificationService.sucessUpdate('added User to Group');
       }, err =>  {

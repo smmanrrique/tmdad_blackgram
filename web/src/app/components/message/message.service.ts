@@ -63,7 +63,7 @@ export class MessageService {
 
   getChatUserMessage(message: Message): FormGroup {
     return this.fb.group({
-      toUser: new FormControl(message.toUser, [Validators.required, Validators.maxLength(30)]),
+      toUser: new FormControl(message.toUser),
       fromUser: new FormControl(message.fromUser),
       toGroup: new FormControl(message.toGroup),
       body: new FormControl(message.body, [Validators.required]),
