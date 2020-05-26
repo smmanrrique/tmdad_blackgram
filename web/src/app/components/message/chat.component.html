@@ -120,9 +120,10 @@
 
               <p>{{message.body}}</p>
               <div *ngIf="message.multimedia !== null">
-                <a href="{{message.multimedia.url}}">{{message.multimedia.url|| ""}}</a>
+                <a style="colo:black" href="{{message.multimedia.url}}">{{message.multimedia.url}}</a>
               </div>
 
+              <p>{{message.multimedia.url|| ""}}</p>
               <p>{{message.createdAt}}</p>
 
             </div>
