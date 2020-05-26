@@ -41,6 +41,8 @@ export class ChatComponent implements OnInit {
   groupMessage: FormGroup;
   fileMessage: FormGroup;
 
+  messages: MessageList[];
+
   constructor(
     private userService: UserService,
     private groupService: GroupService,
@@ -76,6 +78,8 @@ export class ChatComponent implements OnInit {
     this.messageService.getAll(paramsMessage).subscribe(
       data => {
         this.globals.appMessages = this.globals.appMessages.concat(data);
+        // this.messages = data;
+        this.globals.appMessages = data;
       });
   }
 
@@ -144,7 +148,6 @@ export class ChatComponent implements OnInit {
   }
 
   addMessage(message: Message, isUser: boolean){
-    // this.globals.appMessages
     let messageTemp = new MessageList();
     let userFrom = new User();
     userFrom.userName = message.toUser;
@@ -177,7 +180,7 @@ export class ChatComponent implements OnInit {
     console.log("11111111111111111", messageTemp)
 
     this.globals.appMessages = this.globals.appMessages.concat(messageTemp)
-
+    // this.messages = this.messages.concat(messageTemp)
   }
 
 }

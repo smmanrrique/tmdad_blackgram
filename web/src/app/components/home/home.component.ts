@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
 
   @HostListener('window:beforeunload')
   closeChannelBeforeReload() {
-    this.stompClient.send('/chat/close', {}, JSON.stringify(this.user.userName));
+    // this.stompClient.send('/chat/close', {}, JSON.stringify(this.user.userName));
   }
 
   connect() {
@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
       });
     });
 
-    socket.addEventListener('open', function (e) {
+    socket.addEventListener('message', function (e) {
       _this.stompClient.send('/chat/listen', {}, JSON.stringify(_this.user.userName));
     });
   }
