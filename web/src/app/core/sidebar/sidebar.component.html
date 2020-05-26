@@ -29,15 +29,15 @@
         <nav class="nav-item">
             <div class="item header" (click)="selection.toggle(NAV_USERS)"
                 [ngClass]="{'expanded': selection.isSelected(NAV_USERS),
-                    'selected': dataMenuItem == 'userClients' || dataMenuItem == 'userEmployees' || dataMenuItem == 'userGenerics'}">
+                    'selected': dataMenuItem == 'userClients' || dataMenuItem == 'userEmployees' || dataMenuItem == 'userGenerics'}" >
                 <span>Perfil</span>
                 <i class="material-icons">keyboard_arrow_right</i>
             </div>
             <div class="nav-tab">
                 <div class="item" data-menu-item="userClients" [ngClass]="{'selected': dataMenuItem == 'userClients'}"
-                    (click)="select($event)" routerLink="#">Information</div>
+                    (click)="select($event)"  routerLink="./info">Information</div>
                 <div class="item" data-menu-item="userEmployees"
-                    [ngClass]="{'selected': dataMenuItem == 'userEmployees'}" (click)="select($event)" routerLink="#">
+                    [ngClass]="{'selected': dataMenuItem == 'userEmployees'}" (click)="select($event)" routerLink="./contact">
                     Contacts</div>
                 <div class="item" data-menu-item="userGenerics" [ngClass]="{'selected': dataMenuItem == 'userGenerics'}"
                     (click)="select($event)" routerLink="#">Saved Messages</div>

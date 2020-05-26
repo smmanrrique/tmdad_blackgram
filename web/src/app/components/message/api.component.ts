@@ -9,6 +9,7 @@ import { Group } from '../group/group';
 import { Message } from './message';
 import {NotificationService} from "../../core/utils/notification/notification.service";
 import {HttpParams} from "@angular/common/http";
+import {Globals} from '../../globals';
 
 @Component({
   templateUrl: './api.component.html',
@@ -16,6 +17,7 @@ import {HttpParams} from "@angular/common/http";
 })
 
 export class ApiComponent implements OnInit {
+  globals: Globals;
   user: User;
 
   userMessage: FormGroup;
@@ -41,8 +43,9 @@ export class ApiComponent implements OnInit {
     private userService: UserService,
     private groupService: GroupService,
     private messageService: MessageService,
-    private notificationService: NotificationService
-  ) { }
+    private notificationService: NotificationService,
+    globals: Globals
+  ) { this.globals = globals; }
 
 
   ngOnInit() {
