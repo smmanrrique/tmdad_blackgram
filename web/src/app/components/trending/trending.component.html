@@ -32,7 +32,7 @@
       <h2>Recent Topics</h2>
     </div>
 
-    <table mat-table [dataSource]="recentTopic" class="mat-elevation-z8">
+    <table mat-table [dataSource]="globals.recentTopic" class="mat-elevation-z8">
 
       <!--- Note that these columns can be defined in any order.
             The actual rendered columns are set as a property on the row definition" -->
@@ -66,7 +66,7 @@
     <div class="title">
       <h2>Trending Topics</h2>
     </div>
-    <table mat-table [dataSource]="topTopic" class="mat-elevation-z8">
+    <table mat-table [dataSource]="globals.topTopic" class="mat-elevation-z8">
 
       <!--- Note that these columns can be defined in any order.
             The actual rendered columns are set as a property on the row definition" -->
@@ -102,7 +102,7 @@
       <h2>Ranking User by Topics</h2>
     </div>
 
-    <table mat-table [dataSource]="userTopic" class="mat-elevation-z8">
+    <table mat-table [dataSource]="globals.userTopic" class="mat-elevation-z8">
 
       <!--- Note that these columns can be defined in any order.
             The actual rendered columns are set as a property on the row definition" -->
