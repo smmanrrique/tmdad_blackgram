@@ -105,11 +105,26 @@
           <li *ngFor="let message of globals.appMessages">
 
             <div *ngIf="user.userName===message.fromUser.userName">
-              <span class="from">To: {{message.toUser.userName || message.toGroup.name || "Admin Message"}}</span>
+
+              <div *ngIf="message.toUser === null">
+                <span class="from">To: {{ message.toGroup.name || "Admin Message" }}</span>
+              </div>
+
+              <div *ngIf="message.toGroup === null">
+                <span class="from">To: {{ message.toUser.userName || "Admin Message" }}</span>
+              </div>
+
+              <div *ngIf="message.toGroup === null&&message.toUser === null">
+                <span class="from">To: {{ "Broadcast" }}</span>
+              </div>
 
               <p>{{message.body}}</p>
-<!--              <p>{{message.multimedia.url || ""}}</p>-->
+              <div *ngIf="message.multimedia === null">
+                <p>{{message.multimedia.url || ""}}</p>
+              </div>
+
               <p>{{message.createdAt}}</p>
+
             </div>
 
             <div *ngIf="user.userName!==message.fromUser.userName">
@@ -119,7 +134,7 @@
               <p>{{message.createdAt}}</p>
 <!--              <img *ngIf="message.multimedia===''" src="" alt="Avatar" style="width:100%;">-->
               <!--            <p>{{message.multimedia.url || ""}}</p>-->
-              <!--            <p>{{message.createdAt}}</p>-->
+               <p>{{message.createdAt}}</p>
             </div>
 
           </li>

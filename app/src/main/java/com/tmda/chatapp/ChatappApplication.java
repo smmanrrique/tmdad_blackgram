@@ -37,7 +37,7 @@ public class ChatappApplication implements CommandLineRunner {
     }
 
     public void run(String... args) throws Exception {
-        System.out.println("ChatappApplication");
+//        System.out.println("ChatappApplication");
 
         // =======================================
 

@@ -145,7 +145,7 @@ export class ChatComponent implements OnInit {
       }, err =>  {
         this.notificationService.error(err);
       });
-    this.addMessage(<Message> form.value,true);
+    this.addMessage(<Message> form.value,false);
   }
 
   addMessage(message: Message, isUser: boolean){
@@ -159,10 +159,12 @@ export class ChatComponent implements OnInit {
       let userTo = new User();
       userTo.userName = message.toUser;
       messageTemp.toUser = userTo;
+      messageTemp.toGroup = null;
     }else{
       let groupTo = new Group();
       groupTo.name = message.toGroup;
       messageTemp.toGroup = groupTo;
+      messageTemp.toUser = null;
     }
 
     let multimedia = new Multimedia();
@@ -178,8 +180,8 @@ export class ChatComponent implements OnInit {
 
     messageTemp.topics = topics;
 
-    this.globals.appMessages = this.globals.appMessages.concat(messageTemp)
-    // this.messages = this.messages.concat(messageTemp)
+    console.log("aaaaaaaaaaaaa", messageTemp)
+    this.globals.appMessages = this.globals.appMessages.concat(messageTemp);
   }
 
 }
