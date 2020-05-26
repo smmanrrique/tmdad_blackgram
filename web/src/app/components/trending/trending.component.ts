@@ -110,15 +110,17 @@ export class TrendingComponent implements OnInit {
   draw(dataTime: any) {
     this.canvas = this.mychart.nativeElement;
     this.ctx = this.canvas.getContext('2d');
-    this.chart = new Chart(this.ctx, {
+
+    let myChart = new Chart(this.ctx, {
       type: 'line',
+
       data: {
-         datasets: [{
-            label: 'RealTime',
-            backgroundColor: 'rgba(194,180,180,0.4)',
-            borderColor: 'rgb(83,80,80)',
-            fill: true,
-            data: dataTime,
+        datasets: [{
+          label: 'RealTime',
+          backgroundColor: "rgba(194,180,180,0.4)",
+          borderColor: "rgb(83,80,80)",
+          fill: true,
+          data: dataTime,
         }]
       },
       options: {
@@ -127,15 +129,12 @@ export class TrendingComponent implements OnInit {
           display: true,
           text: 'Trendings'
         },
-        legend: {
-          display: false
-        },
         scales: {
           xAxes: [{
             type: 'linear',
             position: 'bottom',
             ticks: {
-              callback(tick): string {
+              callback: function (tick):string {
                 return tick.toString() + 'm';
               }
             },
