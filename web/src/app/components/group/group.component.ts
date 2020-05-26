@@ -6,13 +6,7 @@ import {GroupService} from "./group.service";
 import {MessageService} from "../message/message.service";
 import {BaseService} from "../../core/base.service";
 import {Message, MessageList} from "../message/message";
-
-export interface Sms {
-  fromUser: string;
-  body: string;
-  topics: string;
-  multimedia: string;
-}
+import {Globals} from '../../globals';
 
 @Component({
   selector: "app-group",
@@ -20,7 +14,7 @@ export interface Sms {
   styleUrls: ["./group.component.css"]
 })
 export class GroupComponent implements OnInit {
-
+  globals: Globals;
   selectedGroup: Group;
 
   user: User;
@@ -31,11 +25,13 @@ export class GroupComponent implements OnInit {
     private userService: UserService,
     private groupService: GroupService,
     private messageService: MessageService,
-  ) { }
+    globals: Globals
+  ) { this.globals = globals; }
 
   ngOnInit() {
-    // TODO Get ID USER FROM URL
-    this.userService.getById(1).subscribe(
+    this.user = JSON.parse(sessionStorage.getItem('user'));
+
+    this.userService.getById(this.user.id).subscribe(
       data => {
         // Get User
         this.user = data;

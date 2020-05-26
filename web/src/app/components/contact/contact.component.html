@@ -1,3 +1,45 @@
-<p>
-  contact works!
-</p>
+<div class="container1">
+  <div class="title">
+    <h2>My Contacts</h2>
+  </div>
+
+<!--  <div class="button1">-->
+<!--    <div class="buttons">-->
+<!--      <button (click)="add_contact()" title="New Group">-->
+<!--        <i class="material-icons">person_add</i>-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </div>-->
+</div>
+
+
+<div class="wrap">
+  <div class="floatleft">
+    <ul class="groups">
+      <li *ngFor="let group of myContacts">
+        <span class="badge">{{group.id}}</span>
+        <span>{{group.name}}</span>
+      </li>
+    </ul>
+  </div>
+
+    <div class="floatright" >
+      <h2 style="text-align:center; color: black"> Add user to contact</h2>
+
+      <form *ngIf="contacForm" [formGroup]="contacForm" (ngSubmit)="add_contact(contacForm)">
+
+          <mat-form-field required>
+            <mat-select formControlName="name" placeholder="Add Contact">
+              <mat-option *ngFor="let c of allContacts" [value]="c.userName">
+                {{c.userName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        <div class="field">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!contacForm.valid">Execute</button>
+        </div>
+      </form>
+
+      </div>
+    </div>

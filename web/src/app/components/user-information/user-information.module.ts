@@ -5,9 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule, MatCheckboxModule, MatPaginatorModule, MatSelectModule, MatFormFieldModule, MatInputModule,
   MatSortModule, MatGridListModule, MatCardModule } from '@angular/material';
 import { UtilsModule } from 'src/app/core/utils/utils.module';
-import {ContactService} from "../contact/contact.service";
-import {ContactComponent} from "./contact.component";
-import {ContacRoutingModule} from './contact.routing';
+import {UserInformationComponent} from './user-information.component';
+import {UserInformationRoutingModule} from './user-information.routing';
 
 
 @NgModule({
@@ -27,17 +26,16 @@ import {ContacRoutingModule} from './contact.routing';
     ModalModule.forRoot(),
 
     UtilsModule,
-    ContacRoutingModule,
+    UserInformationRoutingModule,
   ],
   declarations: [
-    ContactComponent
+    UserInformationComponent
   ],
   exports: [
-    ContactComponent
+    UserInformationComponent
   ],
   providers: [
-    ContactService,
   ]
 })
 
-export class ContactModule { }
+export class UserInformationModule { }

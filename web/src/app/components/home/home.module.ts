@@ -11,6 +11,9 @@ import { SidebarComponent } from '../../core/sidebar/sidebar.component';
 import { TopbarComponent } from '../../core/topbar/topbar.component';
 import {TrendingModule} from "../trending/trending.module";
 import {GroupModule} from "../group/group.module";
+import {ContactModule} from '../contact/contact.module';
+import {UserInformationComponent} from '../user-information/user-information.component';
+import {UserInformationModule} from '../user-information/user-information.module';
 
 @NgModule({
 	imports: [
@@ -21,6 +24,8 @@ import {GroupModule} from "../group/group.module";
 		MessageModule,
     GroupModule,
     TrendingModule,
+    ContactModule,
+    UserInformationModule,
 
 		HomeRoutingModule,
 	],
