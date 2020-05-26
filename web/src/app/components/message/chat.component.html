@@ -103,21 +103,20 @@
       <div>
         <ul class="sms">
           <li *ngFor="let message of globals.appMessages">
-<!--            <p>{{user.userName}}</p>-->
-<!--            <p>{{message.fromUser.userName}}</p>-->
 
             <div *ngIf="user.userName===message.fromUser.userName">
-              <span class="from">{{message.fromUser.userName }}</span>
+              <span class="from">To: {{message.toUser.userName || message.toGroup.name || "Admin Message"}}</span>
+
               <p>{{message.body}}</p>
-<!--              <p>TRUE</p>-->
-              <!-- <img *ngIf="message.multimedia===''" src="" alt="Avatar" style="width:100%;">-->
-              <!--            <p>{{message.multimedia.url || ""}}</p>-->
-              <!--            <p>{{message.createdAt}}</p>-->
+<!--              <p>{{message.multimedia.url || ""}}</p>-->
+              <p>{{message.createdAt}}</p>
             </div>
 
             <div *ngIf="user.userName!==message.fromUser.userName">
-              <span class="badge">From: {{message.fromUser.userName }}</span>
+
+              <span class="badge">From: {{message.fromUser.userName}}</span>
               <p>{{message.body}}</p>
+              <p>{{message.createdAt}}</p>
 <!--              <img *ngIf="message.multimedia===''" src="" alt="Avatar" style="width:100%;">-->
               <!--            <p>{{message.multimedia.url || ""}}</p>-->
               <!--            <p>{{message.createdAt}}</p>-->

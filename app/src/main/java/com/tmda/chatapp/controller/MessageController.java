@@ -82,7 +82,7 @@ public class MessageController {
     @PostMapping("/send")
     @ResponseBody
     @CrossOrigin(origins =CROSS_ORIGIN)
-    public ResponseEntity<String> send(@RequestBody MessageDTO message){
+    public ResponseEntity<Message> send(@RequestBody MessageDTO message){
         try {
             System.out.printf("======================");
             logger.info("Call sendMessage and server received {}", message.toString());
@@ -116,7 +116,7 @@ public class MessageController {
 
             String result = rabbitMQSender.SendDirectMessage(connectionRabbitMQ, toUser, sms);
 
-            return new ResponseEntity<>(result, HttpStatus.CREATED);
+            return new ResponseEntity<>(sms, HttpStatus.CREATED);
 
         } catch (DataAccessException e) {
             logger.info(e.getMessage());
@@ -127,7 +127,7 @@ public class MessageController {
     @PostMapping("/sendGroup")
     @ResponseBody
     @CrossOrigin(origins =CROSS_ORIGIN)
-    public ResponseEntity<String> sendGroup(@RequestBody MessageDTO message){
+    public ResponseEntity<Message> sendGroup(@RequestBody MessageDTO message){
         logger.info("Send Message: ", message);
         try {
             logger.info("Call sendMessageGroup and server received {}",message.toString());
@@ -140,7 +140,7 @@ public class MessageController {
             String result = rabbitMQSender.SendGroupMessage(connectionRabbitMQ, message.getToGroup(), sms);
             logger.info("Sent messages Rabbit {}",message.toString());
 
-            return new ResponseEntity<>(result, HttpStatus.CREATED);
+            return new ResponseEntity<>(sms, HttpStatus.CREATED);
 
         } catch (DataAccessException e) {
             logger.info(e.getMessage());
@@ -152,7 +152,7 @@ public class MessageController {
     @PostMapping("/sendBroadcast")
     @ResponseBody
     @CrossOrigin(origins =CROSS_ORIGIN)
-    public ResponseEntity<String> sendBroadcast(@RequestBody MessageDTO message){
+    public ResponseEntity<Message> sendBroadcast(@RequestBody MessageDTO message){
         try {
             logger.info("Call sendBroadcast {}", message.toString());
 
@@ -164,7 +164,7 @@ public class MessageController {
             String result = rabbitMQSender.SendAllMessage(connectionRabbitMQ, connectionRabbitMQ.getALL_EXCHANGE(), sms);
 
             // User user = userService.create(user);
-            return new ResponseEntity<>(result, HttpStatus.CREATED);
+            return new ResponseEntity<>(sms, HttpStatus.CREATED);
 
         } catch (DataAccessException e) {
             logger.info(e.getMessage());

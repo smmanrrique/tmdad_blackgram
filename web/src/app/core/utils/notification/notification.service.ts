@@ -17,7 +17,7 @@ export class NotificationService {
 	) { }
 
 	showSuccess() {
-		this.toastr.successToastr('Exitoso', 'Operacion Exitosa!');
+		this.toastr.successToastr('Exitoso', 'Operación Exitosa!');
 	}
 
 	showError() {
