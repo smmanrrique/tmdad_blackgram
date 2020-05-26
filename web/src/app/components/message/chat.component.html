@@ -119,8 +119,8 @@
               </div>
 
               <p>{{message.body}}</p>
-              <div *ngIf="message.multimedia === null">
-                <p>{{message.multimedia.url || ""}}</p>
+              <div *ngIf="message.multimedia !== null">
+                <a href="{{message.multimedia.url}}">{{message.multimedia.url|| ""}}</a>
               </div>
 
               <p>{{message.createdAt}}</p>
@@ -130,8 +130,8 @@
             <div *ngIf="user.userName!==message.fromUser.userName">
 
               <span class="badge">From: {{message.fromUser.userName}}</span>
-              <p>{{message.body}}</p>
-              <p>{{message.createdAt}}</p>
+              <p>{{message.body}}</p>{{message.createdAt}}
+              <p></p>
 <!--              <img *ngIf="message.multimedia===''" src="" alt="Avatar" style="width:100%;">-->
               <!--            <p>{{message.multimedia.url || ""}}</p>-->
                <p>{{message.createdAt}}</p>

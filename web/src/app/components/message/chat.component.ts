@@ -79,6 +79,7 @@ export class ChatComponent implements OnInit {
         this.globals.appMessages = this.globals.appMessages.concat(data);
         // this.messages = data;
         this.globals.appMessages = data;
+        console.log("asaaaaaaaaaaaaa", data)
       });
   }
 
