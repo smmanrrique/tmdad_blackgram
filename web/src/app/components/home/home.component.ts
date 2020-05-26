@@ -6,7 +6,6 @@ import * as Stomp from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
 import {User} from '../auth/user-register/user';
 
-
 @Component({
 		selector: 'app-home',
 		templateUrl: './home.component.html',
@@ -15,8 +14,8 @@ import {User} from '../auth/user-register/user';
 export class HomeComponent implements OnInit {
   user: User;
   globals: Globals;
-
   private stompClient = null;
+
   constructor(globals: Globals) { this.globals = globals; }
 
   ngOnInit() {
@@ -25,7 +24,7 @@ export class HomeComponent implements OnInit {
   }
 
   @HostListener('window:beforeunload')
-  doSomething() {
+  closeChannelBeforeReload() {
     this.stompClient.send('/chat/close', {}, JSON.stringify(this.user.userName));
   }
 
@@ -40,33 +39,9 @@ export class HomeComponent implements OnInit {
       });
     });
 
-    socket.addEventListener('message', function (e) {
+    socket.addEventListener('open', function (e) {
       _this.stompClient.send('/chat/listen', {}, JSON.stringify(_this.user.userName));
     });
-    //
-    //   socket.addEventListener('message', function (e) {
-    //     _this.stompClient.send('/chat/top', {}, JSON.stringify(_this.user.userName));
-    //   });
-    //
-    //   socket.addEventListener('message', function (e) {
-    //     _this.stompClient.send('/chat/topfive', {}, JSON.stringify(_this.user.userName));
-    //   });
-    //
-    //   socket.addEventListener('message', function (e) {
-    //     _this.stompClient.send('/chat/time', {}, JSON.stringify(_this.user.userName));
-    //   });
-    //
-    //   socket.addEventListener('message', function (e) {
-    //     _this.stompClient.send('/chat/realtime', {}, JSON.stringify(_this.user.userName));
-    //   });
-    //
-    //   socket.addEventListener('message', function (e) {
-    //     _this.stompClient.send('/chat/user', {}, JSON.stringify(_this.user.userName));
-    //   });
-    //
-    //   socket.addEventListener('message', function (e) {
-    //     _this.stompClient.send('/chat/userto', {}, JSON.stringify(_this.user.userName));
-    //   });
   }
 
   saveMessageOutput(message) {
