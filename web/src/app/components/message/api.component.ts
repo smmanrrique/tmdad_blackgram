@@ -100,7 +100,7 @@ export class ApiComponent implements OnInit {
     console.log(form.value)
     this.messageService.sendMessage(<Message> form.value)
       .subscribe(user => {
-        this.notificationService.sucessUpdate('Message sent to user');
+        this.notificationService.showSuccess();
       }, err =>  {
         this.notificationService.error(err);
       });
@@ -110,7 +110,7 @@ export class ApiComponent implements OnInit {
     form.value.fromUser = this.user.userName;
     this.messageService.sendMessageGroup(<Message> form.value)
       .subscribe(user => {
-        this.notificationService.sucessUpdate('Message sent to group');
+        this.notificationService.showSuccess();
       }, err =>  {
         this.notificationService.error(err);
       });
@@ -120,7 +120,7 @@ export class ApiComponent implements OnInit {
     form.value.fromUser = this.user.userName;
     this.messageService.sendMessageBroadcast(<Message> form.value)
       .subscribe(user => {
-        this.notificationService.sucessUpdate('added User to Group');
+        this.notificationService.showSuccess();
       }, err =>  {
         this.notificationService.error(err);
       });

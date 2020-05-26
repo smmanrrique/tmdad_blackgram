@@ -14,6 +14,7 @@ import {Chart} from 'chart.js';
 export class TrendingComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'count'];
 
+  admin:boolean = false;
   user: User;
   globals: Globals;
 
@@ -43,6 +44,7 @@ export class TrendingComponent implements OnInit {
 
   ngOnInit(){
     this.user = JSON.parse(sessionStorage.getItem('user'));
+    this.admin = this.user.admin;
     console.log("Starting to request websocket...")
     this.connect();
     setInterval(this.draw, 10000, this.globals.realTimeTopic);
