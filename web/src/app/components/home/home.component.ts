@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
 
   @HostListener('window:beforeunload')
   closeChannelBeforeReload() {
-    // this.stompClient.send('/chat/close', {}, JSON.stringify(this.user.userName));
+    this.stompClient.send('/chat/close', {}, JSON.stringify(this.user.userName));
   }
 
   connect() {
