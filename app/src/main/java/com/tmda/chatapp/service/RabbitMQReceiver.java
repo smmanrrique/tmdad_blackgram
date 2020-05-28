@@ -104,57 +104,5 @@ public class RabbitMQReceiver {
         return sms;
     }
 
-    @SneakyThrows
-    public String Receiver3(ConnectionRabbitMQ connectionRabbitMQ, String queueName){
-
-        logger.info("Call connection factory into Receiver Function");
-//        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
-//        connectionFactory.getRabbitConnectionFactory().setUri("amqp://bzwbihsx:mo3CwoHiRL6V-ZBmGqrUX0S-_2CnHVcR@hawk.rmq.cloudamqp.com/bzwbihsx");
-//        org.springframework.amqp.rabbit.connection.Connection connection = connectionFactory.createConnection();
-
-//        Message message = (Message) connectionRabbitMQ.rabbitTemplate().receiveAndConvert(queueName);
-//        System.out.println("ReceiveLogsDirect2 Received '" +message.getToUser()+"'");
-//        System.out.println( message);
-//        System.out.println("ReceiveLogsDirect2 Received '" +message.getFromUser()+"'");
-
-        SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer();
-        simpleMessageListenerContainer.setConnectionFactory(connectionRabbitMQ.connectionFactory());
-        simpleMessageListenerContainer.setQueues(connectionRabbitMQ.queueGeneric(queueName));
-        simpleMessageListenerContainer.setMessageListener(new com.tmda.chatapp.service.RabbitMQListner());
-
-//        simpleMessageListenerContainer.ge
-
-
-//        Consumer consumer = new DefaultConsumer()
-//        Channel channel = connectionRabbitMQ.channel();
-//
-//        channel.queueDeclare(queueName, true, false, false, null);
-//
-//        System.out.println("BEFORE");
-//        Consumer consumer = new DefaultConsumer(channel) {
-//            @Override
-//            public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, Byte[] body) throws IOException {
-//
-////                String message = new String(body, "UTF-8");
-//
-////                System.out.println("ReceiveLogsDirect2 Received '" + envelope.getRoutingKey() + "':'" + message + "'");
-
-//            }
-//        };
-//        System.out.println("AFTER");
-//        channel.basicConsume(queueName, true, consumer);
-        return "Receive message: ";
-
-    }
-
-    public MessageListener exampleListener() {
-        return new MessageListener() {
-            @Override
-            public void onMessage(org.springframework.amqp.core.Message message) {
-                System.out.println("received: " + message.getMessageProperties());
-            }
-        };
-    }
-
 
 }

@@ -1,4 +1,4 @@
-package com.tmda.chatapp.controller;
+package com.tmda.chatapp.controller.GRPC;
 
 import com.rabbitmq.client.Channel;
 import com.tmda.chatapp.config.ConnectionRabbitMQ;

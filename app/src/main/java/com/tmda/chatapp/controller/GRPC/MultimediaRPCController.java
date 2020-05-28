@@ -1,4 +1,4 @@
-package com.tmda.chatapp.controller;
+package com.tmda.chatapp.controller.GRPC;
 
 import org.lognet.springboot.grpc.GRpcService;
 

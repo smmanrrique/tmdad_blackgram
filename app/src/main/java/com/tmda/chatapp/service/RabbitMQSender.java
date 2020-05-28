@@ -18,13 +18,11 @@ public class RabbitMQSender {
 
     public String SendDirectMessage(ConnectionRabbitMQ connectionRabbitMQ, String queueName, Message message, MessageRequest smsRequest) {
         connectionRabbitMQ.getAmqpTemplate().convertAndSend(DIRECT_EXCHANGE,queueName, message);
-//        connectionRabbitMQ.getAmqpTemplate().convertAndSend(DIRECT_EXCHANGE,queueName, smsRequest.toByteArray());
         return "Send message: " + message.getFromUser().getUserName();
     }
 
     public String SendDirectMessage(ConnectionRabbitMQ connectionRabbitMQ, String queueName, Message message) {
         connectionRabbitMQ.getAmqpTemplate().convertAndSend(DIRECT_EXCHANGE,queueName, message);
-//        connectionRabbitMQ.getAmqpTemplate().convertAndSend(DIRECT_EXCHANGE,queueName, smsRequest.toByteArray());
         return "Send message: " + message.getFromUser().getUserName();
     }
 
