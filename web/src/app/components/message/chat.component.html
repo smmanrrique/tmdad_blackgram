@@ -28,7 +28,7 @@
       </ul>
 
       <!--    TODO QUITAR "!" -->
-      <div *ngIf="!user.admin" >
+      <div *ngIf="user.admin" >
         <h2  style="text-align:center; color: black" >Broadcast</h2>
         <ul class="groups">
           <li (click)="onSelectedBroadcast()">
