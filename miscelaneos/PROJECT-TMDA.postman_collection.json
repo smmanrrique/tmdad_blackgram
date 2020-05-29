@@ -1,0 +1,1320 @@
+{
+	"info": {
+		"_postman_id": "45cae734-3209-42a3-a06a-2b16a23d6b30",
+		"name": "PROJECT-TMDA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userName\": \"u2\",\n\t\"password\": \"user2\"\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/user",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "covid",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CheckUserPassword",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userName\": \"u1\",\n\t\"password\": \"u1\"\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/user?userName=u1&password=u1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user"
+							],
+							"query": [
+								{
+									"key": "userName",
+									"value": "u1"
+								},
+								{
+									"key": "password",
+									"value": "u1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAll",
+					"protocolProfileBehavior": {
+						"followOriginalHttpMethod": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/user",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "id",
+								"value": "1",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/user/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "https://{{url}}/167",
+							"protocol": "https",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"167"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addUsertoGroup",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZCI6MTAwLCJlbWFpbCI6InNoYW11ZWwyMUBnbWFpbC5jb20iLCJjbGllbnRfaWQiOiJ3ZWJfc2l0ZSIsInRva2VuX3R5cGUiOiJhY2Nlc3NfdG9rZW4iLCJpYXQiOjE1MjkwMDI4MTksInN1YiI6InNoYW11ZWwyMUBnbWFpbC5jb20iLCJpc3MiOiJGaXRuZXNzIExhdGFtIn0.fZBR_6h5Z8KZhzO-6geGTqVDIrfNgg6CTKiUsGzwvUwJqutIwtjgsWe6Xo0aQN3ihkbROl-1cbNaIrlycYcG2Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{URL}}/user/?userName=sham&groupName=g1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user",
+								""
+							],
+							"query": [
+								{
+									"key": "userName",
+									"value": "sham"
+								},
+								{
+									"key": "groupName",
+									"value": "g1"
+								},
+								{
+									"key": "groupId",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b94c8ea1-c941-4413-8e76-fcaf0b348b8d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "217f873f-fb1a-4aac-a4d1-ce21705e4619",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "message",
+			"item": [
+				{
+					"name": "sendMessage",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"fromUser\": \"u1\", \"toUser\": \"u1\",  \"toGroup\": \"null\", \"body\": \"33333333333333333333333\", \"multimedia\": \"null\", \"topics\":[\"aa\", \"ba\", \"ac\",\"ad\",\"tarte1\", \"ater4\", \"attw6\",\"aS\"]}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/message/send",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"message",
+								"send"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "covid",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sendMessageGroup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"fromUser\": \"u1\", \"toUser\": \"null\",  \"toGroup\": \"g1\", \"body\": \"afdsfdasfdasfdasf\", \"multimedia\": \"{{URL}}/message/sendGroup\", \"topics\":[\"uq\", \"u3\", \"u5\"]}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/message/sendGroup",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"message",
+								"sendGroup"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "covid",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sendMessageBroadcast",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"fromUser\": \"u1\", \"toUser\": \"BROADCAST\",  \"toGroup\": \"null\", \"body\": \"afdsfdasfdasfdasf\", \"multimedia\": \"{{URL}}/message/sendGroup\", \"topics\":[\"uq\", \"u3\", \"u5\"]}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/message/sendBroadcast",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"message",
+								"sendBroadcast"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "covid",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAll",
+					"protocolProfileBehavior": {
+						"followOriginalHttpMethod": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/message?toGroup=g1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"message"
+							],
+							"query": [
+								{
+									"key": "fromUser",
+									"value": "u1",
+									"disabled": true
+								},
+								{
+									"key": "toUser",
+									"value": "u1",
+									"disabled": true
+								},
+								{
+									"key": "toGroup",
+									"value": "g1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "id",
+								"value": "1",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/user/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "https://{{url}}/167",
+							"protocol": "https",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"167"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZCI6MTAwLCJlbWFpbCI6InNoYW11ZWwyMUBnbWFpbC5jb20iLCJjbGllbnRfaWQiOiJ3ZWJfc2l0ZSIsInRva2VuX3R5cGUiOiJhY2Nlc3NfdG9rZW4iLCJpYXQiOjE1MjkwMDI4MTksInN1YiI6InNoYW11ZWwyMUBnbWFpbC5jb20iLCJpc3MiOiJGaXRuZXNzIExhdGFtIn0.fZBR_6h5Z8KZhzO-6geGTqVDIrfNgg6CTKiUsGzwvUwJqutIwtjgsWe6Xo0aQN3ihkbROl-1cbNaIrlycYcG2Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"contact\" :  {\"userName\": \"user\"}\n}"
+						},
+						"url": {
+							"raw": "{{URL}}/user/:id ",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user",
+								":id "
+							],
+							"variable": [
+								{
+									"key": "id ",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ed5b8f44-b612-4f20-b27e-f0edc5b36aab",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "fb962ab3-b2b3-4c1f-a997-0c2b5dd56f4b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "contact",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"u2\"\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/contact?userId=1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"contact"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addContact",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"u2\",\n    \"user\":{\"userName\": \"u1\"}\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/contact/new",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"contact",
+								"new"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAll",
+					"protocolProfileBehavior": {
+						"followOriginalHttpMethod": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/contact?userId=1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"contact"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "id",
+								"value": "1",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/user/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "contacts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "id",
+								"type": "text",
+								"value": "1",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/user/?contacts=user1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user",
+								""
+							],
+							"query": [
+								{
+									"key": "contacts",
+									"value": "user1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "https://{{url}}/167",
+							"protocol": "https",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"167"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZCI6MTAwLCJlbWFpbCI6InNoYW11ZWwyMUBnbWFpbC5jb20iLCJjbGllbnRfaWQiOiJ3ZWJfc2l0ZSIsInRva2VuX3R5cGUiOiJhY2Nlc3NfdG9rZW4iLCJpYXQiOjE1MjkwMDI4MTksInN1YiI6InNoYW11ZWwyMUBnbWFpbC5jb20iLCJpc3MiOiJGaXRuZXNzIExhdGFtIn0.fZBR_6h5Z8KZhzO-6geGTqVDIrfNgg6CTKiUsGzwvUwJqutIwtjgsWe6Xo0aQN3ihkbROl-1cbNaIrlycYcG2Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"contact\" :  {\"userName\": \"user\"}\n}"
+						},
+						"url": {
+							"raw": "{{URL}}/user/:id ",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user",
+								":id "
+							],
+							"variable": [
+								{
+									"key": "id ",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "contacts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "id",
+								"type": "text",
+								"value": "1",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/user/?contacts=user1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user",
+								""
+							],
+							"query": [
+								{
+									"key": "contacts",
+									"value": "user1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b94c8ea1-c941-4413-8e76-fcaf0b348b8d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "217f873f-fb1a-4aac-a4d1-ce21705e4619",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "topic",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userName\": \"user2\"\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/topic",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"topic"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "covid",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAll",
+					"protocolProfileBehavior": {
+						"followOriginalHttpMethod": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/topic",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"topic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findTopic",
+					"protocolProfileBehavior": {
+						"followOriginalHttpMethod": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/topic/top",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"topic",
+								"top"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findUserTopic",
+					"protocolProfileBehavior": {
+						"followOriginalHttpMethod": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/topic",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"topic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findTimeTopic",
+					"protocolProfileBehavior": {
+						"followOriginalHttpMethod": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/topic",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"topic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findRealTimeTopic",
+					"protocolProfileBehavior": {
+						"followOriginalHttpMethod": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/topic",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"topic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "id",
+								"value": "1",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/topic/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"topic",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById Copy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "id",
+								"value": "1",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/topic/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"topic",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b94c8ea1-c941-4413-8e76-fcaf0b348b8d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "217f873f-fb1a-4aac-a4d1-ce21705e4619",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "group",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"g3\"\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/group?userId=4",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"group"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAll",
+					"protocolProfileBehavior": {
+						"followOriginalHttpMethod": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/group",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"group"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "id",
+								"value": "1",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/group/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"group",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/group/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"group",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b94c8ea1-c941-4413-8e76-fcaf0b348b8d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "217f873f-fb1a-4aac-a4d1-ce21705e4619",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "filesystem",
+			"item": [
+				{
+					"name": "findAll Copy",
+					"protocolProfileBehavior": {
+						"followOriginalHttpMethod": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://34.89.107.179:8081/uploadFile",
+							"protocol": "http",
+							"host": [
+								"34",
+								"89",
+								"107",
+								"179"
+							],
+							"port": "8081",
+							"path": [
+								"uploadFile"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "uploadFile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"type": "file",
+									"src": "/C:/Users/smmanrrique/Desktop/package.json"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "javascript"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://34.89.107.179:8081/uploadFile",
+							"protocol": "http",
+							"host": [
+								"34",
+								"89",
+								"107",
+								"179"
+							],
+							"port": "8081",
+							"path": [
+								"uploadFile"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "uploadFile Copy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"u2\"\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/contact?userId=1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"contact"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
