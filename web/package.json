@@ -52,7 +52,7 @@
     "rxjs": "6.0.0",
     "rxjs-compat": "6.2.1",
     "sockjs-client": "^1.1.5",
-    "xlsx": "^0.14.0",
+    "xlsx": "^0.17.0",
     "xlsx-style": "^0.8.13",
     "zone.js": "^0.8.26"
   },
